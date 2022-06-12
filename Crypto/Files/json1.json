@@ -1,0 +1,14 @@
+[
+  {
+    "Name": "BTC",
+    "Phemex": "BTCUSD",
+    "Huobi": "BTC-USDT",
+    "Bitfinex": "tBTCF0:USTF0",
+  },
+  {
+    "Name": "ETH",
+    "Phemex": "ETHUSD",
+    "Huobi": "ETH-USDT",
+    "Bitfinex": "tETHF0:USTF0"
+  }
+]
