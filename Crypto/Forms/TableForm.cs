@@ -13,6 +13,7 @@ using Crypto.Clients;
 using Crypto.Clients.Bitfinex;
 using Crypto.Clients.Phemex;
 using Crypto.Clients.Huobi;
+using Crypto.Clients.Binance;
 
 namespace Crypto.Forms
 {
@@ -23,7 +24,7 @@ namespace Crypto.Forms
         private List<TableRow> _rows = new List<TableRow>();
         List<IClient> _clients;
 
-        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted" };
+        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding" };
         int[] _clicks;
         (int ind, bool ascending) _sort;
         double _redMax;
@@ -73,6 +74,11 @@ namespace Crypto.Forms
                             row.HuobiPredicted = d.PredictedFunding;
                             break;
                         }
+                    case "Binance":
+                        {
+                            row.BinanceFunding = d.FundingRate;
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException();
                 };
@@ -88,7 +94,8 @@ namespace Crypto.Forms
             MakeClients();
             foreach (var c in _clients)
             {
-                data.AddRange(await c.GetTableDataAsync(symbols));
+                var dat = await c.GetTableDataAsync(symbols);
+                data.AddRange(dat);
             }
             DataToRows(data);
 
@@ -105,6 +112,7 @@ namespace Crypto.Forms
             dataGridView1.Columns["PhemexPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiPredicted"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["BinanceFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Update();
             dataGridView1.Refresh();
             SetColors();
@@ -179,6 +187,11 @@ namespace Crypto.Forms
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiPredicted).ToList();
             }
+            else if (_sort.ind == 7)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.BinanceFunding).ToList();
+            }
         }
 
         private void MakeClients()
@@ -187,9 +200,11 @@ namespace Crypto.Forms
             BitfinexClient.InitializeClient();
             PhemexClient.InitializeClient();
             HuobiClient.InitializeClient();
+            BinanceClient.InitializeClient();
             _clients.Add(new BitfinexClient());
             _clients.Add(new PhemexClient());
             _clients.Add(new HuobiClient());
+            _clients.Add(new BinanceClient());
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
