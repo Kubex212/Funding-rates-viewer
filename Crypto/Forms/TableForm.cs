@@ -189,7 +189,7 @@ namespace Crypto.Forms
             }
             else if (_sort.ind == 7)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexFunding).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.BinanceFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BinanceFunding).ToList();
             }
         }
