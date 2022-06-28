@@ -18,8 +18,8 @@ namespace Crypto.Clients.Phemex
     {
         public string Name { get; } = "Phemex";
         public static HttpClient Client { get; set; }
-        private static string Id { get; } = "c31d3781-1071-448a-bfc8-f826f546ca27";
-        private static string SecretKey { get; } = ConfigurationManager.AppSettings["secretKey"];
+        private static string Id { get; } = ConfigurationManager.AppSettings["phemexId"];
+        private static string SecretKey { get; } = ConfigurationManager.AppSettings["phemexSecretKey"];
         private static string BaseUrl { get; } = "https://api.phemex.com";
         public static void InitializeClient()
         {
