@@ -11,6 +11,8 @@ First you need to add App.config file to the main directory. It should contain P
 	</appSettings>
 </configuration>
 ```
+After building, clicking the button and waiting for data to load you should see 
+![The table](https://i.postimg.cc/597Rxv90/tabelka.png)
 # About
 My goal is to implement many more markets and provide many more functionalities. My work is in progress. Currently UI support only Polish language but this will change should the need arise.
 
