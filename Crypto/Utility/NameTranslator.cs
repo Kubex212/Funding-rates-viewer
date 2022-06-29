@@ -67,8 +67,12 @@ namespace Crypto.Utility
                 bool found = false;
                 foreach (var s in _arrayOfObjects)
                 {
-                    if (s["Name"] == symbol) result.Add(s[clientName].ToString());
-                    found = true;
+                    if (s["Name"] == symbol)
+                    {
+                        result.Add(s[clientName].ToString());
+                        found = true;
+                        break;
+                    }
                 }
                 if(!found)
                 {

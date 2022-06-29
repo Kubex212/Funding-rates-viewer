@@ -14,9 +14,11 @@ namespace Crypto.Objects
         /// <summary>
         /// Global name used througout the program and on the UI
         /// </summary>
-        public string Name { get; set; }
-        public string Bitfinex { get; set; }
-        public string Huobi { get; set; }
-        public string Phemex { get; set; }
+        public string? Name { get; set; }
+        public string? Bitfinex { get; set; }
+        public string? Huobi { get; set; }
+        public string? Phemex { get; set; }
+        public string? Binance { get; set; }
+        public string? Ftx { get; set; }
     }
 }

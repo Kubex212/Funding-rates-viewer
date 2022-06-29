@@ -32,7 +32,8 @@ namespace Crypto.Utility
             try
             {
                 string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
+                //using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
+                using (StreamReader r = new StreamReader("names.json"))
                 {
                     string json = r.ReadToEnd();
                     _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json);

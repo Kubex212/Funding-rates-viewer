@@ -38,6 +38,9 @@
             this.tabelkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.odświeżToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.wartościToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minimalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maksymalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,7 +103,8 @@
             // tabelkaToolStripMenuItem
             // 
             this.tabelkaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.odświeżToolStripMenuItem});
+            this.odświeżToolStripMenuItem,
+            this.wartościToolStripMenuItem});
             this.tabelkaToolStripMenuItem.Name = "tabelkaToolStripMenuItem";
             this.tabelkaToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.tabelkaToolStripMenuItem.Text = "Tabelka";
@@ -108,7 +112,7 @@
             // odświeżToolStripMenuItem
             // 
             this.odświeżToolStripMenuItem.Name = "odświeżToolStripMenuItem";
-            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.odświeżToolStripMenuItem.Text = "Odśwież";
             this.odświeżToolStripMenuItem.Click += new System.EventHandler(this.odświeżToolStripMenuItem_Click);
             // 
@@ -123,6 +127,29 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
+            // wartościToolStripMenuItem
+            // 
+            this.wartościToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minimalnaToolStripMenuItem,
+            this.maksymalnaToolStripMenuItem});
+            this.wartościToolStripMenuItem.Name = "wartościToolStripMenuItem";
+            this.wartościToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wartościToolStripMenuItem.Text = "Wartości...";
+            // 
+            // minimalnaToolStripMenuItem
+            // 
+            this.minimalnaToolStripMenuItem.Name = "minimalnaToolStripMenuItem";
+            this.minimalnaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minimalnaToolStripMenuItem.Text = "Minimalna";
+            this.minimalnaToolStripMenuItem.Click += new System.EventHandler(this.minimalnaToolStripMenuItem_Click);
+            // 
+            // maksymalnaToolStripMenuItem
+            // 
+            this.maksymalnaToolStripMenuItem.Name = "maksymalnaToolStripMenuItem";
+            this.maksymalnaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maksymalnaToolStripMenuItem.Text = "Maksymalna";
+            this.maksymalnaToolStripMenuItem.Click += new System.EventHandler(this.maksymalnaToolStripMenuItem_Click);
+            // 
             // TableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -135,7 +162,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TableForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "TableForm";
+            this.Text = "Tabelka";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TableForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -157,5 +184,8 @@
         private ToolStripMenuItem jakoMessageBoxToolStripMenuItem;
         private ToolStripMenuItem jakoRichTextBoxToolStripMenuItem;
         private PictureBox pictureBox1;
+        private ToolStripMenuItem wartościToolStripMenuItem;
+        private ToolStripMenuItem minimalnaToolStripMenuItem;
+        private ToolStripMenuItem maksymalnaToolStripMenuItem;
     }
 }

@@ -14,6 +14,7 @@ using Crypto.Clients.Bitfinex;
 using Crypto.Clients.Phemex;
 using Crypto.Clients.Huobi;
 using Crypto.Clients.Binance;
+using Crypto.Clients.Ftx;
 
 namespace Crypto.Forms
 {
@@ -24,7 +25,7 @@ namespace Crypto.Forms
         private List<TableRow> _rows = new List<TableRow>();
         List<IClient> _clients;
 
-        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding" };
+        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted" };
         int[] _clicks;
         (int ind, bool ascending) _sort;
         double _redMax;
@@ -79,10 +80,16 @@ namespace Crypto.Forms
                             row.BinanceFunding = d.FundingRate;
                             break;
                         }
+                    case "Ftx":
+                        {
+                            row.FtxPredicted = d.PredictedFunding;
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException();
                 };
             }
+            Text = "Tabelka" + $" (załadowane symbole: {_symbols.Count})";
         }
 
         async void InitTable(List<string> symbols)
@@ -113,6 +120,7 @@ namespace Crypto.Forms
             dataGridView1.Columns["HuobiFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["BinanceFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["FtxPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Update();
             dataGridView1.Refresh();
             SetColors();
@@ -192,6 +200,11 @@ namespace Crypto.Forms
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BinanceFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BinanceFunding).ToList();
             }
+            else if (_sort.ind == 8)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.FtxPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.FtxPredicted).ToList();
+            }
         }
 
         private void MakeClients()
@@ -201,10 +214,12 @@ namespace Crypto.Forms
             PhemexClient.InitializeClient();
             HuobiClient.InitializeClient();
             BinanceClient.InitializeClient();
+            FtxClient.InitializeClient();
             _clients.Add(new BitfinexClient());
             _clients.Add(new PhemexClient());
             _clients.Add(new HuobiClient());
             _clients.Add(new BinanceClient());
+            _clients.Add(new FtxClient());
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -238,6 +253,74 @@ namespace Crypto.Forms
         private void TableForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void minimalnaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float min = float.PositiveInfinity;
+            int x = 0, resX = 0, resY = 0;
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                int y = 0;
+                foreach (var colName in _columnNames)
+                {
+                    if (colName == "Symbol")
+                    {
+                        y++;
+                        continue;
+                    }
+                    var c = row.Cells[colName];
+                    var val = c.Value;
+                    if (val == null || (float)val == -100f)
+                    {
+                        y++;
+                        continue;
+                    }
+                    if ((float)val < min)
+                    {
+                        min = (float)val;
+                        resX = x;
+                        resY = y;
+                    }
+                    y++;
+                }
+                x++;
+            }
+            dataGridView1.CurrentCell = dataGridView1[resY, resX];
+        }
+
+        private void maksymalnaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            float max = float.NegativeInfinity;
+            int x = 0, column = 0, row = 0;
+            foreach (DataGridViewRow r in dataGridView1.Rows)
+            {
+                int y = 0;
+                foreach (var colName in _columnNames)
+                {
+                    if (colName == "Symbol")
+                    {
+                        y++;
+                        continue;
+                    }
+                    var c = r.Cells[colName];
+                    var val = c.Value;
+                    if (val == null || (float)val == -100f)
+                    {
+                        y++;
+                        continue;
+                    }
+                    if ((float)val > max)
+                    {
+                        max = (float)val;
+                        column = x;
+                        row = y;
+                    }
+                    y++;
+                }
+                x++;
+            }
+            dataGridView1.CurrentCell = dataGridView1[row, column];
         }
     }
 }

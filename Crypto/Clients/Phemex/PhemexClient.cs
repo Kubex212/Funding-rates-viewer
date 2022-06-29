@@ -43,9 +43,10 @@ namespace Crypto.Clients.Phemex
 
             string path = "/md/ticker/24hr";
 
-            foreach(var s in symbols)
+            var options = new ParallelOptions { MaxDegreeOfParallelism = 100 };
+            await Parallel.ForEachAsync(symbols, options, async (s, token) =>
             {
-                try 
+                try
                 {
                     using (var request = new HttpRequestMessage(HttpMethod.Get, BaseUrl + path + "?" + "symbol=" + s))
                     {
@@ -68,25 +69,26 @@ namespace Crypto.Clients.Phemex
                         res.Add(model);
                     }
                 }
-                catch(HttpRequestException ex)
+                catch (HttpRequestException ex)
                 {
                     Logger.Log($"Symbol {s} nie działa ({Name}): {ex.Message}");
 
                     FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -100, -100);
                     res.Add(model);
 
-                    continue;
+                    return;
                 }
-                catch(ArgumentException ex)
+                catch (ArgumentException ex)
                 {
                     Logger.Log($"Problem z symbolem {s}({Name}): {ex.Message}");
 
                     FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -100, -100);
                     res.Add(model);
 
-                    continue;
+                    return;
                 }
-            }
+            });
+            
             result.AddRange(FundingModelToTableData(res));
             return result;
         }
