@@ -1,5 +1,5 @@
 # Funding rates table
-This is a simple program that shows funding rates and predicted funding rates if the market provides such. Currently there are 4 markets implemented: Bitfinex, Phemex, Binance and Huobi.
+This is a simple program that shows funding rates and predicted funding rates if the market provides such. Currently there are 5 markets implemented: Bitfinex, Phemex, Binance, Huobi and FTX.
 # How to use
 First you need to add App.config file to the main directory. It should contain Phemex' API ID and secret key. It should look like this:
 ```
