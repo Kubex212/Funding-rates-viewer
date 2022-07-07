@@ -1,1095 +1,1362 @@
 [
   {
     "Name": "BTC",
+    "Bitfinex": "tBTCF0:USTF0",
+    "Huobi": "BTC-USDT",
     "Phemex": "BTCUSD",
     "Binance": "BTCUSDT",
-    "Huobi": "BTC-USDT",
-    "Bitfinex": "tBTCF0:USTF0"
+    "Ftx": "BTC-PERP"
   },
   {
     "Name": "ETH",
+    "Bitfinex": "tETHF0:USTF0",
+    "Huobi": "ETH-USDT",
     "Phemex": "ETHUSD",
     "Binance": "ETHUSDT",
-    "Huobi": "ETH-USDT",
-    "Bitfinex": "tETHF0:USTF0"
+    "Ftx": "ETH-PERP"
   },
   {
     "Name": "LTC",
+    "Bitfinex": "tLTCF0:USTF0",
+    "Huobi": "LTC-USDT",
     "Phemex": "LTCUSD",
     "Binance": "LTCUSDT",
-    "Huobi": "LTC-USDT",
-    "Bitfinex": "tLTCF0:USTF0"
+    "Ftx": "LTC-PERP"
   },
   {
     "Name": "LINK",
+    "Bitfinex": "tLINKF0:USTF0",
+    "Huobi": "LINK-USDT",
     "Phemex": "LINKUSD",
     "Binance": "LINKUSDT",
-    "Huobi": "LINK-USDT",
-    "Bitfinex": "tLINKF0:USTF0"
+    "Ftx": "LINK-PERP"
   },
   {
     "Name": "GOLD",
+    "Bitfinex": "tXAUTF0:USTF0",
+    "Huobi": "GOLD-USDT",
     "Phemex": "GOLDUSD",
     "Binance": "GOLDUSDT",
-    "Huobi": "GOLD-USDT",
-    "Bitfinex": "tXAUTF0:USTF0"
+    "Ftx": "GOLD-PERP"
   },
   {
     "Name": "ADA",
+    "Bitfinex": "tADAF0:USTF0",
+    "Huobi": "ADA-USDT",
     "Phemex": "ADAUSD",
     "Binance": "ADAUSDT",
-    "Huobi": "ADA-USDT",
-    "Bitfinex": "tADAF0:USTF0"
+    "Ftx": "ADA-PERP"
   },
   {
     "Name": "BCH",
+    "Bitfinex": "tBCHF0:USTF0",
+    "Huobi": "BCH-USDT",
     "Phemex": "BCHUSD",
     "Binance": "BCHUSDT",
-    "Huobi": "BCH-USDT",
-    "Bitfinex": "tBCHF0:USTF0"
+    "Ftx": "BCH-PERP"
+  },
+  {
+    "Name": "NKN",
+    "Bitfinex": "?",
+    "Huobi": "NKN-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "NKN-PERP"
+  },
+  {
+    "Name": "ROSE",
+    "Bitfinex": "?",
+    "Huobi": "ROSE-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "ROSE-PERP"
+  },
+  {
+    "Name": "OKB",
+    "Bitfinex": "?",
+    "Huobi": "OKB-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "OKB-PERP"
+  },
+  {
+    "Name": "XTZ",
+    "Bitfinex": "?",
+    "Huobi": "XTZ-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "XTZ-PERP"
+  },
+  {
+    "Name": "NYM",
+    "Bitfinex": "?",
+    "Huobi": "NYM-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "NYM-PERP"
+  },
+  {
+    "Name": "SOS",
+    "Bitfinex": "?",
+    "Huobi": "SOS-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "SOS-PERP"
+  },
+  {
+    "Name": "XCN",
+    "Bitfinex": "?",
+    "Huobi": "XCN-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "XCN-PERP"
+  },
+  {
+    "Name": "OP",
+    "Bitfinex": "?",
+    "Huobi": "OP-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "OP-PERP"
+  },
+  {
+    "Name": "LUNC",
+    "Bitfinex": "?",
+    "Huobi": "LUNC-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "?"
+  },
+  {
+    "Name": "IOTA",
+    "Bitfinex": "?",
+    "Huobi": "IOTA-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "IOTA-PERP"
+  },
+  {
+    "Name": "CEL",
+    "Bitfinex": "?",
+    "Huobi": "CEL-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "CEL-PERP"
+  },
+  {
+    "Name": "BSV",
+    "Bitfinex": "?",
+    "Huobi": "BSV-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "BSV-PERP"
+  },
+  {
+    "Name": "CSPR",
+    "Bitfinex": "?",
+    "Huobi": "CSPR-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "CSPR-PERP"
+  },
+  {
+    "Name": "XEC",
+    "Bitfinex": "?",
+    "Huobi": "XEC-USDT",
+    "Phemex": "?",
+    "Binance": "1000XECUSDT",
+    "Ftx": "XEC-PERP"
+  },
+  {
+    "Name": "BADGER",
+    "Bitfinex": "?",
+    "Huobi": "BADGER-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "BADGER-PERP"
+  },
+  {
+    "Name": "GST",
+    "Bitfinex": "?",
+    "Huobi": "GST-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "GST-PERP"
+  },
+  {
+    "Name": "METIS",
+    "Bitfinex": "?",
+    "Huobi": "METIS-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "METIS-PERP"
+  },
+  {
+    "Name": "BTS",
+    "Bitfinex": "?",
+    "Huobi": "BTS-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "BTS-PERP"
+  },
+  {
+    "Name": "LOOKS",
+    "Bitfinex": "?",
+    "Huobi": "LOOKS-USDT",
+    "Phemex": "?",
+    "Binance": "?",
+    "Ftx": "LOOKS-PERP"
   },
   {
     "Name": "ALGO",
+    "Bitfinex": "tALGF0:USTF0",
+    "Huobi": "ALGO-USDT",
     "Phemex": "ALGOUSD",
     "Binance": "ALGOUSDT",
-    "Huobi": "ALGO-USDT",
-    "Bitfinex": "tALGF0:USTF0"
+    "Ftx": "ALGO-PERP"
   },
   {
     "Name": "YFI",
+    "Bitfinex": "tYFIF0:USTF0",
+    "Huobi": "YFI-USDT",
     "Phemex": "YFIUSD",
     "Binance": "YFIUSDT",
-    "Huobi": "YFI-USDT",
-    "Bitfinex": "tYFIF0:USTF0"
+    "Ftx": "YFI-PERP"
   },
   {
     "Name": "DOT",
+    "Bitfinex": "tDOTF0:USTF0",
+    "Huobi": "DOT-USDT",
     "Phemex": "DOTUSD",
     "Binance": "DOTUSDT",
-    "Huobi": "DOT-USDT",
-    "Bitfinex": "tDOTF0:USTF0"
+    "Ftx": "DOT-PERP"
   },
   {
     "Name": "UNI",
+    "Bitfinex": "tUNIF0:USTF0",
+    "Huobi": "UNI-USDT",
     "Phemex": "UNIUSD",
     "Binance": "UNIUSDT",
-    "Huobi": "UNI-USDT",
-    "Bitfinex": "tUNIF0:USTF0"
+    "Ftx": "UNI-PERP"
   },
   {
     "Name": "BAT",
+    "Bitfinex": "tBATF0:USTF0",
+    "Huobi": "BAT-USDT",
     "Phemex": "BATUSD",
     "Binance": "BATUSDT",
-    "Huobi": "BAT-USDT",
-    "Bitfinex": "tBATF0:USTF0"
+    "Ftx": "BAT-PERP"
   },
   {
     "Name": "CHZ",
+    "Bitfinex": "tCHZF0:USTF0",
+    "Huobi": "CHZ-USDT",
     "Phemex": "CHZUSD",
     "Binance": "CHZUSDT",
-    "Huobi": "CHZ-USDT",
-    "Bitfinex": "tCHZF0:USTF0"
+    "Ftx": "CHZ-PERP"
   },
   {
     "Name": "MANA",
+    "Bitfinex": "tMANAF0:USTF0",
+    "Huobi": "MANA-USDT",
     "Phemex": "MANAUSD",
     "Binance": "MANAUSDT",
-    "Huobi": "MANA-USDT",
-    "Bitfinex": "tMANAF0:USTF0"
+    "Ftx": "MANA-PERP"
   },
   {
     "Name": "ENJ",
+    "Bitfinex": "tENJF0:USTF0",
+    "Huobi": "ENJ-USDT",
     "Phemex": "ENJUSD",
     "Binance": "ENJUSDT",
-    "Huobi": "ENJ-USDT",
-    "Bitfinex": "tENJF0:USTF0"
+    "Ftx": "ENJ-PERP"
   },
   {
     "Name": "SUSHI",
+    "Bitfinex": "tSUSHIF0:USTF0",
+    "Huobi": "SUSHI-USDT",
     "Phemex": "SUSHIUSD",
     "Binance": "SUSHIUSDT",
-    "Huobi": "SUSHI-USDT",
-    "Bitfinex": "tSUSHIF0:USTF0"
+    "Ftx": "SUSHI-PERP"
   },
   {
     "Name": "SNX",
+    "Bitfinex": "tSNXF0:USTF0",
+    "Huobi": "SNX-USDT",
     "Phemex": "SNXUSD",
     "Binance": "SNXUSDT",
-    "Huobi": "SNX-USDT",
-    "Bitfinex": "tSNXF0:USTF0"
+    "Ftx": "SNX-PERP"
   },
   {
     "Name": "GRT",
+    "Bitfinex": "tGRTF0:USTF0",
+    "Huobi": "GRT-USDT",
     "Phemex": "GRTUSD",
     "Binance": "GRTUSDT",
-    "Huobi": "GRT-USDT",
-    "Bitfinex": "tGRTF0:USTF0"
+    "Ftx": "GRT-PERP"
   },
   {
     "Name": "MKR",
+    "Bitfinex": "tMKRF0:USTF0",
+    "Huobi": "MKR-USDT",
     "Phemex": "MKRUSD",
     "Binance": "MKRUSDT",
-    "Huobi": "MKR-USDT",
-    "Bitfinex": "tMKRF0:USTF0"
+    "Ftx": "MKR-PERP"
   },
   {
     "Name": "EOS",
+    "Bitfinex": "tEOSF0:USTF0",
+    "Huobi": "EOS-USDT",
     "Phemex": "EOSUSD",
     "Binance": "EOSUSDT",
-    "Huobi": "EOS-USDT",
-    "Bitfinex": "tEOSF0:USTF0"
+    "Ftx": "EOS-PERP"
   },
   {
     "Name": "NEO",
+    "Bitfinex": "tNEOF0:USTF0",
+    "Huobi": "NEO-USDT",
     "Phemex": "NEOUSD",
     "Binance": "NEOUSDT",
-    "Huobi": "NEO-USDT",
-    "Bitfinex": "tNEOF0:USTF0"
+    "Ftx": "NEO-PERP"
   },
   {
     "Name": "ZEC",
+    "Bitfinex": "tZECF0:USTF0",
+    "Huobi": "ZEC-USDT",
     "Phemex": "ZECUSD",
     "Binance": "ZECUSDT",
-    "Huobi": "ZEC-USDT",
-    "Bitfinex": "tZECF0:USTF0"
+    "Ftx": "ZEC-PERP"
   },
   {
     "Name": "FIL",
+    "Bitfinex": "tFILF0:USTF0",
+    "Huobi": "FIL-USDT",
     "Phemex": "FILUSD",
     "Binance": "FILUSDT",
-    "Huobi": "FIL-USDT",
-    "Bitfinex": "tFILF0:USTF0"
+    "Ftx": "FIL-PERP"
   },
   {
     "Name": "KSM",
+    "Bitfinex": "tKSMF0:USTF0",
+    "Huobi": "KSM-USDT",
     "Phemex": "KSMUSD",
     "Binance": "KSMUSDT",
-    "Huobi": "KSM-USDT",
-    "Bitfinex": "tKSMF0:USTF0"
+    "Ftx": "KSM-PERP"
   },
   {
     "Name": "XMR",
+    "Bitfinex": "tXMRF0:USTF0",
+    "Huobi": "XMR-USDT",
     "Phemex": "XMRUSD",
     "Binance": "XMRUSDT",
-    "Huobi": "XMR-USDT",
-    "Bitfinex": "tXMRF0:USTF0"
+    "Ftx": "XMR-PERP"
   },
   {
     "Name": "QTUM",
+    "Bitfinex": "tQTUMF0:USTF0",
+    "Huobi": "QTUM-USDT",
     "Phemex": "QTUMUSD",
     "Binance": "QTUMUSDT",
-    "Huobi": "QTUM-USDT",
-    "Bitfinex": "tQTUMF0:USTF0"
+    "Ftx": "QTUM-PERP"
   },
   {
     "Name": "XLM",
+    "Bitfinex": "tXLMF0:USTF0",
+    "Huobi": "XLM-USDT",
     "Phemex": "XLMUSD",
     "Binance": "XLMUSDT",
-    "Huobi": "XLM-USDT",
-    "Bitfinex": "tXLMF0:USTF0"
+    "Ftx": "XLM-PERP"
   },
   {
     "Name": "ATOM",
+    "Bitfinex": "tATOF0:USTF0",
+    "Huobi": "ATOM-USDT",
     "Phemex": "ATOMUSD",
     "Binance": "ATOMUSDT",
-    "Huobi": "ATOM-USDT",
-    "Bitfinex": "tATOF0:USTF0"
+    "Ftx": "ATOM-PERP"
   },
   {
     "Name": "SOL",
+    "Bitfinex": "tSOLF0:USTF0",
+    "Huobi": "SOL-USDT",
     "Phemex": "SOLUSD",
     "Binance": "SOLUSDT",
-    "Huobi": "SOL-USDT",
-    "Bitfinex": "tSOLF0:USTF0"
+    "Ftx": "SOL-PERP"
   },
   {
     "Name": "AGLD",
+    "Bitfinex": "tAGLDF0:USTF0",
+    "Huobi": "AGLD-USDT",
     "Phemex": "AGLDUSD",
     "Binance": "AGLDUSDT",
-    "Huobi": "AGLD-USDT",
-    "Bitfinex": "tAGLDF0:USTF0"
+    "Ftx": "AGLD-PERP"
   },
   {
     "Name": "INJ",
+    "Bitfinex": "tINJF0:USTF0",
+    "Huobi": "INJ-USDT",
     "Phemex": "INJUSD",
     "Binance": "INJUSDT",
-    "Huobi": "INJ-USDT",
-    "Bitfinex": "tINJF0:USTF0"
+    "Ftx": "INJ-PERP"
   },
   {
     "Name": "ILV",
+    "Bitfinex": "tILVF0:USTF0",
+    "Huobi": "ILV-USDT",
     "Phemex": "ILVUSD",
     "Binance": "ILVUSDT",
-    "Huobi": "ILV-USDT",
-    "Bitfinex": "tILVF0:USTF0"
+    "Ftx": "ILV-PERP"
   },
   {
     "Name": "DAO",
+    "Bitfinex": "tDAOF0:USTF0",
+    "Huobi": "DAO-USDT",
     "Phemex": "DAOUSD",
     "Binance": "DAOUSDT",
-    "Huobi": "DAO-USDT",
-    "Bitfinex": "tDAOF0:USTF0"
+    "Ftx": "DAO-PERP"
   },
   {
     "Name": "KLAY",
+    "Bitfinex": "tKLAYF0:USTF0",
+    "Huobi": "KLAY-USDT",
     "Phemex": "KLAYUSD",
     "Binance": "KLAYUSDT",
-    "Huobi": "KLAY-USDT",
-    "Bitfinex": "tKLAYF0:USTF0"
+    "Ftx": "KLAY-PERP"
   },
   {
     "Name": "ASTR",
+    "Bitfinex": "tASTRF0:USTF0",
+    "Huobi": "ASTR-USDT",
     "Phemex": "ASTRUSD",
     "Binance": "ASTRUSDT",
-    "Huobi": "ASTR-USDT",
-    "Bitfinex": "tASTRF0:USTF0"
+    "Ftx": "ASTR-PERP"
   },
   {
     "Name": "MINA",
+    "Bitfinex": "tMINAF0:USTF0",
+    "Huobi": "MINA-USDT",
     "Phemex": "MINAUSD",
     "Binance": "MINAUSDT",
-    "Huobi": "MINA-USDT",
-    "Bitfinex": "tMINAF0:USTF0"
+    "Ftx": "MINA-PERP"
   },
   {
     "Name": "GLMR",
+    "Bitfinex": "tGLMRF0:USTF0",
+    "Huobi": "GLMR-USDT",
     "Phemex": "GLMRUSD",
     "Binance": "GLMRUSDT",
-    "Huobi": "GLMR-USDT",
-    "Bitfinex": "tGLMRF0:USTF0"
+    "Ftx": "GLMR-PERP"
   },
   {
     "Name": "SRM",
+    "Bitfinex": "tSRMF0:USTF0",
+    "Huobi": "SRM-USDT",
     "Phemex": "SRMUSD",
     "Binance": "SRMUSDT",
-    "Huobi": "SRM-USDT",
-    "Bitfinex": "tSRMF0:USTF0"
+    "Ftx": "SRM-PERP"
   },
   {
     "Name": "BIT",
+    "Bitfinex": "tBITF0:USTF0",
+    "Huobi": "BIT-USDT",
     "Phemex": "BITUSD",
     "Binance": "BITUSDT",
-    "Huobi": "BIT-USDT",
-    "Bitfinex": "tBITF0:USTF0"
+    "Ftx": "BIT-PERP"
   },
   {
     "Name": "FTT",
+    "Bitfinex": "tFTTF0:USTF0",
+    "Huobi": "FTT-USDT",
     "Phemex": "FTTUSD",
     "Binance": "FTTUSDT",
-    "Huobi": "FTT-USDT",
-    "Bitfinex": "tFTTF0:USTF0"
+    "Ftx": "FTT-PERP"
   },
   {
     "Name": "MOVR",
+    "Bitfinex": "tMOVRF0:USTF0",
+    "Huobi": "MOVR-USDT",
     "Phemex": "MOVRUSD",
     "Binance": "MOVRUSDT",
-    "Huobi": "MOVR-USDT",
-    "Bitfinex": "tMOVRF0:USTF0"
+    "Ftx": "MOVR-PERP"
   },
   {
     "Name": "YGG",
+    "Bitfinex": "tYGGF0:USTF0",
+    "Huobi": "YGG-USDT",
     "Phemex": "YGGUSD",
     "Binance": "YGGUSDT",
-    "Huobi": "YGG-USDT",
-    "Bitfinex": "tYGGF0:USTF0"
+    "Ftx": "YGG-PERP"
   },
   {
     "Name": "CVX",
+    "Bitfinex": "tCVXF0:USTF0",
+    "Huobi": "CVX-USDT",
     "Phemex": "CVXUSD",
     "Binance": "CVXUSDT",
-    "Huobi": "CVX-USDT",
-    "Bitfinex": "tCVXF0:USTF0"
+    "Ftx": "CVX-PERP"
   },
   {
     "Name": "KNC",
+    "Bitfinex": "tKNCF0:USTF0",
+    "Huobi": "KNC-USDT",
     "Phemex": "KNCUSD",
     "Binance": "KNCUSDT",
-    "Huobi": "KNC-USDT",
-    "Bitfinex": "tKNCF0:USTF0"
+    "Ftx": "KNC-PERP"
   },
   {
     "Name": "SKL",
+    "Bitfinex": "tSKLF0:USTF0",
+    "Huobi": "SKL-USDT",
     "Phemex": "SKLUSD",
     "Binance": "SKLUSDT",
-    "Huobi": "SKL-USDT",
-    "Bitfinex": "tSKLF0:USTF0"
+    "Ftx": "SKL-PERP"
   },
   {
     "Name": "ONE",
+    "Bitfinex": "tONEF0:USTF0",
+    "Huobi": "ONE-USDT",
     "Phemex": "ONEUSD",
     "Binance": "ONEUSDT",
-    "Huobi": "ONE-USDT",
-    "Bitfinex": "tONEF0:USTF0"
+    "Ftx": "ONE-PERP"
   },
   {
     "Name": "ONT",
+    "Bitfinex": "tONTF0:USTF0",
+    "Huobi": "ONT-USDT",
     "Phemex": "ONTUSD",
     "Binance": "ONTUSDT",
-    "Huobi": "ONT-USDT",
-    "Bitfinex": "tONTF0:USTF0"
+    "Ftx": "ONT-PERP"
   },
   {
     "Name": "OMG",
+    "Bitfinex": "tOMGF0:USTF0",
+    "Huobi": "OMG-USDT",
     "Phemex": "OMGUSD",
     "Binance": "OMGUSDT",
-    "Huobi": "OMG-USDT",
-    "Bitfinex": "tOMGF0:USTF0"
+    "Ftx": "OMG-PERP"
   },
   {
     "Name": "APE",
+    "Bitfinex": "tAPEF0:USTF0",
+    "Huobi": "APE-USDT",
     "Phemex": "APEUSD",
     "Binance": "APEUSDT",
-    "Huobi": "APE-USDT",
-    "Bitfinex": "tAPEF0:USTF0"
+    "Ftx": "APE-PERP"
   },
   {
     "Name": "EGLD",
+    "Bitfinex": "tEGLDF0:USTF0",
+    "Huobi": "EGLD-USDT",
     "Phemex": "EGLDUSD",
     "Binance": "EGLDUSDT",
-    "Huobi": "EGLD-USDT",
-    "Bitfinex": "tEGLDF0:USTF0"
+    "Ftx": "EGLD-PERP"
   },
   {
     "Name": "IMX",
+    "Bitfinex": "tIMXF0:USTF0",
+    "Huobi": "IMX-USDT",
     "Phemex": "IMXUSD",
     "Binance": "IMXUSDT",
-    "Huobi": "IMX-USDT",
-    "Bitfinex": "tIMXF0:USTF0"
+    "Ftx": "IMX-PERP"
   },
   {
     "Name": "DODO",
+    "Bitfinex": "tDODOF0:USTF0",
+    "Huobi": "DODO-USDT",
     "Phemex": "DODOUSD",
     "Binance": "DODOUSDT",
-    "Huobi": "DODO-USDT",
-    "Bitfinex": "tDODOF0:USTF0"
+    "Ftx": "DODO-PERP"
   },
   {
     "Name": "LUNA",
+    "Bitfinex": "tLUNA0:USTF0",
+    "Huobi": "LUNA-USDT",
     "Phemex": "LUNAUSD",
     "Binance": "LUNAUSDT",
-    "Huobi": "LUNA-USDT",
-    "Bitfinex": "tLUNA0:USTF0"
+    "Ftx": "LUNA-PERP"
   },
   {
     "Name": "ICP",
+    "Bitfinex": "tICPF0:USTF0",
+    "Huobi": "ICP-USDT",
     "Phemex": "ICPUSD",
     "Binance": "ICPUSDT",
-    "Huobi": "ICP-USDT",
-    "Bitfinex": "tICPF0:USTF0"
+    "Ftx": "ICP-PERP"
   },
   {
     "Name": "COMP",
+    "Bitfinex": "tCOMPF0:USTF0",
+    "Huobi": "COMP-USDT",
     "Phemex": "COMPUSD",
     "Binance": "COMPUSDT",
-    "Huobi": "COMP-USDT",
-    "Bitfinex": "tCOMPF0:USTF0"
+    "Ftx": "COMP-PERP"
   },
   {
     "Name": "ZIL",
+    "Bitfinex": "tZILF0:USTF0",
+    "Huobi": "ZIL-USDT",
     "Phemex": "ZILUSD",
     "Binance": "ZILUSDT",
-    "Huobi": "ZIL-USDT",
-    "Bitfinex": "tZILF0:USTF0"
+    "Ftx": "ZIL-PERP"
   },
   {
     "Name": "THETA",
+    "Bitfinex": "tTHETAF0:USTF0",
+    "Huobi": "THETA-USDT",
     "Phemex": "THETAUSD",
     "Binance": "THETAUSDT",
-    "Huobi": "THETA-USDT",
-    "Bitfinex": "tTHETAF0:USTF0"
+    "Ftx": "THETA-PERP"
   },
   {
     "Name": "GMT",
+    "Bitfinex": "tGMTF0:USTF0",
+    "Huobi": "GMT-USDT",
     "Phemex": "GMTUSD",
     "Binance": "GMTUSDT",
-    "Huobi": "GMT-USDT",
-    "Bitfinex": "tGMTF0:USTF0"
+    "Ftx": "GMT-PERP"
   },
   {
     "Name": "AVAX",
+    "Bitfinex": "tAVAXF0:USTF0",
+    "Huobi": "AVAX-USDT",
     "Phemex": "AVAXUSD",
     "Binance": "AVAXUSDT",
-    "Huobi": "AVAX-USDT",
-    "Bitfinex": "tAVAXF0:USTF0"
+    "Ftx": "AVAX-PERP"
   },
   {
     "Name": "DYDX",
+    "Bitfinex": "tDYDXF0:USTF0",
+    "Huobi": "DYDX-USDT",
     "Phemex": "DYDXUSD",
     "Binance": "DYDXUSDT",
-    "Huobi": "DYDX-USDT",
-    "Bitfinex": "tDYDXF0:USTF0"
+    "Ftx": "DYDX-PERP"
   },
   {
     "Name": "CRV",
+    "Bitfinex": "tCRVF0:USTF0",
+    "Huobi": "CRV-USDT",
     "Phemex": "CRVUSD",
     "Binance": "CRVUSDT",
-    "Huobi": "CRV-USDT",
-    "Bitfinex": "tCRVF0:USTF0"
+    "Ftx": "CRV-PERP"
   },
   {
     "Name": "AXS",
+    "Bitfinex": "tAXSF0:USTF0",
+    "Huobi": "AXS-USDT",
     "Phemex": "AXSUSD",
     "Binance": "AXSUSDT",
-    "Huobi": "AXS-USDT",
-    "Bitfinex": "tAXSF0:USTF0"
+    "Ftx": "AXS-PERP"
   },
   {
     "Name": "FTM",
+    "Bitfinex": "tFTMF0:USTF0",
+    "Huobi": "FTM-USDT",
     "Phemex": "FTMUSD",
     "Binance": "FTMUSDT",
-    "Huobi": "FTM-USDT",
-    "Bitfinex": "tFTMF0:USTF0"
+    "Ftx": "FTM-PERP"
   },
   {
     "Name": "GAL",
+    "Bitfinex": "tGALF0:USTF0",
+    "Huobi": "GAL-USDT",
     "Phemex": "GALUSD",
     "Binance": "GALUSDT",
-    "Huobi": "GAL-USDT",
-    "Bitfinex": "tGALF0:USTF0"
+    "Ftx": "GAL-PERP"
   },
   {
     "Name": "BNB",
+    "Bitfinex": "tBNBF0:USTF0",
+    "Huobi": "BNB-USDT",
     "Phemex": "BNBUSD",
     "Binance": "BNBUSDT",
-    "Huobi": "BNB-USDT",
-    "Bitfinex": "tBNBF0:USTF0"
+    "Ftx": "BNB-PERP"
   },
   {
     "Name": "LRC",
+    "Bitfinex": "tLRCF0:USTF0",
+    "Huobi": "LRC-USDT",
     "Phemex": "LRCUSD",
     "Binance": "LRCUSDT",
-    "Huobi": "LRC-USDT",
-    "Bitfinex": "tLRCF0:USTF0"
+    "Ftx": "LRC-PERP"
   },
   {
     "Name": "AAVE",
+    "Bitfinex": "tAAVEF0:USTF0",
+    "Huobi": "AAVE-USDT",
     "Phemex": "AAVEUSD",
     "Binance": "AAVEUSDT",
-    "Huobi": "AAVE-USDT",
-    "Bitfinex": "tAAVEF0:USTF0"
+    "Ftx": "AAVE-PERP"
   },
   {
     "Name": "ETC",
+    "Bitfinex": "tETCF0:USTF0",
+    "Huobi": "ETC-USDT",
     "Phemex": "ETCUSD",
     "Binance": "ETCUSDT",
-    "Huobi": "ETC-USDT",
-    "Bitfinex": "tETCF0:USTF0"
+    "Ftx": "ETC-PERP"
   },
   {
     "Name": "CVC",
+    "Bitfinex": "tCVCF0:USTF0",
+    "Huobi": "CVC-USDT",
     "Phemex": "CVCUSD",
     "Binance": "CVCUSDT",
-    "Huobi": "CVC-USDT",
-    "Bitfinex": "tCVCF0:USTF0"
+    "Ftx": "CVC-PERP"
   },
   {
     "Name": "SAND",
+    "Bitfinex": "tSANDF0:USTF0",
+    "Huobi": "SAND-USDT",
     "Phemex": "SANDUSD",
     "Binance": "SANDUSDT",
-    "Huobi": "SAND-USDT",
-    "Bitfinex": "tSANDF0:USTF0"
+    "Ftx": "SAND-PERP"
   },
   {
     "Name": "NEAR",
+    "Bitfinex": "tNEARF0:USTF0",
+    "Huobi": "NEAR-USDT",
     "Phemex": "NEARUSD",
     "Binance": "NEARUSDT",
-    "Huobi": "NEAR-USDT",
-    "Bitfinex": "tNEARF0:USTF0"
+    "Ftx": "NEAR-PERP"
   },
   {
     "Name": "API3",
+    "Bitfinex": "tAPI3F0:USTF0",
+    "Huobi": "API3-USDT",
     "Phemex": "API3USD",
     "Binance": "API3USDT",
-    "Huobi": "API3-USDT",
-    "Bitfinex": "tAPI3F0:USTF0"
+    "Ftx": "API3-PERP"
   },
   {
     "Name": "WAVES",
-    "Phemex": "WAVEUSD",
-    "Binance": "WAVEUSDT",
+    "Bitfinex": "tWAVESF0:USTF0",
     "Huobi": "WAVES-USDT",
-    "Bitfinex": "tWAVESF0:USTF0"
+    "Phemex": "WAVESUSD",
+    "Binance": "WAVESUSDT",
+    "Ftx": "WAVES-PERP"
   },
   {
     "Name": "WOO",
+    "Bitfinex": "tWOOF0:USTF0",
+    "Huobi": "WOO-USDT",
     "Phemex": "WOOUSD",
     "Binance": "WOOUSDT",
-    "Huobi": "WOO-USDT",
-    "Bitfinex": "tWOOF0:USTF0"
+    "Ftx": "WOO-PERP"
   },
   {
     "Name": "ZEN",
+    "Bitfinex": "tZENF0:USTF0",
+    "Huobi": "ZEN-USDT",
     "Phemex": "ZENUSD",
     "Binance": "ZENUSDT",
-    "Huobi": "ZEN-USDT",
-    "Bitfinex": "tZENF0:USTF0"
+    "Ftx": "ZEN-PERP"
   },
   {
     "Name": "AR",
+    "Bitfinex": "tARF0:USTF0",
+    "Huobi": "AR-USDT",
     "Phemex": "ARUSD",
     "Binance": "ARUSDT",
-    "Huobi": "AR-USDT",
-    "Bitfinex": "tARF0:USTF0"
+    "Ftx": "AR-PERP"
   },
   {
     "Name": "CTK",
+    "Bitfinex": "tCTKF0:USTF0",
+    "Huobi": "CTK-USDT",
     "Phemex": "CTKUSD",
     "Binance": "CTKUSDT",
-    "Huobi": "CTK-USDT",
-    "Bitfinex": "tCTKF0:USTF0"
+    "Ftx": "CTK-PERP"
   },
   {
     "Name": "BAL",
+    "Bitfinex": "tBALF0:USTF0",
+    "Huobi": "BAL-USDT",
     "Phemex": "BALUSD",
     "Binance": "BALUSDT",
-    "Huobi": "BAL-USDT",
-    "Bitfinex": "tBALF0:USTF0"
+    "Ftx": "BAL-PERP"
   },
   {
     "Name": "SXP",
+    "Bitfinex": "tSXPF0:USTF0",
+    "Huobi": "SXP-USDT",
     "Phemex": "SXPUSD",
     "Binance": "SXPUSDT",
-    "Huobi": "SXP-USDT",
-    "Bitfinex": "tSXPF0:USTF0"
+    "Ftx": "SXP-PERP"
   },
   {
     "Name": "TRX",
+    "Bitfinex": "tTRXF0:USTF0",
+    "Huobi": "TRX-USDT",
     "Phemex": "TRXUSD",
     "Binance": "TRXUSDT",
-    "Huobi": "TRX-USDT",
-    "Bitfinex": "tTRXF0:USTF0"
+    "Ftx": "TRX-PERP"
   },
   {
     "Name": "MTL",
+    "Bitfinex": "tMTLF0:USTF0",
+    "Huobi": "MTL-USDT",
     "Phemex": "MTLUSD",
     "Binance": "MTLUSDT",
-    "Huobi": "MTL-USDT",
-    "Bitfinex": "tMTLF0:USTF0"
+    "Ftx": "MTL-PERP"
   },
   {
     "Name": "BNX",
+    "Bitfinex": "tBNXF0:USTF0",
+    "Huobi": "BNX-USDT",
     "Phemex": "BNXUSD",
     "Binance": "BNXUSDT",
-    "Huobi": "BNX-USDT",
-    "Bitfinex": "tBNXF0:USTF0"
+    "Ftx": "BNX-PERP"
   },
   {
     "Name": "REN",
+    "Bitfinex": "tRENF0:USTF0",
+    "Huobi": "REN-USDT",
     "Phemex": "RENUSD",
     "Binance": "RENUSDT",
-    "Huobi": "REN-USDT",
-    "Bitfinex": "tRENF0:USTF0"
+    "Ftx": "REN-PERP"
   },
   {
     "Name": "DOGE",
+    "Bitfinex": "tDOGEF0:USTF0",
+    "Huobi": "DOGE-USDT",
     "Phemex": "DOGEUSD",
     "Binance": "DOGEUSDT",
-    "Huobi": "DOGE-USDT",
-    "Bitfinex": "tDOGEF0:USTF0"
+    "Ftx": "DOGE-PERP"
   },
   {
     "Name": "COTI",
+    "Bitfinex": "tCOTIF0:USTF0",
+    "Huobi": "COTI-USDT",
     "Phemex": "COTIUSD",
     "Binance": "COTIUSDT",
-    "Huobi": "COTI-USDT",
-    "Bitfinex": "tCOTIF0:USTF0"
+    "Ftx": "COTI-PERP"
   },
   {
     "Name": "LIT",
+    "Bitfinex": "tLITF0:USTF0",
+    "Huobi": "LIT-USDT",
     "Phemex": "LITUSD",
     "Binance": "LITUSDT",
-    "Huobi": "LIT-USDT",
-    "Bitfinex": "tLITF0:USTF0"
+    "Ftx": "LIT-PERP"
   },
   {
     "Name": "TOMO",
+    "Bitfinex": "tTOMOF0:USTF0",
+    "Huobi": "TOMO-USDT",
     "Phemex": "TOMOUSD",
     "Binance": "TOMOUSDT",
-    "Huobi": "TOMO-USDT",
-    "Bitfinex": "tTOMOF0:USTF0"
+    "Ftx": "TOMO-PERP"
   },
   {
     "Name": "CELO",
+    "Bitfinex": "tCELOF0:USTF0",
+    "Huobi": "CELO-USDT",
     "Phemex": "CELOUSD",
     "Binance": "CELOUSDT",
-    "Huobi": "CELO-USDT",
-    "Bitfinex": "tCELOF0:USTF0"
+    "Ftx": "CELO-PERP"
   },
   {
     "Name": "ZRX",
+    "Bitfinex": "tZRXF0:USTF0",
+    "Huobi": "ZRX-USDT",
     "Phemex": "ZRXUSD",
     "Binance": "ZRXUSDT",
-    "Huobi": "ZRX-USDT",
-    "Bitfinex": "tZRXF0:USTF0"
+    "Ftx": "ZRX-PERP"
   },
   {
     "Name": "OCEAN",
+    "Bitfinex": "tOCEANF0:USTF0",
+    "Huobi": "OCEAN-USDT",
     "Phemex": "OCEANUSD",
     "Binance": "OCEANUSDT",
-    "Huobi": "OCEAN-USDT",
-    "Bitfinex": "tOCEANF0:USTF0"
+    "Ftx": "OCEAN-PERP"
   },
   {
     "Name": "FLOW",
+    "Bitfinex": "tFLOWF0:USTF0",
+    "Huobi": "FLOW-USDT",
     "Phemex": "FLOWUSD",
     "Binance": "FLOWUSDT",
-    "Huobi": "FLOW-USDT",
-    "Bitfinex": "tFLOWF0:USTF0"
+    "Ftx": "FLOW-PERP"
   },
   {
     "Name": "STORJ",
+    "Bitfinex": "tSTORJF0:USTF0",
+    "Huobi": "STORJ-USDT",
     "Phemex": "STORJUSD",
     "Binance": "STORJUSDT",
-    "Huobi": "STORJ-USDT",
-    "Bitfinex": "tSTORJF0:USTF0"
+    "Ftx": "STORJ-PERP"
   },
   {
     "Name": "GTC",
+    "Bitfinex": "tGTCF0:USTF0",
+    "Huobi": "GTC-USDT",
     "Phemex": "GTCUSD",
     "Binance": "GTCUSDT",
-    "Huobi": "GTC-USDT",
-    "Bitfinex": "tGTCF0:USTF0"
+    "Ftx": "GTC-PERP"
   },
   {
     "Name": "MASK",
+    "Bitfinex": "tMASKF0:USTF0",
+    "Huobi": "MASK-USDT",
     "Phemex": "MASKUSD",
     "Binance": "MASKUSDT",
-    "Huobi": "MASK-USDT",
-    "Bitfinex": "tMASKF0:USTF0"
+    "Ftx": "MASK-PERP"
   },
   {
     "Name": "SFP",
+    "Bitfinex": "tSFPF0:USTF0",
+    "Huobi": "SFP-USDT",
     "Phemex": "SFPUSD",
     "Binance": "SFPUSDT",
-    "Huobi": "SFP-USDT",
-    "Bitfinex": "tSFPF0:USTF0"
+    "Ftx": "SFP-PERP"
   },
   {
     "Name": "AUDIO",
+    "Bitfinex": "tAUDIOF0:USTF0",
+    "Huobi": "AUDIO-USDT",
     "Phemex": "AUDIOUSD",
     "Binance": "AUDIOUSDT",
-    "Huobi": "AUDIO-USDT",
-    "Bitfinex": "tAUDIOF0:USTF0"
+    "Ftx": "AUDIO-PERP"
   },
   {
     "Name": "KAVA",
+    "Bitfinex": "tKAVAF0:USTF0",
+    "Huobi": "KAVA-USDT",
     "Phemex": "KAVAUSD",
     "Binance": "KAVAUSDT",
-    "Huobi": "KAVA-USDT",
-    "Bitfinex": "tKAVAF0:USTF0"
+    "Ftx": "KAVA-PERP"
   },
   {
     "Name": "CHR",
+    "Bitfinex": "tCHRF0:USTF0",
+    "Huobi": "CHR-USDT",
     "Phemex": "CHRUSD",
     "Binance": "CHRUSDT",
-    "Huobi": "CHR-USDT",
-    "Bitfinex": "tCHRF0:USTF0"
+    "Ftx": "CHR-PERP"
   },
   {
     "Name": "ENS",
+    "Bitfinex": "tENSF0:USTF0",
+    "Huobi": "ENS-USDT",
     "Phemex": "ENSUSD",
     "Binance": "ENSUSDT",
-    "Huobi": "ENS-USDT",
-    "Bitfinex": "tENSF0:USTF0"
+    "Ftx": "ENS-PERP"
   },
   {
     "Name": "C98",
+    "Bitfinex": "tC98F0:USTF0",
+    "Huobi": "C98-USDT",
     "Phemex": "C98USD",
     "Binance": "C98USDT",
-    "Huobi": "C98-USDT",
-    "Bitfinex": "tC98F0:USTF0"
+    "Ftx": "C98-PERP"
   },
   {
     "Name": "XRP",
+    "Bitfinex": "tXRPF0:USTF0",
+    "Huobi": "XRP-USDT",
     "Phemex": "XRPUSD",
     "Binance": "XRPUSDT",
-    "Huobi": "XRP-USDT",
-    "Bitfinex": "tXRPF0:USTF0"
+    "Ftx": "XRP-PERP"
   },
   {
     "Name": "BAKE",
+    "Bitfinex": "tBAKEF0:USTF0",
+    "Huobi": "BAKE-USDT",
     "Phemex": "BAKEUSD",
     "Binance": "BAKEUSDT",
-    "Huobi": "BAKE-USDT",
-    "Bitfinex": "tBAKEF0:USTF0"
+    "Ftx": "BAKE-PERP"
   },
   {
     "Name": "1INCH",
+    "Bitfinex": "t1INCHF0:USTF0",
+    "Huobi": "1INCH-USDT",
     "Phemex": "1INCHUSD",
     "Binance": "1INCHUSDT",
-    "Huobi": "1INCH-USDT",
-    "Bitfinex": "t1INCHF0:USTF0"
+    "Ftx": "1INCH-PERP"
   },
   {
     "Name": "RAY",
+    "Bitfinex": "tRAYF0:USTF0",
+    "Huobi": "RAY-USDT",
     "Phemex": "RAYUSD",
     "Binance": "RAYUSDT",
-    "Huobi": "RAY-USDT",
-    "Bitfinex": "tRAYF0:USTF0"
+    "Ftx": "RAY-PERP"
   },
   {
     "Name": "GALA",
+    "Bitfinex": "tGALAF0:USTF0",
+    "Huobi": "GALA-USDT",
     "Phemex": "GALAUSD",
     "Binance": "GALAUSDT",
-    "Huobi": "GALA-USDT",
-    "Bitfinex": "tGALAF0:USTF0"
+    "Ftx": "GALA-PERP"
   },
   {
     "Name": "LPT",
+    "Bitfinex": "tLPTF0:USTF0",
+    "Huobi": "LPT-USDT",
     "Phemex": "LPTUSD",
     "Binance": "LPTUSDT",
-    "Huobi": "LPT-USDT",
-    "Bitfinex": "tLPTF0:USTF0"
+    "Ftx": "LPT-PERP"
   },
   {
     "Name": "RUNE",
+    "Bitfinex": "tRUNEF0:USTF0",
+    "Huobi": "RUNE-USDT",
     "Phemex": "RUNEUSD",
     "Binance": "RUNEUSDT",
-    "Huobi": "RUNE-USDT",
-    "Bitfinex": "tRUNEF0:USTF0"
+    "Ftx": "RUNE-PERP"
   },
   {
     "Name": "ALICE",
+    "Bitfinex": "tALICEF0:USTF0",
+    "Huobi": "ALICE-USDT",
     "Phemex": "ALICEUSD",
     "Binance": "ALICEUSDT",
-    "Huobi": "ALICE-USDT",
-    "Bitfinex": "tALICEF0:USTF0"
+    "Ftx": "ALICE-PERP"
   },
   {
     "Name": "MATIC",
+    "Bitfinex": "tMATICF0:USTF0",
+    "Huobi": "MATIC-USDT",
     "Phemex": "MATICUSD",
     "Binance": "MATICUSDT",
-    "Huobi": "MATIC-USDT",
-    "Bitfinex": "tMATICF0:USTF0"
+    "Ftx": "MATIC-PERP"
   },
   {
     "Name": "RSR",
-    "Phemex": "u1000RSRUSD",
-    "Binance": "u1000RSRUSDT",
+    "Bitfinex": "tu1000RSRF0:USTF0",
     "Huobi": "RSR-USDT",
-    "Bitfinex": "tu1000RSRF0:USTF0"
+    "Phemex": "u1000RSRUSD",
+    "Binance": "RSRUSDT",
+    "Ftx": "RSR-PERP"
   },
   {
     "Name": "LINA",
-    "Phemex": "u100LINAUSD",
-    "Binance": "u100LINAUSDT",
+    "Bitfinex": "tLINAF0:USTF0",
     "Huobi": "LINA-USDT",
-    "Bitfinex": "tLINAF0:USTF0"
+    "Phemex": "u100LINAUSD",
+    "Binance": "LINAUSDT",
+    "Ftx": "LINA-PERP"
   },
   {
     "Name": "HOT",
-    "Phemex": "u1000HOTUSD",
-    "Binance": "u1000HOTUSDT",
+    "Bitfinex": "tHOTF0:USTF0",
     "Huobi": "HOT-USDT",
-    "Bitfinex": "tHOTF0:USTF0"
+    "Phemex": "u1000HOTUSD",
+    "Binance": "HOTUSDT",
+    "Ftx": "HOT-PERP"
   },
   {
     "Name": "CELR",
-    "Phemex": "u100CELRUSD",
-    "Binance": "u100CELRUSDT",
+    "Bitfinex": "tCELRF0:USTF0",
     "Huobi": "CELR-USDT",
-    "Bitfinex": "tCELRF0:USTF0"
+    "Phemex": "u100CELRUSD",
+    "Binance": "CELRUSDT",
+    "Ftx": "CELR-PERP"
   },
   {
     "Name": "DENT",
-    "Phemex": "u1000DENTUSD",
-    "Binance": "u1000DENTUSDT",
+    "Bitfinex": "tDENTF0:USTF0",
     "Huobi": "DENT-USDT",
-    "Bitfinex": "tDENTF0:USTF0"
-  },
-  {
-    "Name": "CELO",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "CELO-USDT"
+    "Phemex": "u1000DENTUSD",
+    "Binance": "DENTUSDT",
+    "Ftx": "DENT-PERP"
   },
   {
     "Name": "HT",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "HT-USDT"
+    "Huobi": "HT-USDT",
+    "Phemex": "?",
+    "Binance": "HTUSDT",
+    "Ftx": "HT-PERP"
   },
   {
     "Name": "DASH",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "DASH-USDT"
-  },
-  {
-    "Name": "REEF",
+    "Huobi": "DASH-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "REEF-USDT"
-  },
-  {
-    "Name": "ANKR",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "ANKR-USDT"
+    "Binance": "DASHUSDT",
+    "Ftx": "DASH-PERP"
   },
   {
     "Name": "SHIB",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "SHIB-USDT"
+    "Bitfinex": "tSHIBF0:USTF0",
+    "Huobi": "SHIB-USDT",
+    "Phemex": "u100000SHIBUSD",
+    "Binance": "1000SHIBUSDT",
+    "Ftx": "SHIB-PERP"
   },
   {
     "Name": "CRO",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "CRO-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "CRO-USDT"
+    "Ftx": "CRO-PERP"
   },
   {
     "Name": "VRA",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "VRA-USDT"
-  },
-  {
-    "Name": "ZRX",
+    "Huobi": "VRA-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "ZRX-USDT"
+    "Ftx": "VRA-PERP"
   },
   {
     "Name": "CTSI",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "CTSI-USDT"
-  },
-  {
-    "Name": "C98",
+    "Huobi": "CTSI-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "C98-USDT"
-  },
-  {
-    "Name": "RSR",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "RSR-USDT"
+    "Ftx": "CTSI-PERP"
   },
   {
     "Name": "O3",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "O3-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "O3-USDT"
+    "Ftx": "O3-PERP"
   },
   {
     "Name": "JST",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "JST-USDT"
+    "Huobi": "JST-USDT",
+    "Phemex": "?",
+    "Binance": "JSTUSDT",
+    "Ftx": "JST-PERP"
   },
   {
-    "Name": "BTC",
-    "Phemex": "?",
+    "Name": "BTC220701",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "BTC-USDT-220701"
-  },
-  {
-    "Name": "1INCH",
+    "Huobi": "BTC-USDT-220701",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "1INCH-USDT"
-  },
-  {
-    "Name": "MATIC",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "MATIC-USDT"
-  },
-  {
-    "Name": "NFT",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "NFT-USDT"
+    "Ftx": "BTC220701-PERP"
   },
   {
     "Name": "YFII",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "YFII-USDT"
-  },
-  {
-    "Name": "ARPA",
+    "Huobi": "YFII-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "ARPA-USDT"
+    "Ftx": "YFII-PERP"
   },
   {
     "Name": "QNT",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "QNT-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "QNT-USDT"
+    "Ftx": "QNT-PERP"
   },
   {
     "Name": "ANT",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "ANT-USDT"
-  },
-  {
-    "Name": "BTC",
+    "Huobi": "ANT-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "BTC-USDT-220708"
+    "Ftx": "ANT-PERP"
   },
   {
     "Name": "HBAR",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "HBAR-USDT"
+    "Huobi": "HBAR-USDT",
+    "Phemex": "?",
+    "Binance": "HBARUSDT",
+    "Ftx": "HBAR-PERP"
   },
   {
     "Name": "UNFI",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "UNFI-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "UNFI-USDT"
+    "Ftx": "UNFI-PERP"
   },
   {
     "Name": "BICO",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "BICO-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "BICO-USDT"
+    "Ftx": "BICO-PERP"
   },
   {
     "Name": "FITFI",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "FITFI-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "FITFI-USDT"
+    "Ftx": "FITFI-PERP"
   },
   {
     "Name": "CLV",
-    "Phemex": "?",
     "Bitfinex": "?",
+    "Huobi": "CLV-USDT",
+    "Phemex": "?",
     "Binance": "?",
-    "Huobi": "CLV-USDT"
+    "Ftx": "CLV-PERP"
   },
   {
     "Name": "EGS",
-    "Phemex": "?",
     "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "EGS-USDT"
-  },
-  {
-    "Name": "XRP",
+    "Huobi": "EGS-USDT",
     "Phemex": "?",
-    "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "XRP-USDT"
-  },
-  {
-    "Name": "ENS",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "ENS-USDT"
+    "Ftx": "EGS-PERP"
   },
   {
     "Name": "BTT",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "BTT-USDT"
-  },
-  {
-    "Name": "LPT",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "LPT-USDT"
-  },
-  {
-    "Name": "CHR",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "CHR-USDT"
+    "Huobi": "BTT-USDT",
+    "Ftx": "BTT-PERP"
   },
   {
     "Name": "WAXP",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "WAXP-USDT"
-  },
-  {
-    "Name": "GALA",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "GALA-USDT"
-  },
-  {
-    "Name": "MASK",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "MASK-USDT"
-  },
-  {
-    "Name": "JASMY",
-    "Phemex": "?",
-    "Bitfinex": "?",
-    "Binance": "?",
-    "Huobi": "JASMY-USDT"
+    "Huobi": "WAXP-USDT",
+    "Ftx": "WAXP-PERP"
   },
   {
     "Name": "RNDR",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "RNDR-USDT"
+    "Huobi": "RNDR-USDT",
+    "Ftx": "RNDR-PERP"
   },
   {
     "Name": "MDX",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "MDX-USDT"
+    "Huobi": "MDX-USDT",
+    "Ftx": "MDX-PERP"
   },
   {
     "Name": "WIN",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "WIN-USDT"
+    "Huobi": "WIN-USDT",
+    "Ftx": "WIN-PERP"
   },
   {
     "Name": "TRIBE",
     "Phemex": "?",
     "Bitfinex": "?",
     "Binance": "?",
-    "Huobi": "TRIBE-USDT"
+    "Huobi": "TRIBE-USDT",
+    "Ftx": "TRIBE-PERP"
+  },
+  {
+    "Name": "IOTX",
+    "Phemex": "u100IOTXUSD",
+    "Huobi": "IOTX-USDT",
+    "Bitfinex": "tIOTXF0:USTF0",
+    "Binance": "IOTXUSDT",
+    "Ftx": "IOTX-PERP"
+  },
+  {
+    "Name": "XEM",
+    "Phemex": "u100XEMUSD",
+    "Huobi": "XEM-USDT",
+    "Bitfinex": "tXEMF0:USTF0",
+    "Binance": "XEMUSDT",
+    "Ftx": "XEM-PERP"
+  },
+  {
+    "Name": "REEF",
+    "Phemex": "u1000REEFUSD",
+    "Huobi": "REEF-USDT",
+    "Bitfinex": "tREEFF0:USTF0",
+    "Binance": "REEFUSDT",
+    "Ftx": "REEF-PERP"
+  },
+  {
+    "Name": "ARPA",
+    "Phemex": "u100ARPAUSD",
+    "Huobi": "ARPA-USDT",
+    "Bitfinex": "tARPAF0:USTF0",
+    "Binance": "ARPAUSDT",
+    "Ftx": "ARPA-PERP"
+  },
+  {
+    "Name": "RVN",
+    "Phemex": "u100RVNUSD",
+    "Huobi": "RVN-USDT",
+    "Bitfinex": "tRVNF0:USTF0",
+    "Binance": "RVNUSDT",
+    "Ftx": "RVN-PERP"
+  },
+  {
+    "Name": "ANKR",
+    "Phemex": "u100ANKRUSD",
+    "Huobi": "ANKR-USDT",
+    "Bitfinex": "tANKRF0:USTF0",
+    "Binance": "ANKRUSDT",
+    "Ftx": "ANKR-PERP"
+  },
+  {
+    "Name": "VET",
+    "Phemex": "u100VETUSD",
+    "Huobi": "VET-USDT",
+    "Bitfinex": "tVETF0:USTF0",
+    "Binance": "VETUSDT",
+    "Ftx": "VET-PERP"
+  },
+  {
+    "Name": "PEOPLE",
+    "Phemex": "u100PEOPLEUSD",
+    "Huobi": "PEOPLE-USDT",
+    "Bitfinex": "tPEOPLEF0:USTF0",
+    "Binance": "PEOPLEUSDT",
+    "Ftx": "PEOPLE-PERP"
+  },
+  {
+    "Name": "SLP",
+    "Phemex": "u100SLPUSD",
+    "Huobi": "SLP-USDT",
+    "Bitfinex": "tSLPF0:USTF0",
+    "Binance": "SLPUSDT",
+    "Ftx": "SLP-PERP"
+  },
+  {
+    "Name": "JASMY",
+    "Phemex": "u100JASMYUSD",
+    "Huobi": "JASMY-USDT",
+    "Bitfinex": "tJASMYF0:USTF0",
+    "Binance": "JASMYUSDT",
+    "Ftx": "JASMY-PERP"
+  },
+  {
+    "Name": "IOST",
+    "Phemex": "u100IOSTUSD",
+    "Huobi": "IOST-USDT",
+    "Bitfinex": "tIOSTF0:USTF0",
+    "Binance": "IOSTUSDT",
+    "Ftx": "IOST-PERP"
+  },
+  {
+    "Name": "ACH",
+    "Phemex": "u100ACHUSD",
+    "Huobi": "ACH-USDT",
+    "Bitfinex": "tACHF0:USTF0",
+    "Binance": "ACHUSDT",
+    "Ftx": "ACH-PERP"
+  },
+  {
+    "Name": "NFT",
+    "Phemex": "u100000NFTUSD",
+    "Huobi": "NFT-USDT",
+    "Bitfinex": "tNFTF0:USTF0",
+    "Binance": "NFTUSDT",
+    "Ftx": "NFT-PERP"
   }
 ]
- 
