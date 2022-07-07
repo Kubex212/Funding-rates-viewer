@@ -42,7 +42,6 @@ namespace Crypto.Utility
             }
             catch (FileNotFoundException ex)
             {
-                MessageBox.Show($"Nie ma pliku {ex.FileName}! {ex.Message}");
                 Logger.Log($"Nie ma pliku {ex.FileName}! {ex.Message}", Type.Error);
                 return false;
             }
