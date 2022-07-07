@@ -14,11 +14,14 @@ namespace Crypto.Utility
         private static List<Symbol> _symbols = new List<Symbol>();
         private static dynamic _arrayOfObjects;
         
+        // to do: use symbol provider XD
         private static bool Initialize()
         {
             try
             {
-                using (StreamReader r = new StreamReader("names.json"))
+                string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
+                //using (StreamReader r = new StreamReader("names.json"))
                 {
                     string json = r.ReadToEnd();
                     _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json);
@@ -27,6 +30,7 @@ namespace Crypto.Utility
             }
             catch (FileNotFoundException ex)
             {
+                MessageBox.Show($"Nie ma pliku {ex.FileName}! {ex.Message}");
                 Logger.Log($"Nie ma pliku {ex.FileName}! {ex.Message}", Type.Error);
                 return false;
             }
