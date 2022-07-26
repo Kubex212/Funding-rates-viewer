@@ -12,7 +12,7 @@ namespace Crypto.Objects
     public class Symbol
     {
         /// <summary>
-        /// Global name used througout the program and on the UI
+        /// Global name used throughout the program and on the UI
         /// </summary>
         public string? Name { get; set; }
         public string? Bitfinex { get; set; }
@@ -20,5 +20,7 @@ namespace Crypto.Objects
         public string? Phemex { get; set; }
         public string? Binance { get; set; }
         public string? Ftx { get; set; }
+        public string? Okx { get; set; }
+        public string? OkxUsd { get; set; }
     }
 }

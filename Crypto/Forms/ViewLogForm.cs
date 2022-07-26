@@ -23,7 +23,7 @@ namespace Crypto.Forms
                 richTextBox1.AppendText(log.msg);
                 richTextBox1.Select(length, log.msg.Length);
                 length += log.msg.Length;
-                if (log.type == Utility.Type.Warning) richTextBox1.SelectionColor = Color.Orange;
+                if (log.type == Utility.Type.Warning) richTextBox1.SelectionColor = Color.DarkOrange;
                 else if (log.type == Utility.Type.Error) richTextBox1.SelectionColor = Color.Red;
             }
             richTextBox1.Select(0,0);

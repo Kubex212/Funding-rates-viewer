@@ -37,10 +37,12 @@
             this.jakoRichTextBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabelkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.odświeżToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.wartościToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maksymalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.symboleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modyfikujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -54,7 +56,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(939, 453);
+            this.dataGridView1.Size = new System.Drawing.Size(1160, 453);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             // 
@@ -62,10 +64,11 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.konsolaToolStripMenuItem,
-            this.tabelkaToolStripMenuItem});
+            this.tabelkaToolStripMenuItem,
+            this.symboleToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(939, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1160, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -112,20 +115,9 @@
             // odświeżToolStripMenuItem
             // 
             this.odświeżToolStripMenuItem.Name = "odświeżToolStripMenuItem";
-            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.odświeżToolStripMenuItem.Text = "Odśwież";
             this.odświeżToolStripMenuItem.Click += new System.EventHandler(this.odświeżToolStripMenuItem_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(322, 155);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(289, 145);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
             // 
             // wartościToolStripMenuItem
             // 
@@ -133,28 +125,54 @@
             this.minimalnaToolStripMenuItem,
             this.maksymalnaToolStripMenuItem});
             this.wartościToolStripMenuItem.Name = "wartościToolStripMenuItem";
-            this.wartościToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wartościToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.wartościToolStripMenuItem.Text = "Wartości...";
             // 
             // minimalnaToolStripMenuItem
             // 
             this.minimalnaToolStripMenuItem.Name = "minimalnaToolStripMenuItem";
-            this.minimalnaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.minimalnaToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.minimalnaToolStripMenuItem.Text = "Minimalna";
             this.minimalnaToolStripMenuItem.Click += new System.EventHandler(this.minimalnaToolStripMenuItem_Click);
             // 
             // maksymalnaToolStripMenuItem
             // 
             this.maksymalnaToolStripMenuItem.Name = "maksymalnaToolStripMenuItem";
-            this.maksymalnaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.maksymalnaToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.maksymalnaToolStripMenuItem.Text = "Maksymalna";
             this.maksymalnaToolStripMenuItem.Click += new System.EventHandler(this.maksymalnaToolStripMenuItem_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(433, 160);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(289, 145);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // symboleToolStripMenuItem
+            // 
+            this.symboleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modyfikujToolStripMenuItem});
+            this.symboleToolStripMenuItem.Name = "symboleToolStripMenuItem";
+            this.symboleToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.symboleToolStripMenuItem.Text = "Symbole";
+            // 
+            // modyfikujToolStripMenuItem
+            // 
+            this.modyfikujToolStripMenuItem.Name = "modyfikujToolStripMenuItem";
+            this.modyfikujToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modyfikujToolStripMenuItem.Text = "Modyfikuj";
+            this.modyfikujToolStripMenuItem.Click += new System.EventHandler(this.modyfikujToolStripMenuItem_Click);
             // 
             // TableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 477);
+            this.ClientSize = new System.Drawing.Size(1160, 477);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
@@ -187,5 +205,7 @@
         private ToolStripMenuItem wartościToolStripMenuItem;
         private ToolStripMenuItem minimalnaToolStripMenuItem;
         private ToolStripMenuItem maksymalnaToolStripMenuItem;
+        private ToolStripMenuItem symboleToolStripMenuItem;
+        private ToolStripMenuItem modyfikujToolStripMenuItem;
     }
 }

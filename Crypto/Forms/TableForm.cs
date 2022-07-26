@@ -15,6 +15,7 @@ using Crypto.Clients.Phemex;
 using Crypto.Clients.Huobi;
 using Crypto.Clients.Binance;
 using Crypto.Clients.Ftx;
+using Crypto.Clients.Okx;
 
 namespace Crypto.Forms
 {
@@ -25,7 +26,9 @@ namespace Crypto.Forms
         private List<TableRow> _rows = new List<TableRow>();
         List<IClient> _clients;
 
-        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted" };
+        string[] _displayedColumnNames = { "Symbol", "Phemex funding", "Phemex predicted", "Bitfinex funding", "Bitfinex predicted", "Huobi funding", "Huobi predicted", "Binance funding", "FTX predicted", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
+        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
+
         int[] _clicks;
         (int ind, bool ascending) _sort;
         double _redMax;
@@ -42,7 +45,6 @@ namespace Crypto.Forms
             _names = SymbolProvider.GetSymbolNames();
 
             InitTable(_names);
-
         }
 
         private void DataToRows(List<TableData> data)
@@ -85,6 +87,18 @@ namespace Crypto.Forms
                             row.FtxPredicted = d.PredictedFunding;
                             break;
                         }
+                    case "Okx":
+                        {
+                            row.OkxFunding = d.FundingRate;
+                            row.OkxPredicted = d.PredictedFunding;
+                            break;
+                        }
+                    case "OkxUsd":
+                        {
+                            row.OkxUsdFunding = d.FundingRate;
+                            row.OkxUsdPredicted = d.PredictedFunding;
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException();
                 };
@@ -121,6 +135,21 @@ namespace Crypto.Forms
             dataGridView1.Columns["HuobiPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["BinanceFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["FtxPredicted"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["OkxFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["OkxPredicted"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["OkxUsdFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["OkxUsdPredicted"].DefaultCellStyle.Format = "0.0000%";
+
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkGray;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.EnableHeadersVisualStyles = false;
+
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                dataGridView1.Columns[i].Width = 80;
+                dataGridView1.Columns[i].HeaderText = _displayedColumnNames[i];
+            }
+
             dataGridView1.Update();
             dataGridView1.Refresh();
             SetColors();
@@ -205,6 +234,26 @@ namespace Crypto.Forms
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.FtxPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.FtxPredicted).ToList();
             }
+            else if (_sort.ind == 9)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxFunding).ToList();
+            }
+            else if (_sort.ind == 10)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxPredicted).ToList();
+            }
+            else if (_sort.ind == 11)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxUsdFunding).ToList();
+            }
+            else if (_sort.ind == 12)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxUsdPredicted).ToList();
+            }
         }
 
         private void MakeClients()
@@ -215,11 +264,15 @@ namespace Crypto.Forms
             HuobiClient.InitializeClient();
             BinanceClient.InitializeClient();
             FtxClient.InitializeClient();
+            OkxClient.InitializeClient();
+            OkxUsdClient.InitializeClient();
             _clients.Add(new BitfinexClient());
             _clients.Add(new PhemexClient());
             _clients.Add(new HuobiClient());
             _clients.Add(new BinanceClient());
             _clients.Add(new FtxClient());
+            _clients.Add(new OkxClient());
+            _clients.Add(new OkxUsdClient());
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -321,6 +374,12 @@ namespace Crypto.Forms
                 x++;
             }
             dataGridView1.CurrentCell = dataGridView1[row, column];
+        }
+
+        private void modyfikujToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var window = new EditSymbolsForm();
+            window.Show();
         }
     }
 }

@@ -17,5 +17,9 @@ namespace Crypto.Objects
         public float HuobiPredicted { get; set; } = -100;
         public float BinanceFunding { get; set; } = -100;
         public float FtxPredicted { get; set; } = -100;
+        public float OkxFunding { get; set; } = -100;
+        public float OkxPredicted { get; set; } = -100;
+        public float OkxUsdFunding { get; set; } = -100;
+        public float OkxUsdPredicted { get; set; } = -100;
     }
 }

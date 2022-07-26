@@ -111,6 +111,7 @@ namespace Crypto.Clients.Phemex
             List<TableData> result = new List<TableData>();
             foreach (var model in fundingModels)
             {
+                if (model == null) continue;
                 result.Add(new TableData(model.Symbol, model.FundingRate / 100000000f, Name, model.PredFundingRate / 100000000f));
             }
             return result;
