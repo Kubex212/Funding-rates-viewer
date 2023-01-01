@@ -9,9 +9,9 @@ namespace Crypto.Objects.Models.Phemex
     public class FundingModel
     {
         public string Symbol { get; set; }
-        public int FundingRate { get; set; }
-        public int PredFundingRate { get; set; }
-        public FundingModel(string symbol, int fundingRate, int predFundingRate)
+        public long FundingRate { get; set; }
+        public long PredFundingRate { get; set; }
+        public FundingModel(string symbol, long fundingRate, long predFundingRate)
         {
             Symbol = symbol;
             FundingRate = fundingRate;

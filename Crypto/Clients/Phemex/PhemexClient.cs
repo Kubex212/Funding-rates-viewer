@@ -73,7 +73,7 @@ namespace Crypto.Clients.Phemex
                 {
                     Logger.Log($"Symbol {s} nie działa ({Name}): {ex.Message}");
 
-                    FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -100, -100);
+                    FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -12345, 0);
                     res.Add(model);
 
                     return;
@@ -82,7 +82,7 @@ namespace Crypto.Clients.Phemex
                 {
                     Logger.Log($"Problem z symbolem {s}({Name}): {ex.Message}");
 
-                    FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -100, -100);
+                    FundingModel model = new FundingModel(NameTranslator.ClientToGlobalName(s, Name), -12345, 0);
                     res.Add(model);
 
                     return;
@@ -112,6 +112,7 @@ namespace Crypto.Clients.Phemex
             foreach (var model in fundingModels)
             {
                 if (model == null) continue;
+                if (model.FundingRate == -12345) result.Add(new TableData(model.Symbol, -100f, Name, -100f));
                 result.Add(new TableData(model.Symbol, model.FundingRate / 100000000f, Name, model.PredFundingRate / 100000000f));
             }
             return result;

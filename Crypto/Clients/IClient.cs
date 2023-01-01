@@ -20,7 +20,7 @@ namespace Crypto.Clients
             {
                 if (Utility.NameTranslator.GlobalToClientName(s, Name) == "?")
                 {
-                    result.Add(new TableData(s, -100f, Name, -100f));
+                    result.Add(new TableData(s, -99f, Name, -99f));
                 }
             }
             return result;

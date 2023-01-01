@@ -22,5 +22,73 @@ namespace Crypto.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color Color_low {
+            get {
+                return ((global::System.Drawing.Color)(this["Color_low"]));
+            }
+            set {
+                this["Color_low"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color Color_high {
+            get {
+                return ((global::System.Drawing.Color)(this["Color_high"]));
+            }
+            set {
+                this["Color_high"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color Color_empty {
+            get {
+                return ((global::System.Drawing.Color)(this["Color_empty"]));
+            }
+            set {
+                this["Color_empty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Drawing.Color Color_error {
+            get {
+                return ((global::System.Drawing.Color)(this["Color_error"]));
+            }
+            set {
+                this["Color_error"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double min_green {
+            get {
+                return ((double)(this["min_green"]));
+            }
+            set {
+                this["min_green"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double max_red {
+            get {
+                return ((double)(this["max_red"]));
+            }
+            set {
+                this["max_red"] = value;
+            }
+        }
     }
 }

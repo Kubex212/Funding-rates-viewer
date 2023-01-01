@@ -24,13 +24,15 @@ namespace Crypto.Forms
         private List<Symbol> _symbols;
         private List<string> _names;
         private List<TableRow> _rows = new List<TableRow>();
+        private List<TableData> _data = new List<TableData>();
         List<IClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Phemex funding", "Phemex predicted", "Bitfinex funding", "Bitfinex predicted", "Huobi funding", "Huobi predicted", "Binance funding", "FTX predicted", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
-        string[] _columnNames = { "Symbol", "PhemexFunding", "PhemexPredicted", "BitfinexFunding", "BitfinexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Huobi funding", "Huobi predicted", "Binance funding", "FTX predicted", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
+        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
 
         int[] _clicks;
-        (int ind, bool ascending) _sort;
+        int _workingCells;
+        (int ind, bool ascending) _sort = (-1, false);
         double _redMax;
         double _greenMin;
         public TableForm(int refresh, double redMax, double greenMin)
@@ -100,10 +102,51 @@ namespace Crypto.Forms
                             break;
                         }
                     default:
-                        throw new InvalidOperationException();
+                        throw new InvalidOperationException($"symbol of name {d.Name} was not found");
                 };
             }
-            Text = "Tabelka" + $" (załadowane symbole: {_symbols.Count})";
+        }
+
+        private List<TableData> RowsToData(List<TableRow> rows)
+        {
+            var result = new List<TableData>();
+            foreach(var r in rows)
+            {
+                //MessageBox.Show(r.Symbol);
+                string bitfinexName, phemexName, huobiName, binanceName, ftxName, okxName, okxUsdName;
+                try
+                {
+                    bitfinexName = NameTranslator.GlobalToClientName(r.Symbol, "Bitfinex");
+                    phemexName = NameTranslator.GlobalToClientName(r.Symbol, "Phemex");
+                    huobiName = NameTranslator.GlobalToClientName(r.Symbol, "Huobi");
+                    binanceName = NameTranslator.GlobalToClientName(r.Symbol, "Binance");
+                    ftxName = NameTranslator.GlobalToClientName(r.Symbol, "Ftx");
+                    okxName = NameTranslator.GlobalToClientName(r.Symbol, "Okx");
+                    okxUsdName = NameTranslator.GlobalToClientName(r.Symbol, "OkxUsd");
+                }
+                catch(ArgumentException ex)
+                {
+                    continue;
+                }
+                result.Add(new TableData(bitfinexName, r.BitfinexFunding, "Bitfinex", r.BitfinexPredicted));
+                result.Add(new TableData(phemexName, r.PhemexFunding, "Phemex", r.PhemexPredicted));
+                result.Add(new TableData(huobiName, r.HuobiFunding, "Huobi", r.HuobiPredicted));
+                result.Add(new TableData(binanceName, r.BinanceFunding, "Binance", -100));
+                result.Add(new TableData(ftxName, -100f, "Ftx", r.FtxPredicted));
+                result.Add(new TableData(okxName, r.OkxFunding, "Okx", r.OkxPredicted));
+                result.Add(new TableData(okxUsdName, r.OkxUsdFunding, "OkxUsd", r.OkxUsdPredicted));
+            }
+            DeleteBadRows();
+            return result;
+        }
+
+        private void DeleteBadRows()
+        {
+            for(int i=0; i<_rows.Count; i++)
+            {
+                var r = _rows[i];
+                if (r.BinanceFunding < -90f && r.BitfinexFunding < -90f && r.HuobiFunding < 90f && r.PhemexFunding < 90f && r.FtxPredicted < 90f && r.OkxFunding < 90f && r.OkxUsdFunding < 90f) _rows.Remove(r);
+            }
         }
 
         async void InitTable(List<string> symbols)
@@ -111,14 +154,14 @@ namespace Crypto.Forms
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Show();
             pictureBox1.Update();
-            List<TableData> data = new List<TableData>();
+            _data = new List<TableData>();
             MakeClients();
             foreach (var c in _clients)
             {
                 var dat = await c.GetTableDataAsync(symbols);
-                data.AddRange(dat);
+                _data.AddRange(dat);
             }
-            DataToRows(data);
+            DataToRows(_data);
 
             var bindingList = new BindingList<TableRow>(_rows);
             var source = new BindingSource(bindingList, null);
@@ -155,7 +198,7 @@ namespace Crypto.Forms
             SetColors();
         }
 
-        private void UpdateTable()
+        private void RefreshTable()
         {
             Sort();
             var bindingList = new BindingList<TableRow>(_rows);
@@ -169,6 +212,7 @@ namespace Crypto.Forms
 
         private void SetColors()
         {
+            _workingCells = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 foreach(var colName in _columnNames)
@@ -178,13 +222,34 @@ namespace Crypto.Forms
                     var val = c.Value;
                     if(val == null) continue;
                     DataGridViewCellStyle style = new DataGridViewCellStyle();
-                    if ((float)val == -100f) style.BackColor = Color.Black;
-                    else if ((float)val * 100 >= _greenMin) style.BackColor = Color.Green;
-                    else if ((float)val * 100 <= _redMax) style.BackColor = Color.Red;
-                    else style.BackColor = Color.White;
+                    if ((float)val == -100f)
+                    {
+                        style.BackColor = Color.DarkMagenta;
+                        style.ForeColor = Color.DarkMagenta;
+                    }
+                    else if ((float)val == -99f)
+                    {
+                        style.BackColor = Color.Black;
+                    }
+                    else if ((float)val * 100 >= _greenMin)
+                    {
+                        style.BackColor = Color.Green;
+                        _workingCells++;
+                    }
+                    else if ((float)val * 100 <= _redMax)
+                    {
+                        style.BackColor = Color.Red;
+                        _workingCells++;
+                    }
+                    else
+                    {
+                        style.BackColor = Color.White;
+                        _workingCells++;
+                    }
                     c.Style = style;
                 }
             }
+            Text = "Tabelka" + $" (załadowane symbole: {_symbols.Count}, działające komórki: {_workingCells})";
         }
 
         private void Sort()
@@ -275,21 +340,26 @@ namespace Crypto.Forms
             _clients.Add(new OkxUsdClient());
         }
 
+        private async Task UpdateData()
+        {
+            _data = new List<TableData>();
+            foreach (var c in _clients)
+            {
+                _data.AddRange(await c.GetTableDataAsync(SymbolProvider.GetSymbolNames()));
+            }
+            DataToRows(_data);
+        }
+
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _sort = (e.ColumnIndex, _sort.ascending ? false : true);
-            UpdateTable();
+            RefreshTable();
         }
 
         private async void odświeżToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<TableData> data = new List<TableData>();
-            foreach (var c in _clients)
-            {
-                data.AddRange(await c.GetTableDataAsync(_names));
-            }
-            DataToRows(data);
-            UpdateTable();
+            await UpdateData();
+            RefreshTable();
         }
 
         private void jakoMessageBoxToolStripMenuItem_Click(object sender, EventArgs e)
@@ -324,7 +394,7 @@ namespace Crypto.Forms
                     }
                     var c = row.Cells[colName];
                     var val = c.Value;
-                    if (val == null || (float)val == -100f)
+                    if (val == null || (float)val <= -99f)
                     {
                         y++;
                         continue;
@@ -358,7 +428,7 @@ namespace Crypto.Forms
                     }
                     var c = r.Cells[colName];
                     var val = c.Value;
-                    if (val == null || (float)val == -100f)
+                    if (val == null || (float)val <= -99f)
                     {
                         y++;
                         continue;
@@ -378,8 +448,8 @@ namespace Crypto.Forms
 
         private void modyfikujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var window = new EditSymbolsForm();
-            window.Show();
+            var window = new ViewSymbolsForm(RowsToData(_rows));
+            window.ShowDialog();
         }
     }
 }

@@ -48,7 +48,8 @@ namespace Crypto.Utility
                 if (s["Name"] == symbol) return s[clientName];
             }
             Logger.Log($"W pliku .json symbol {symbol} nie istnieje!", Utility.Type.Warning);
-            throw new InvalidOperationException();
+            throw new ArgumentException();
+            return "";
         }
 
         /// <summary>

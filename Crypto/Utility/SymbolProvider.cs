@@ -27,11 +27,34 @@ namespace Crypto.Utility
             return _symbolNames;
         }
 
+        public static bool SaveToFile()
+        {
+            if (!_initialized)
+                if (!Initialize()) throw new InvalidOperationException();
+            //string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+            //using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
+            try
+            {
+                using (StreamWriter w = new StreamWriter("names.json"))
+                {
+                    string json = JsonConvert.SerializeObject(_symbols);
+                    w.Write(json);
+                    w.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.Log("Zapisywanie do pliku nie powiodło się!!! " + ex.Message, Type.Error);
+            }
+            _initialized = false;
+            return true;
+        }
+
         private static bool Initialize()
         {
             try
             {
-                string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+                //string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
                 //using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
                 using (StreamReader r = new StreamReader("names.json"))
                 {
