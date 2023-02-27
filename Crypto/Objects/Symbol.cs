@@ -17,6 +17,7 @@ namespace Crypto.Objects
         public string? Name { get; set; }
         public string? Bitfinex { get; set; }
         public string? Phemex { get; set; }
+        public string? PhemexUsdt { get; set; }
         public string? Huobi { get; set; }
         public string? Binance { get; set; }
         public string? Ftx { get; set; }

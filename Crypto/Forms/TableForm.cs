@@ -27,8 +27,8 @@ namespace Crypto.Forms
         private List<TableData> _data = new List<TableData>();
         List<IClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Huobi funding", "Huobi predicted", "Binance funding", "FTX predicted", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
-        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "FtxPredicted", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Phemex USDT funding", "Phemex USDT predicted", "Huobi funding", "Huobi predicted", "Binance funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
+        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "PhemexUsdtFunding", "PhemexUsdtPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
 
         int[] _clicks;
         int _workingCells;
@@ -73,6 +73,12 @@ namespace Crypto.Forms
                             row.PhemexPredicted = d.PredictedFunding;
                             break;
                         }
+                    case "PhemexUsdt":
+                        {
+                            row.PhemexUsdtFunding = d.FundingRate;
+                            row.PhemexUsdtPredicted = d.PredictedFunding;
+                            break;
+                        }
                     case "Huobi":
                         {
                             row.HuobiFunding = d.FundingRate;
@@ -82,11 +88,6 @@ namespace Crypto.Forms
                     case "Binance":
                         {
                             row.BinanceFunding = d.FundingRate;
-                            break;
-                        }
-                    case "Ftx":
-                        {
-                            row.FtxPredicted = d.PredictedFunding;
                             break;
                         }
                     case "Okx":
@@ -113,14 +114,13 @@ namespace Crypto.Forms
             foreach(var r in rows)
             {
                 //MessageBox.Show(r.Symbol);
-                string bitfinexName, phemexName, huobiName, binanceName, ftxName, okxName, okxUsdName;
+                string bitfinexName, phemexName, huobiName, binanceName, okxName, okxUsdName;
                 try
                 {
                     bitfinexName = NameTranslator.GlobalToClientName(r.Symbol, "Bitfinex");
                     phemexName = NameTranslator.GlobalToClientName(r.Symbol, "Phemex");
                     huobiName = NameTranslator.GlobalToClientName(r.Symbol, "Huobi");
                     binanceName = NameTranslator.GlobalToClientName(r.Symbol, "Binance");
-                    ftxName = NameTranslator.GlobalToClientName(r.Symbol, "Ftx");
                     okxName = NameTranslator.GlobalToClientName(r.Symbol, "Okx");
                     okxUsdName = NameTranslator.GlobalToClientName(r.Symbol, "OkxUsd");
                 }
@@ -132,7 +132,6 @@ namespace Crypto.Forms
                 result.Add(new TableData(phemexName, r.PhemexFunding, "Phemex", r.PhemexPredicted));
                 result.Add(new TableData(huobiName, r.HuobiFunding, "Huobi", r.HuobiPredicted));
                 result.Add(new TableData(binanceName, r.BinanceFunding, "Binance", -100));
-                result.Add(new TableData(ftxName, -100f, "Ftx", r.FtxPredicted));
                 result.Add(new TableData(okxName, r.OkxFunding, "Okx", r.OkxPredicted));
                 result.Add(new TableData(okxUsdName, r.OkxUsdFunding, "OkxUsd", r.OkxUsdPredicted));
             }
@@ -145,7 +144,7 @@ namespace Crypto.Forms
             for(int i=0; i<_rows.Count; i++)
             {
                 var r = _rows[i];
-                if (r.BinanceFunding < -90f && r.BitfinexFunding < -90f && r.HuobiFunding < 90f && r.PhemexFunding < 90f && r.FtxPredicted < 90f && r.OkxFunding < 90f && r.OkxUsdFunding < 90f) _rows.Remove(r);
+                if (r.BinanceFunding < -90f && r.BitfinexFunding < -90f && r.HuobiFunding < 90f && r.PhemexFunding < 90f && r.OkxFunding < 90f && r.OkxUsdFunding < 90f) _rows.Remove(r);
             }
         }
 
@@ -174,10 +173,11 @@ namespace Crypto.Forms
             dataGridView1.Columns["BitfinexPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["PhemexFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["PhemexPredicted"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["PhemexUsdtFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["PhemexUsdtPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["BinanceFunding"].DefaultCellStyle.Format = "0.0000%";
-            dataGridView1.Columns["FtxPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxUsdFunding"].DefaultCellStyle.Format = "0.0000%";
@@ -261,60 +261,65 @@ namespace Crypto.Forms
             }
             else if (_sort.ind == 1)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexFunding).ToList();
-                else _rows = _rows.OrderByDescending(r => r.PhemexFunding).ToList();
-            }
-            else if (_sort.ind == 2)
-            {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexPredicted).ToList();
-                else _rows = _rows.OrderByDescending(r => r.PhemexPredicted).ToList();
-            }
-            else if (_sort.ind == 3)
-            {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BitfinexFunding).ToList();
             }
-            else if (_sort.ind == 4)
+            else if (_sort.ind == 2)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BitfinexPredicted).ToList();
             }
+            else if (_sort.ind == 3)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.PhemexFunding).ToList();
+            }
+            else if (_sort.ind == 4)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.PhemexPredicted).ToList();
+            }
             else if (_sort.ind == 5)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexUsdtFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.PhemexUsdtFunding).ToList();
+            }
+            else if (_sort.ind == 6)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexUsdtPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.PhemexUsdtPredicted).ToList();
+            }
+            else if (_sort.ind == 7)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiFunding).ToList();
             }
-            else if (_sort.ind == 6)
+            else if (_sort.ind == 8)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiPredicted).ToList();
             }
-            else if (_sort.ind == 7)
+            else if (_sort.ind == 9)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BinanceFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BinanceFunding).ToList();
             }
-            else if (_sort.ind == 8)
-            {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.FtxPredicted).ToList();
-                else _rows = _rows.OrderByDescending(r => r.FtxPredicted).ToList();
-            }
-            else if (_sort.ind == 9)
+            else if (_sort.ind == 10)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.OkxFunding).ToList();
             }
-            else if (_sort.ind == 10)
+            else if (_sort.ind == 11)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.OkxPredicted).ToList();
             }
-            else if (_sort.ind == 11)
+            else if (_sort.ind == 12)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.OkxUsdFunding).ToList();
             }
-            else if (_sort.ind == 12)
+            else if (_sort.ind == 13)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.OkxUsdPredicted).ToList();
@@ -326,16 +331,18 @@ namespace Crypto.Forms
             _clients = new List<IClient>();
             BitfinexClient.InitializeClient();
             PhemexClient.InitializeClient();
+            PhemexV2Client.InitializeClient();
             HuobiClient.InitializeClient();
             BinanceClient.InitializeClient();
-            FtxClient.InitializeClient();
+            //FtxClient.InitializeClient();
             OkxClient.InitializeClient();
             OkxUsdClient.InitializeClient();
             _clients.Add(new BitfinexClient());
             _clients.Add(new PhemexClient());
+            _clients.Add(new PhemexV2Client());
             _clients.Add(new HuobiClient());
             _clients.Add(new BinanceClient());
-            _clients.Add(new FtxClient());
+            //_clients.Add(new FtxClient());
             _clients.Add(new OkxClient());
             _clients.Add(new OkxUsdClient());
         }

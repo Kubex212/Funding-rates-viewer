@@ -18,4 +18,17 @@ namespace Crypto.Objects.Models.Phemex
             PredFundingRate = predFundingRate;
         }
     }
+
+    public class FundingModelV2
+    {
+        public string Symbol { get; set; }
+        public float FundingRate { get; set; }
+        public float PredFundingRate { get; set; }
+        public FundingModelV2(string symbol, float fundingRate, float predFundingRate)
+        {
+            Symbol = symbol;
+            FundingRate = fundingRate;
+            PredFundingRate = predFundingRate;
+        }
+    }
 }
