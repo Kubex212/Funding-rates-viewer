@@ -6,6 +6,7 @@ using Crypto.Objects.Models.Phemex;
 using Crypto.Clients;
 using Crypto.Objects;
 using Crypto.Utility;
+using System.Configuration;
 
 namespace Crypto
 {
@@ -14,29 +15,32 @@ namespace Crypto
         public Form1()
         {
             InitializeComponent();
+
+            numericUpDown2.Value = (decimal)Properties.Settings.Default.min_green;
+            numericUpDown3.Value = (decimal)Properties.Settings.Default.max_red;
+
+            if (Properties.Settings.Default.Color_high == Color.White)
+                Properties.Settings.Default.Color_high = Color.Green;
+
+            if (Properties.Settings.Default.Color_low == Color.White)
+                Properties.Settings.Default.Color_low = Color.Red;
+
+            if (Properties.Settings.Default.Color_error == Color.White)
+                Properties.Settings.Default.Color_error = Color.Black;
+
+            if (Properties.Settings.Default.Color_empty == Color.White)
+                Properties.Settings.Default.Color_empty = Color.DarkMagenta;
+            Properties.Settings.Default.Save();
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
             var tableForm = new TableForm((int)numericUpDown1.Value, (double)numericUpDown3.Value, (double)numericUpDown2.Value);
             tableForm.Show();
+            Properties.Settings.Default.min_green = (double)numericUpDown2.Value;
+            Properties.Settings.Default.max_red = (double)numericUpDown3.Value;
+            Properties.Settings.Default.Save();
             Hide();
-        }
-
-        private List<string> FetchSymbols()
-        {
-            List<string> symbols = new List<string>();
-            //            foreach(var cb in groupBox1.Controls.OfType<CheckBox>())
-            //{
-            //                if (cb.Checked)
-            //                {
-            //                    symbols.Add("t"+cb.Text);
-            //                }
-            //            }
-            symbols.Add("BTC");
-            //symbols.Add("XRP");
-            symbols.Add("ETH");
-            return symbols;
         }
 
         private void button2_Click(object sender, EventArgs e)

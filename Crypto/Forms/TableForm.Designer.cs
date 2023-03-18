@@ -40,9 +40,16 @@
             this.wartościToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maksymalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.symboleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modyfikujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dodajSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ustawieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kolorPowyżejToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kolorPoniżejToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kolorBłęduToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pobierzSymboleZBinanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -56,7 +63,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(1160, 453);
+            this.dataGridView1.Size = new System.Drawing.Size(1492, 453);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             // 
@@ -65,10 +72,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.konsolaToolStripMenuItem,
             this.tabelkaToolStripMenuItem,
-            this.symboleToolStripMenuItem});
+            this.symboleToolStripMenuItem,
+            this.ustawieniaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1160, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1492, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -142,21 +150,12 @@
             this.maksymalnaToolStripMenuItem.Text = "Maksymalna";
             this.maksymalnaToolStripMenuItem.Click += new System.EventHandler(this.maksymalnaToolStripMenuItem_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(433, 160);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(289, 145);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
-            // 
             // symboleToolStripMenuItem
             // 
             this.symboleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.modyfikujToolStripMenuItem});
+            this.modyfikujToolStripMenuItem,
+            this.dodajSymbolToolStripMenuItem,
+            this.pobierzSymboleZBinanceToolStripMenuItem});
             this.symboleToolStripMenuItem.Name = "symboleToolStripMenuItem";
             this.symboleToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.symboleToolStripMenuItem.Text = "Symbole";
@@ -164,15 +163,81 @@
             // modyfikujToolStripMenuItem
             // 
             this.modyfikujToolStripMenuItem.Name = "modyfikujToolStripMenuItem";
-            this.modyfikujToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modyfikujToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.modyfikujToolStripMenuItem.Text = "Modyfikuj";
             this.modyfikujToolStripMenuItem.Click += new System.EventHandler(this.modyfikujToolStripMenuItem_Click);
+            // 
+            // dodajSymbolToolStripMenuItem
+            // 
+            this.dodajSymbolToolStripMenuItem.Name = "dodajSymbolToolStripMenuItem";
+            this.dodajSymbolToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.dodajSymbolToolStripMenuItem.Text = "Dodaj symbol";
+            this.dodajSymbolToolStripMenuItem.Click += new System.EventHandler(this.dodajSymbolToolStripMenuItem_Click);
+            // 
+            // ustawieniaToolStripMenuItem
+            // 
+            this.ustawieniaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.kolorPowyżejToolStripMenuItem,
+            this.kolorPoniżejToolStripMenuItem,
+            this.kolorBłęduToolStripMenuItem,
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem});
+            this.ustawieniaToolStripMenuItem.Name = "ustawieniaToolStripMenuItem";
+            this.ustawieniaToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.ustawieniaToolStripMenuItem.Text = "Ustawienia";
+            // 
+            // kolorPowyżejToolStripMenuItem
+            // 
+            this.kolorPowyżejToolStripMenuItem.Name = "kolorPowyżejToolStripMenuItem";
+            this.kolorPowyżejToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.kolorPowyżejToolStripMenuItem.Text = "Kolor powyżej";
+            this.kolorPowyżejToolStripMenuItem.Click += new System.EventHandler(this.kolorPowyżejToolStripMenuItem_Click);
+            // 
+            // kolorPoniżejToolStripMenuItem
+            // 
+            this.kolorPoniżejToolStripMenuItem.Name = "kolorPoniżejToolStripMenuItem";
+            this.kolorPoniżejToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.kolorPoniżejToolStripMenuItem.Text = "Kolor poniżej";
+            this.kolorPoniżejToolStripMenuItem.Click += new System.EventHandler(this.kolorPoniżejToolStripMenuItem_Click);
+            // 
+            // kolorBłęduToolStripMenuItem
+            // 
+            this.kolorBłęduToolStripMenuItem.Name = "kolorBłęduToolStripMenuItem";
+            this.kolorBłęduToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.kolorBłęduToolStripMenuItem.Text = "Kolor błędu";
+            this.kolorBłęduToolStripMenuItem.Click += new System.EventHandler(this.kolorBłęduToolStripMenuItem_Click);
+            // 
+            // kolorNieobsługiwanegoSymboluToolStripMenuItem
+            // 
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Name = "kolorNieobsługiwanegoSymboluToolStripMenuItem";
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Text = "Kolor nieobsługiwanego symbolu";
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Click += new System.EventHandler(this.kolorNieobsługiwanegoSymboluToolStripMenuItem_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1492, 453);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // pobierzSymboleZBinanceToolStripMenuItem
+            // 
+            this.pobierzSymboleZBinanceToolStripMenuItem.Name = "pobierzSymboleZBinanceToolStripMenuItem";
+            this.pobierzSymboleZBinanceToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.pobierzSymboleZBinanceToolStripMenuItem.Text = "Pobierz symbole z Binance";
+            this.pobierzSymboleZBinanceToolStripMenuItem.Click += new System.EventHandler(this.pobierzSymboleZBinanceToolStripMenuItem_Click);
             // 
             // TableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1160, 477);
+            this.ClientSize = new System.Drawing.Size(1492, 477);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
@@ -207,5 +272,12 @@
         private ToolStripMenuItem maksymalnaToolStripMenuItem;
         private ToolStripMenuItem symboleToolStripMenuItem;
         private ToolStripMenuItem modyfikujToolStripMenuItem;
+        private ToolStripMenuItem ustawieniaToolStripMenuItem;
+        private ToolStripMenuItem kolorPowyżejToolStripMenuItem;
+        private ToolStripMenuItem kolorPoniżejToolStripMenuItem;
+        private ToolStripMenuItem kolorBłęduToolStripMenuItem;
+        private ToolStripMenuItem kolorNieobsługiwanegoSymboluToolStripMenuItem;
+        private ToolStripMenuItem dodajSymbolToolStripMenuItem;
+        private ToolStripMenuItem pobierzSymboleZBinanceToolStripMenuItem;
     }
 }

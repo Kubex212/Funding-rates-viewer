@@ -50,6 +50,43 @@ namespace Crypto.Utility
             return true;
         }
 
+        public static void AddSymbols(params Symbol[] symbol)
+        {
+            _symbols.AddRange(symbol);
+            SaveToFile();
+            Invalidate();
+            NameTranslator.Invalidate();
+        }
+
+        public static void AddSymbols(params string[] names)
+        {
+            var symbols = names.Select(n =>
+                new Symbol()
+                {
+                    Name = n,
+                    Bitfinex = $"t{n}F0:USTF0",
+                    Phemex = $"{n}USD",
+                    PhemexUsdt = $"{n}USDT",
+                    Huobi = $"{n}-USDT",
+                    Binance = $"{n}USDT",
+                    Okx = $"{n}-USD-SWAP",
+                    OkxUsd = $"{n}-USDT-SWAP",
+                    ByBitInverse= $"{n}USDT",
+                    ByBitLinear = $"{n}USD",
+                    ByBitPerp = $"{n}PERP",
+                    Ftx = "to delete"
+                }
+            );
+            SaveToFile();
+            Invalidate();
+            NameTranslator.Invalidate();
+        }
+
+        public static void Invalidate()
+        {
+            _initialized = false;
+        }
+
         private static bool Initialize()
         {
             try
@@ -59,8 +96,8 @@ namespace Crypto.Utility
                 using (StreamReader r = new StreamReader("names.json"))
                 {
                     string json = r.ReadToEnd();
-                    _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json);
-                    foreach (var symbol in _symbols) _symbolNames.Add(symbol.Name);
+                    _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json)!;
+                    _symbolNames = _symbols.Select(x => x.Name).ToList()!;
                 }
             }
             catch (FileNotFoundException ex)

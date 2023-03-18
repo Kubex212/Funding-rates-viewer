@@ -21,8 +21,8 @@ namespace Crypto.Utility
                 using (StreamReader r = new StreamReader("names.json"))
                 {
                     string json = r.ReadToEnd();
-                    _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json);
-                    _arrayOfObjects = JsonConvert.DeserializeObject(json);
+                    _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json)!;
+                    _arrayOfObjects = JsonConvert.DeserializeObject(json)!;
                 }
             }
             catch (FileNotFoundException ex)
@@ -49,7 +49,6 @@ namespace Crypto.Utility
             }
             Logger.Log($"W pliku .json symbol {symbol} nie istnieje!", Utility.Type.Warning);
             throw new ArgumentException();
-            return "";
         }
 
         /// <summary>
@@ -99,6 +98,11 @@ namespace Crypto.Utility
                 if (s[clientName] == symbol) return s.Name;
             }
             throw new InvalidOperationException($"Giełda {clientName} zwróciła symbol {symbol}, jednak w pliku .json nie ma jego odpowiednika. Zostanie on pominięty w tabeli.");
+        }
+
+        public static void Invalidate()
+        {
+            _initialized = false;
         }
     }
 }

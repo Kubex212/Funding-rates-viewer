@@ -22,5 +22,8 @@ namespace Crypto.Objects
         public float OkxPredicted { get; set; } = -100;
         public float OkxUsdFunding { get; set; } = -100;
         public float OkxUsdPredicted { get; set; } = -100;
+        public float ByBitLinearFunding { get; set; } = -100;
+        public float ByBitInverseFunding { get; set; } = -100;
+        public float ByBitPerpFunding { get; set; } = -100;
     }
 }

@@ -25,12 +25,12 @@ namespace Crypto.Forms
         private List<string> _names;
         private List<TableRow> _rows = new List<TableRow>();
         private List<TableData> _data = new List<TableData>();
+
         List<IClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Phemex USDT funding", "Phemex USDT predicted", "Huobi funding", "Huobi predicted", "Binance funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted" };
-        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "PhemexUsdtFunding", "PhemexUsdtPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Phemex USDT funding", "Phemex USDT predicted", "Huobi funding", "Huobi predicted", "Binance funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit Perp funding" };
+        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "PhemexUsdtFunding", "PhemexUsdtPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding" };
 
-        int[] _clicks;
         int _workingCells;
         (int ind, bool ascending) _sort = (-1, false);
         double _redMax;
@@ -39,7 +39,6 @@ namespace Crypto.Forms
         {
             InitializeComponent();
 
-            _clicks = new int[4];
             _redMax = redMax;
             _greenMin = greenMin;
 
@@ -102,6 +101,21 @@ namespace Crypto.Forms
                             row.OkxUsdPredicted = d.PredictedFunding;
                             break;
                         }
+                    case "ByBitLinear":
+                        {
+                            row.ByBitLinearFunding = d.FundingRate;
+                            break;
+                        }
+                    case "ByBitInverse":
+                        {
+                            row.ByBitInverseFunding = d.FundingRate;
+                            break;
+                        }
+                    case "ByBitPerp":
+                        {
+                            row.ByBitPerpFunding = d.FundingRate;
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException($"symbol of name {d.Name} was not found");
                 };
@@ -113,8 +127,7 @@ namespace Crypto.Forms
             var result = new List<TableData>();
             foreach(var r in rows)
             {
-                //MessageBox.Show(r.Symbol);
-                string bitfinexName, phemexName, huobiName, binanceName, okxName, okxUsdName;
+                string bitfinexName, phemexName, huobiName, binanceName, okxName, okxUsdName, byBitLinearName, byBitInverseName, byBitPerpName;
                 try
                 {
                     bitfinexName = NameTranslator.GlobalToClientName(r.Symbol, "Bitfinex");
@@ -123,8 +136,11 @@ namespace Crypto.Forms
                     binanceName = NameTranslator.GlobalToClientName(r.Symbol, "Binance");
                     okxName = NameTranslator.GlobalToClientName(r.Symbol, "Okx");
                     okxUsdName = NameTranslator.GlobalToClientName(r.Symbol, "OkxUsd");
+                    byBitLinearName = NameTranslator.GlobalToClientName(r.Symbol, "ByBitLinear");
+                    byBitInverseName = NameTranslator.GlobalToClientName(r.Symbol, "ByBitInverse");
+                    byBitPerpName = NameTranslator.GlobalToClientName(r.Symbol, "ByBitPerp");
                 }
-                catch(ArgumentException ex)
+                catch(ArgumentException)
                 {
                     continue;
                 }
@@ -134,6 +150,9 @@ namespace Crypto.Forms
                 result.Add(new TableData(binanceName, r.BinanceFunding, "Binance", -100));
                 result.Add(new TableData(okxName, r.OkxFunding, "Okx", r.OkxPredicted));
                 result.Add(new TableData(okxUsdName, r.OkxUsdFunding, "OkxUsd", r.OkxUsdPredicted));
+                result.Add(new TableData(byBitLinearName, r.ByBitLinearFunding, "ByBitLinear", r.ByBitLinearFunding));
+                result.Add(new TableData(byBitInverseName, r.ByBitInverseFunding, "ByBitInverse", r.ByBitInverseFunding));
+                result.Add(new TableData(byBitPerpName, r.ByBitPerpFunding, "ByBitPerp", r.ByBitPerpFunding));
             }
             DeleteBadRows();
             return result;
@@ -182,6 +201,9 @@ namespace Crypto.Forms
             dataGridView1.Columns["OkxPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxUsdFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxUsdPredicted"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["ByBitLinearFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["ByBitInverseFunding"].DefaultCellStyle.Format = "0.0000%";
+            dataGridView1.Columns["ByBitPerpFunding"].DefaultCellStyle.Format = "0.0000%";
 
             dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkGray;
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
@@ -224,21 +246,22 @@ namespace Crypto.Forms
                     DataGridViewCellStyle style = new DataGridViewCellStyle();
                     if ((float)val == -100f)
                     {
-                        style.BackColor = Color.DarkMagenta;
-                        style.ForeColor = Color.DarkMagenta;
+                        style.BackColor = Properties.Settings.Default.Color_error;
+                        style.ForeColor = Properties.Settings.Default.Color_error;
                     }
                     else if ((float)val == -99f)
                     {
-                        style.BackColor = Color.Black;
+                        style.BackColor = Properties.Settings.Default.Color_empty;
+                        style.ForeColor = Properties.Settings.Default.Color_empty;
                     }
                     else if ((float)val * 100 >= _greenMin)
                     {
-                        style.BackColor = Color.Green;
+                        style.BackColor = Properties.Settings.Default.Color_high;
                         _workingCells++;
                     }
                     else if ((float)val * 100 <= _redMax)
                     {
-                        style.BackColor = Color.Red;
+                        style.BackColor = Properties.Settings.Default.Color_low;
                         _workingCells++;
                     }
                     else
@@ -324,6 +347,21 @@ namespace Crypto.Forms
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.OkxUsdPredicted).ToList();
             }
+            else if (_sort.ind == 14)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitLinearFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.ByBitLinearFunding).ToList();
+            }
+            else if (_sort.ind == 15)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitInverseFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.ByBitInverseFunding).ToList();
+            }
+            else if (_sort.ind == 16)
+            {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitPerpFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.ByBitPerpFunding).ToList();
+            }
         }
 
         private void MakeClients()
@@ -337,6 +375,7 @@ namespace Crypto.Forms
             //FtxClient.InitializeClient();
             OkxClient.InitializeClient();
             OkxUsdClient.InitializeClient();
+            BaseByBitClient.InitializeClient();
             _clients.Add(new BitfinexClient());
             _clients.Add(new PhemexClient());
             _clients.Add(new PhemexV2Client());
@@ -345,6 +384,9 @@ namespace Crypto.Forms
             //_clients.Add(new FtxClient());
             _clients.Add(new OkxClient());
             _clients.Add(new OkxUsdClient());
+            _clients.Add(new ByBitLinearClient());
+            _clients.Add(new ByBitInverseClient());
+            _clients.Add(new ByBitPerpClient());
         }
 
         private async Task UpdateData()
@@ -457,6 +499,67 @@ namespace Crypto.Forms
         {
             var window = new ViewSymbolsForm(RowsToData(_rows));
             window.ShowDialog();
+        }
+
+        private void kolorPowyżejToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = true;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = Properties.Settings.Default.Color_high;
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                Properties.Settings.Default.Color_high = colorDialog.Color;
+            Properties.Settings.Default.Save();
+        }
+
+        private void kolorPoniżejToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = true;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = Properties.Settings.Default.Color_low;
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                Properties.Settings.Default.Color_low = colorDialog.Color;
+            Properties.Settings.Default.Save();
+        }
+
+        private void kolorBłęduToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = true;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = Properties.Settings.Default.Color_error;
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                Properties.Settings.Default.Color_error = colorDialog.Color;
+            Properties.Settings.Default.Save();
+        }
+
+        private void kolorNieobsługiwanegoSymboluToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var colorDialog = new ColorDialog();
+            colorDialog.AllowFullOpen = false;
+            colorDialog.ShowHelp = true;
+            colorDialog.Color = Properties.Settings.Default.Color_empty;
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                Properties.Settings.Default.Color_empty = colorDialog.Color;
+            Properties.Settings.Default.Save();
+        }
+
+        private void dodajSymbolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var window = new AddSymbolForm();
+            window.ShowDialog();
+        }
+
+        private void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var names = BinanceClient.GetSymbolNames().Result;
+
+            Utility.SymbolProvider.AddSymbols(names.Where(n => !_names.Contains(n)).ToArray());
         }
     }
 }

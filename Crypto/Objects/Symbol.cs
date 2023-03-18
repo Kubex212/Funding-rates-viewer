@@ -24,6 +24,10 @@ namespace Crypto.Objects
         public string? Okx { get; set; }
         public string? OkxUsd { get; set; }
 
+        public string? ByBitLinear { get; set; }
+        public string? ByBitInverse { get; set; }
+        public string? ByBitPerp { get; set; }
+
         public object Clone()
         {
             return MemberwiseClone();
@@ -31,7 +35,17 @@ namespace Crypto.Objects
 
         public bool Equals(Symbol? other)
         {
-            return (Name == other?.Name && Bitfinex == other?.Bitfinex && Phemex == other?.Phemex && Binance == other?.Binance && Ftx == other?.Ftx && Okx == other?.Okx && OkxUsd == other?.OkxUsd && Huobi == other?.Huobi);
+            return (Name == other?.Name &&
+                Bitfinex == other?.Bitfinex &&
+                Phemex == other?.Phemex &&
+                Binance == other?.Binance &&
+                Ftx == other?.Ftx &&
+                Okx == other?.Okx &&
+                OkxUsd == other?.OkxUsd &&
+                Huobi == other?.Huobi && 
+                ByBitLinear == other?.ByBitLinear &&
+                ByBitInverse == other?.ByBitInverse &&
+                ByBitPerp == other?.ByBitPerp);
         }
     }
 }

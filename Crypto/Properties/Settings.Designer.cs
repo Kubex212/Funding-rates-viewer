@@ -25,6 +25,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("OrangeRed")]
         public global::System.Drawing.Color Color_low {
             get {
                 return ((global::System.Drawing.Color)(this["Color_low"]));
@@ -36,6 +37,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LimeGreen")]
         public global::System.Drawing.Color Color_high {
             get {
                 return ((global::System.Drawing.Color)(this["Color_high"]));
@@ -47,6 +49,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 192")]
         public global::System.Drawing.Color Color_empty {
             get {
                 return ((global::System.Drawing.Color)(this["Color_empty"]));
@@ -58,6 +61,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
         public global::System.Drawing.Color Color_error {
             get {
                 return ((global::System.Drawing.Color)(this["Color_error"]));
@@ -69,7 +73,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.015")]
         public double min_green {
             get {
                 return ((double)(this["min_green"]));
@@ -81,7 +85,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-0.005")]
         public double max_red {
             get {
                 return ((double)(this["max_red"]));

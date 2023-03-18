@@ -66,5 +66,23 @@ namespace Crypto.Clients.Binance
             return result;
         }
 
+        public static async Task<List<string>> GetSymbolNames()
+        {
+            var result = new List<string>();
+
+            string url = BaseUrl + "fapi/v1/ticker/bookTicker";
+            using (HttpResponseMessage response = await Client.GetAsync(url))
+            {
+                string data = await response.Content.ReadAsStringAsync();
+                dynamic obj = JsonConvert.DeserializeObject(data)!;
+                foreach (var item in obj)
+                {
+                    result.Add(((string)item.symbol).Replace("USDT", ""));
+                }
+            }
+
+            return result;
+        }
+
     }
 }

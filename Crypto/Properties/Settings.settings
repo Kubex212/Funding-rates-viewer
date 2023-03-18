@@ -3,22 +3,22 @@
   <Profiles />
   <Settings>
     <Setting Name="Color_low" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">OrangeRed</Value>
     </Setting>
     <Setting Name="Color_high" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">LimeGreen</Value>
     </Setting>
     <Setting Name="Color_empty" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">192, 0, 192</Value>
     </Setting>
     <Setting Name="Color_error" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Black</Value>
     </Setting>
     <Setting Name="min_green" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">0.015</Value>
     </Setting>
     <Setting Name="max_red" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">-0.005</Value>
     </Setting>
   </Settings>
 </SettingsFile>
