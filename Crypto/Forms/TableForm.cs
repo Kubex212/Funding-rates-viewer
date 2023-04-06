@@ -555,9 +555,11 @@ namespace Crypto.Forms
             window.ShowDialog();
         }
 
-        private void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var names = BinanceClient.GetSymbolNames().Result;
+            var names = await BinanceClient.GetSymbolNames();
+
+            MessageBox.Show(names.Where(n => !_names.Contains(n)).Count().ToString());
 
             Utility.SymbolProvider.AddSymbols(names.Where(n => !_names.Contains(n)).ToArray());
         }

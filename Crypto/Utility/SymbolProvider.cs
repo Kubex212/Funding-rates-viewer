@@ -77,6 +77,7 @@ namespace Crypto.Utility
                     Ftx = "to delete"
                 }
             );
+            _symbols.AddRange(symbols);
             SaveToFile();
             Invalidate();
             NameTranslator.Invalidate();

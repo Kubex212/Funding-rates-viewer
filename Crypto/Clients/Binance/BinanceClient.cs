@@ -77,7 +77,7 @@ namespace Crypto.Clients.Binance
                 dynamic obj = JsonConvert.DeserializeObject(data)!;
                 foreach (var item in obj)
                 {
-                    result.Add(((string)item.symbol).Replace("USDT", ""));
+                    result.Add(((string)item.symbol).Replace("USDT", "").Replace("USD", ""));
                 }
             }
 

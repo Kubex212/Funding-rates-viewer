@@ -112,8 +112,11 @@ namespace Crypto.Clients.Phemex
             foreach (var model in fundingModels)
             {
                 if (model == null) continue;
-                if (model.FundingRate == -12345) result.Add(new TableData(model.Symbol, -100f, Name, -100f));
-                result.Add(new TableData(model.Symbol, model.FundingRate / 100000000f, Name, model.PredFundingRate / 100000000f));
+                if (model.FundingRate == -12345)
+                {
+                    result.Add(new TableData(model.Symbol, -100f, Name, -100f));
+                }
+                else result.Add(new TableData(model.Symbol, model.FundingRate / 100000000f, Name, model.PredFundingRate / 100000000f));
             }
             return result;
         }
