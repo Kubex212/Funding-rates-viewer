@@ -25,6 +25,7 @@ namespace Crypto.Forms
         private List<string> _names;
         private List<TableRow> _rows = new List<TableRow>();
         private List<TableData> _data = new List<TableData>();
+        private NotificationSettings _notificationSettings = new NotificationSettings();
 
         List<IClient> _clients;
 
@@ -399,6 +400,33 @@ namespace Crypto.Forms
             DataToRows(_data);
         }
 
+        private void Notify()
+        {
+            var groups = _data.GroupBy(d => d.Name);
+            foreach (var group in groups)
+            {
+                var list = group.ToList();
+                var count = list.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    for (int j = i + 1; j < count; j++)
+                    {
+                        var cond1 = list[i].FundingRate != -100f && list[j].FundingRate != -100f &&
+                                    list[i].FundingRate != -99f  && list[j].FundingRate != -99f;
+                        var cond2 = Math.Abs(list[i].FundingRate - list[j].FundingRate) > _notificationSettings.Difference;
+
+                        var cond3 = list[i].PredictedFunding != -100f && list[j].PredictedFunding != -100f &&
+                                    list[i].PredictedFunding != -99f  && list[j].PredictedFunding != -99f;
+                        var cond4 = Math.Abs(list[i].PredictedFunding - list[j].PredictedFunding) > _notificationSettings.Difference;
+                        if (cond1 && cond2 || (cond3 && cond4))
+                        {
+                            MessageBox.Show($"");
+                        }
+                    }
+                }
+            }
+        }
+
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _sort = (e.ColumnIndex, _sort.ascending ? false : true);
@@ -562,6 +590,18 @@ namespace Crypto.Forms
             MessageBox.Show(names.Where(n => !_names.Contains(n)).Count().ToString());
 
             Utility.SymbolProvider.AddSymbols(names.Where(n => !_names.Contains(n)).ToArray());
+        }
+
+        private void powiadomieniaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var form = new NotificationForm(_notificationSettings))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    _notificationSettings = form.Settings;
+                }
+            }
         }
     }
 }

@@ -43,13 +43,14 @@
             this.symboleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modyfikujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pobierzSymboleZBinanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ustawieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorPowyżejToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorPoniżejToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorBłęduToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorNieobsługiwanegoSymboluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pobierzSymboleZBinanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.powiadomieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -73,7 +74,8 @@
             this.konsolaToolStripMenuItem,
             this.tabelkaToolStripMenuItem,
             this.symboleToolStripMenuItem,
-            this.ustawieniaToolStripMenuItem});
+            this.ustawieniaToolStripMenuItem,
+            this.powiadomieniaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1492, 24);
@@ -174,6 +176,13 @@
             this.dodajSymbolToolStripMenuItem.Text = "Dodaj symbol";
             this.dodajSymbolToolStripMenuItem.Click += new System.EventHandler(this.dodajSymbolToolStripMenuItem_Click);
             // 
+            // pobierzSymboleZBinanceToolStripMenuItem
+            // 
+            this.pobierzSymboleZBinanceToolStripMenuItem.Name = "pobierzSymboleZBinanceToolStripMenuItem";
+            this.pobierzSymboleZBinanceToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.pobierzSymboleZBinanceToolStripMenuItem.Text = "Pobierz symbole z Binance";
+            this.pobierzSymboleZBinanceToolStripMenuItem.Click += new System.EventHandler(this.pobierzSymboleZBinanceToolStripMenuItem_Click);
+            // 
             // ustawieniaToolStripMenuItem
             // 
             this.ustawieniaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -226,12 +235,12 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
-            // pobierzSymboleZBinanceToolStripMenuItem
+            // powiadomieniaToolStripMenuItem
             // 
-            this.pobierzSymboleZBinanceToolStripMenuItem.Name = "pobierzSymboleZBinanceToolStripMenuItem";
-            this.pobierzSymboleZBinanceToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.pobierzSymboleZBinanceToolStripMenuItem.Text = "Pobierz symbole z Binance";
-            this.pobierzSymboleZBinanceToolStripMenuItem.Click += new System.EventHandler(this.pobierzSymboleZBinanceToolStripMenuItem_Click);
+            this.powiadomieniaToolStripMenuItem.Name = "powiadomieniaToolStripMenuItem";
+            this.powiadomieniaToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.powiadomieniaToolStripMenuItem.Text = "Powiadomienia";
+            this.powiadomieniaToolStripMenuItem.Click += new System.EventHandler(this.powiadomieniaToolStripMenuItem_Click);
             // 
             // TableForm
             // 
@@ -279,5 +288,6 @@
         private ToolStripMenuItem kolorNieobsługiwanegoSymboluToolStripMenuItem;
         private ToolStripMenuItem dodajSymbolToolStripMenuItem;
         private ToolStripMenuItem pobierzSymboleZBinanceToolStripMenuItem;
+        private ToolStripMenuItem powiadomieniaToolStripMenuItem;
     }
 }
