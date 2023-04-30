@@ -83,6 +83,32 @@ namespace Crypto.Utility
             NameTranslator.Invalidate();
         }
 
+        public static int FixBinanceBSymbols(bool invalidate = true)
+        {
+            var toRemove = new List<Symbol>();
+
+            foreach (var symbol in _symbols)
+            {
+                var name = symbol.Name!;
+                var foundSymbol = _symbols.FirstOrDefault(s => s.Name == name.Substring(0, name.Length - 1));
+                if (name.EndsWith("B") && foundSymbol != null)
+                {
+                    foundSymbol.BinanceBUSD = symbol.Binance;
+                    toRemove.Add(symbol);
+                }
+            }
+
+            _symbols.RemoveAll(s => toRemove.Contains(s));
+
+            if(invalidate)
+            {
+                SaveToFile();
+                Invalidate();
+            }
+
+            return toRemove.Count;
+        }
+
         public static void Invalidate()
         {
             _initialized = false;

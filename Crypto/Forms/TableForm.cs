@@ -16,6 +16,8 @@ using Crypto.Clients.Huobi;
 using Crypto.Clients.Binance;
 using Crypto.Clients.Ftx;
 using Crypto.Clients.Okx;
+using WebScraper.Services;
+using System.Reflection;
 
 namespace Crypto.Forms
 {
@@ -26,6 +28,7 @@ namespace Crypto.Forms
         private List<TableRow> _rows = new List<TableRow>();
         private List<TableData> _data = new List<TableData>();
         private NotificationSettings _notificationSettings = new NotificationSettings();
+        
 
         List<IClient> _clients;
 
@@ -398,17 +401,21 @@ namespace Crypto.Forms
                 _data.AddRange(await c.GetTableDataAsync(SymbolProvider.GetSymbolNames()));
             }
             DataToRows(_data);
+            var notifications = Notify();
         }
 
-        private void Notify()
+        private List<(string Name, string Prop1, string Prop2)> Notify()
         {
-            var groups = _data.GroupBy(d => d.Name);
+            var res = new List<(string Name, string Prop1, string Prop2)>();
+
+            var groups = _data.GroupBy(d => d.Symbol);
             foreach (var group in groups)
             {
                 var list = group.ToList();
                 var count = list.Count;
                 for (int i = 0; i < count; i++)
                 {
+                    var broken = false;
                     for (int j = i + 1; j < count; j++)
                     {
                         var cond1 = list[i].FundingRate != -100f && list[j].FundingRate != -100f &&
@@ -418,13 +425,50 @@ namespace Crypto.Forms
                         var cond3 = list[i].PredictedFunding != -100f && list[j].PredictedFunding != -100f &&
                                     list[i].PredictedFunding != -99f  && list[j].PredictedFunding != -99f;
                         var cond4 = Math.Abs(list[i].PredictedFunding - list[j].PredictedFunding) > _notificationSettings.Difference;
+
                         if (cond1 && cond2 || (cond3 && cond4))
                         {
-                            MessageBox.Show($"");
+                            res.Add((list[i].Symbol, list[i].Name, list[j].Name));
+                            broken = true;
+                            break; // one is enough
+                        }
+                    }
+                    if(broken)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return res;
+        }
+
+        private List<(string Name, string Prop1, string Prop2)> FindPairs()
+        {
+            var res = new List<(string Name, string Prop1, string Prop2)>();
+
+            var tableRow = new TableRow();
+            var props = tableRow.GetType().GetProperties().Where(p => p.PropertyType == typeof(float));
+
+            foreach (var row in _rows)
+            {
+                var dictionary = props.ToDictionary(p => p.Name, p => p.GetValue(row, null));
+                var propNames = props.Select(p => p.Name).ToArray();
+                var values = props.Select(p => (float)p.GetValue(row, null)!).ToArray();
+
+                for(int i = 0; i < values.Length; i++)
+                {
+                    for(int j = i + 1; j < values.Length; j++)
+                    {
+                        if (Math.Abs(values[i] - values[j]) < 0.1f)
+                        {
+                            res.Add((row.Symbol, propNames[i], propNames[j]));
                         }
                     }
                 }
             }
+
+            return res;
         }
 
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -585,14 +629,44 @@ namespace Crypto.Forms
 
         private async void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var names = await BinanceClient.GetSymbolNames();
+            var binanceNames = await BinanceClient.GetSymbolNames();
+            var newBinanceNames = binanceNames.Where(n => !_names.Contains(n)).ToList();
+            var namesUnknownForBinance = _names.Where(n => !binanceNames.Contains(n)).ToList();
 
-            MessageBox.Show(names.Where(n => !_names.Contains(n)).Count().ToString());
+            foreach(var name in namesUnknownForBinance)
+            {
+                // _symbols.Single(s => s.Name == name).Binance = "?";
+            }
 
-            Utility.SymbolProvider.AddSymbols(names.Where(n => !_names.Contains(n)).ToArray());
+            var worker = new SeleniumWorker();
+            var phemexNames = worker.GetPhemexNames();
+            worker.QuitDriver();
+            var newPhemexNames = phemexNames.Where(n => !_names.Contains(n)).ToList();
+            var namesUnknownForPhemex = _names.Where(n => !phemexNames.Contains(n)).ToList();
+
+            foreach (var name in namesUnknownForPhemex)
+            {
+                //_symbols.Single(s => s.Name == name).Phemex = "?";
+                // _symbols.Single(s => s.Name == name).PhemexUsdt = "?";
+            }
+
+            var newNames = new List<string>(binanceNames);
+            newNames.AddRange(phemexNames);
+            newNames = newNames.Distinct().ToList();
+
+            SymbolProvider.AddSymbols(newNames.ToArray());
+
+            var bSymbolsCount = SymbolProvider.FixBinanceBSymbols(true);
+
+            MessageBox.Show("Wynik aktualizacji", $"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
+                $" było wcześniej nieznanych.\n" +
+                $"Phemex zwróciła {phemexNames.Count} symboli, z czego {newPhemexNames.Count}" +
+                $" było wcześniej nieznanych.\n\n" +
+                $"Łącznie dodano {newNames.Count} symboli.",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void powiadomieniaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ustawieniaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             using (var form = new NotificationForm(_notificationSettings))
             {
@@ -603,5 +677,12 @@ namespace Crypto.Forms
                 }
             }
         }
+
+        private void pokażToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

@@ -62,7 +62,7 @@ namespace Crypto.Forms
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Settings.Difference = (double)numericUpDown1.Value;
+            Settings.Difference = (double)numericUpDown1.Value / 100.0;
         }
 
         private void button1_Click(object sender, EventArgs e)

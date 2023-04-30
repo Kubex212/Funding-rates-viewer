@@ -20,6 +20,7 @@ namespace Crypto.Objects
         public string? PhemexUsdt { get; set; }
         public string? Huobi { get; set; }
         public string? Binance { get; set; }
+        public string? BinanceBUSD { get; set; }
         public string? Ftx { get; set; }
         public string? Okx { get; set; }
         public string? OkxUsd { get; set; }
