@@ -134,5 +134,28 @@ namespace Crypto.Utility
             }
             return _initialized = true;
         }
+
+        public static List<string> ReadFile(string filename, string suffix)
+        {
+            List<string> lines = new List<string>();
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        lines.Add(line.Split()[2].Replace(suffix, ""));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log($"problem z plikiem {filename}: {e.Message}", Type.Error);
+            }
+
+            return lines;
+        }
     }
 }

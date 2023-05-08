@@ -638,20 +638,30 @@ namespace Crypto.Forms
                 // _symbols.Single(s => s.Name == name).Binance = "?";
             }
 
-            var worker = new SeleniumWorker();
-            var phemexNames = worker.GetPhemexNames();
-            worker.QuitDriver();
-            var newPhemexNames = phemexNames.Where(n => !_names.Contains(n)).ToList();
-            var namesUnknownForPhemex = _names.Where(n => !phemexNames.Contains(n)).ToList();
+            //var worker = new SeleniumWorker();
+            //var phemexNames = worker.GetPhemexNames();
+            //worker.QuitDriver();
 
-            foreach (var name in namesUnknownForPhemex)
+            var phemexUsdNames = Utility.SymbolProvider.ReadFile("phemexUSD.txt", "USD");
+            var newPhemexUsdNames = phemexUsdNames.Where(n => !_names.Contains(n)).ToList();
+            var namesUnknownForPhemexUsd = _names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+
+            foreach (var name in namesUnknownForPhemexUsd)
             {
                 //_symbols.Single(s => s.Name == name).Phemex = "?";
+            }
+
+            var phemexUsdtNames = Utility.SymbolProvider.ReadFile("phemexUSDT.txt", "USDT");
+            var newPhemexUsdtNames = phemexUsdNames.Where(n => !_names.Contains(n)).ToList();
+            var namesUnknownForPhemexUsdt = _names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+
+            foreach (var name in namesUnknownForPhemexUsd)
+            {
                 // _symbols.Single(s => s.Name == name).PhemexUsdt = "?";
             }
 
             var newNames = new List<string>(binanceNames);
-            newNames.AddRange(phemexNames);
+            newNames.AddRange(phemexUsdNames);
             newNames = newNames.Distinct().ToList();
 
             SymbolProvider.AddSymbols(newNames.ToArray());
@@ -660,7 +670,7 @@ namespace Crypto.Forms
 
             MessageBox.Show("Wynik aktualizacji", $"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
                 $" było wcześniej nieznanych.\n" +
-                $"Phemex zwróciła {phemexNames.Count} symboli, z czego {newPhemexNames.Count}" +
+                $"Phemex zwróciła {phemexUsdNames.Count} symboli, z czego {newPhemexUsdNames.Count}" +
                 $" było wcześniej nieznanych.\n\n" +
                 $"Łącznie dodano {newNames.Count} symboli.",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);

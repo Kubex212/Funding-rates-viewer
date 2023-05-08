@@ -28,9 +28,9 @@ namespace WebScraper.Services
             var names = new List<string>();
             var uri = "https://phemex.com/trade/BTCUSDT";
             webDriver.Navigate().GoToUrl(uri);
-            webDriver.FindElement(By.CssSelector("#app > div > div > main > div > header > div > h1 > div > div.symbol.df.aic.f16.fw3.wsn.T1 > i"), 5).Click();
-            webDriver.FindElement(By.CssSelector("body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.header.ps.H-embllz > div.wrap.pr.df.ph16.ooo.ovh.sv.H-1sa5lp8 > div.list.df.H-1sa5lp8 > span.btn.T3.fw1.cp.H-1sa5lp8.active"), 5).Click();
-            Thread.Sleep(1500);
+            webDriver.FindElement(By.CssSelector("#app > div > div > main > div > header > div > h1 > div > div.symbol.df.aic.f16.fw3.wsn.T1 > i"), 15).Click();
+            webDriver.FindElement(By.CssSelector("body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.header.ps.H-embllz > div.wrap.pr.df.ph16.ooo.ovh.sv.H-1sa5lp8 > div.list.df.H-1sa5lp8 > span.btn.T3.fw1.cp.H-1sa5lp8.active"), 15).Click();
+            Thread.Sleep(3500);
             int increment = 1;
             try
             {
