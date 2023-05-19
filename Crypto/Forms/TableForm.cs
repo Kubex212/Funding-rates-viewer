@@ -23,8 +23,9 @@ namespace Crypto.Forms
 {
     public partial class TableForm : Form
     {
-        private List<Symbol> _symbols;
-        private List<string> _names;
+        private List<Symbol> Symbols { get => SymbolProvider.GetSymbols(); }
+        private List<string> Names { get => SymbolProvider.GetSymbolNames(); }
+
         private List<TableRow> _rows = new List<TableRow>();
         private List<TableData> _data = new List<TableData>();
         private NotificationSettings _notificationSettings = new NotificationSettings();
@@ -46,16 +47,13 @@ namespace Crypto.Forms
             _redMax = redMax;
             _greenMin = greenMin;
 
-            _symbols = SymbolProvider.GetSymbols();
-            _names = SymbolProvider.GetSymbolNames();
-
-            InitTable(_names);
+            InitTable(Names);
         }
 
         private void DataToRows(List<TableData> data)
         {
             _rows = new List<TableRow>();
-            foreach (var n in _names)
+            foreach (var n in Names)
             {
                 _rows.Add(new TableRow() { Symbol = n });
             }
@@ -276,7 +274,7 @@ namespace Crypto.Forms
                     c.Style = style;
                 }
             }
-            Text = "Tabelka" + $" (załadowane symbole: {_symbols.Count}, działające komórki: {_workingCells})";
+            Text = "Tabelka" + $" (załadowane symbole: {Symbols.Count}, działające komórki: {_workingCells})";
         }
 
         private void Sort()
@@ -630,8 +628,8 @@ namespace Crypto.Forms
         private async void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var binanceNames = await BinanceClient.GetSymbolNames();
-            var newBinanceNames = binanceNames.Where(n => !_names.Contains(n)).ToList();
-            var namesUnknownForBinance = _names.Where(n => !binanceNames.Contains(n)).ToList();
+            var newBinanceNames = binanceNames.Where(n => !Names.Contains(n)).ToList();
+            var namesUnknownForBinance = Names.Where(n => !binanceNames.Contains(n)).ToList();
 
             foreach(var name in namesUnknownForBinance)
             {
@@ -643,36 +641,38 @@ namespace Crypto.Forms
             //worker.QuitDriver();
 
             var phemexUsdNames = Utility.SymbolProvider.ReadFile("phemexUSD.txt", "USD");
-            var newPhemexUsdNames = phemexUsdNames.Where(n => !_names.Contains(n)).ToList();
-            var namesUnknownForPhemexUsd = _names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+            var newPhemexUsdNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
+            var namesUnknownForPhemexUsd = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
 
             foreach (var name in namesUnknownForPhemexUsd)
             {
                 //_symbols.Single(s => s.Name == name).Phemex = "?";
             }
 
-            var phemexUsdtNames = Utility.SymbolProvider.ReadFile("phemexUSDT.txt", "USDT");
-            var newPhemexUsdtNames = phemexUsdNames.Where(n => !_names.Contains(n)).ToList();
-            var namesUnknownForPhemexUsdt = _names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+            var phemexUsdtNames = SymbolProvider.ReadFile("phemexUSDT.txt", "USDT");
+            var newPhemexUsdtNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
+            var namesUnknownForPhemexUsdt = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
 
             foreach (var name in namesUnknownForPhemexUsd)
             {
                 // _symbols.Single(s => s.Name == name).PhemexUsdt = "?";
             }
 
-            var newNames = new List<string>(binanceNames);
-            newNames.AddRange(phemexUsdNames);
+            var newNames = new List<string>(newBinanceNames);
+            newNames.AddRange(newPhemexUsdNames);
+            newNames.AddRange(newPhemexUsdtNames);
             newNames = newNames.Distinct().ToList();
 
             SymbolProvider.AddSymbols(newNames.ToArray());
 
             var bSymbolsCount = SymbolProvider.FixBinanceBSymbols(true);
 
-            MessageBox.Show("Wynik aktualizacji", $"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
+            MessageBox.Show($"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
                 $" było wcześniej nieznanych.\n" +
                 $"Phemex zwróciła {phemexUsdNames.Count} symboli, z czego {newPhemexUsdNames.Count}" +
                 $" było wcześniej nieznanych.\n\n" +
-                $"Łącznie dodano {newNames.Count} symboli.",
+                $"Łącznie dodano {newNames.Count - bSymbolsCount} symboli.",
+                "Wynik aktualizacji",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

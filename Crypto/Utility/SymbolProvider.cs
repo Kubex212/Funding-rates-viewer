@@ -10,6 +10,9 @@ namespace Crypto.Utility
 {
     public static class SymbolProvider
     {
+        private static List<Symbol> Symbols { get => GetSymbols(); }
+        private static List<string> Names { get => GetSymbolNames(); }
+
         private static bool _initialized = false;
         private static List<Symbol> _symbols = new List<Symbol>();
         private static List<string> _symbolNames = new List<string>();
@@ -29,15 +32,13 @@ namespace Crypto.Utility
 
         public static bool SaveToFile()
         {
-            if (!_initialized)
-                if (!Initialize()) throw new InvalidOperationException();
             //string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             //using (StreamReader r = new StreamReader(Path.Combine(new string[] { projectDirectory, "Files", "names.json" })))
             try
             {
                 using (StreamWriter w = new StreamWriter("names.json"))
                 {
-                    string json = JsonConvert.SerializeObject(_symbols);
+                    string json = JsonConvert.SerializeObject(Symbols);
                     w.Write(json);
                     w.Close();
                 }
@@ -46,13 +47,13 @@ namespace Crypto.Utility
             {
                 Logger.Log("Zapisywanie do pliku nie powiodło się!!! " + ex.Message, Type.Error);
             }
-            _initialized = false;
+            Invalidate();
             return true;
         }
 
         public static void AddSymbols(params Symbol[] symbol)
         {
-            _symbols.AddRange(symbol);
+            Symbols.AddRange(symbol);
             SaveToFile();
             Invalidate();
             NameTranslator.Invalidate();
@@ -77,7 +78,7 @@ namespace Crypto.Utility
                     Ftx = "to delete"
                 }
             );
-            _symbols.AddRange(symbols);
+            Symbols.AddRange(symbols);
             SaveToFile();
             Invalidate();
             NameTranslator.Invalidate();
@@ -87,10 +88,10 @@ namespace Crypto.Utility
         {
             var toRemove = new List<Symbol>();
 
-            foreach (var symbol in _symbols)
+            foreach (var symbol in Symbols)
             {
                 var name = symbol.Name!;
-                var foundSymbol = _symbols.FirstOrDefault(s => s.Name == name.Substring(0, name.Length - 1));
+                var foundSymbol = Symbols.FirstOrDefault(s => s.Name == name.Substring(0, name.Length - 1));
                 if (name.EndsWith("B") && foundSymbol != null)
                 {
                     foundSymbol.BinanceBUSD = symbol.Binance;
@@ -98,7 +99,7 @@ namespace Crypto.Utility
                 }
             }
 
-            _symbols.RemoveAll(s => toRemove.Contains(s));
+            var removed = Symbols.RemoveAll(s => toRemove.Contains(s));
 
             if(invalidate)
             {
@@ -106,7 +107,7 @@ namespace Crypto.Utility
                 Invalidate();
             }
 
-            return toRemove.Count;
+            return removed;
         }
 
         public static void Invalidate()
@@ -114,6 +115,10 @@ namespace Crypto.Utility
             _initialized = false;
         }
 
+        /// <summary>
+        /// Must be called after any operation that modifies the list of symbols
+        /// </summary>
+        /// <returns>true if no error</returns>
         private static bool Initialize()
         {
             try

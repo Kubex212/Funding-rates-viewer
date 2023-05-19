@@ -36,6 +36,13 @@ namespace Crypto.Forms
             toolTip1.SetToolTip(button5, "Oznacz jako nieznane, czyli \"?\"");
             toolTip1.SetToolTip(button6, "Oznacz jako nieznane, czyli \"?\"");
             toolTip1.SetToolTip(button7, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button1, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button2, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button3, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button4, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button5, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button6, "Oznacz jako nieznane, czyli \"?\"");
+            toolTip1.SetToolTip(button7, "Oznacz jako nieznane, czyli \"?\"");
             toolTip2.SetToolTip(button8, "Wypełnij wartością domniemaną");
             toolTip2.SetToolTip(button9, "Wypełnij wartością domniemaną");
             toolTip2.SetToolTip(button10, "Wypełnij wartością domniemaną");
@@ -55,8 +62,8 @@ namespace Crypto.Forms
             textBox4.Text = _symbol.Huobi;
             textBox5.Text = _symbol.Binance;
             textBox6.Text = _symbol.Ftx;
-            textBox7.Text = _symbol.Okx;
-            textBox8.Text = _symbol.OkxUsd;
+            textBox11.Text = _symbol.Okx;
+            textBox87.Text = _symbol.OkxUsd;
         }
 
         void InitLabels()
@@ -111,8 +118,8 @@ namespace Crypto.Forms
             _symbol.Huobi = textBox4.Text;
             _symbol.Binance = textBox5.Text;
             _symbol.Ftx = textBox6.Text;
-            _symbol.Okx = textBox7.Text;
-            _symbol.OkxUsd = textBox8.Text;
+            _symbol.Okx = textBox11.Text;
+            _symbol.OkxUsd = textBox87.Text;
             Close();
         }
         private void cancelButton_Click(object sender, EventArgs e)
@@ -148,12 +155,12 @@ namespace Crypto.Forms
 
         private void button6_Click(object sender, EventArgs e)
         {
-            textBox7.Text = "?";
+            textBox11.Text = "?";
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            textBox8.Text = "?";
+            textBox87.Text = "?";
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -183,12 +190,12 @@ namespace Crypto.Forms
 
         private void button13_Click(object sender, EventArgs e)
         {
-            textBox7.Text = $"{textBox1.Text}-USD-SWAP";
+            textBox11.Text = $"{textBox1.Text}-USD-SWAP";
         }
 
         private void button14_Click(object sender, EventArgs e)
         {
-            textBox8.Text = $"{textBox1.Text}-USDT-SWAP";
+            textBox87.Text = $"{textBox1.Text}-USDT-SWAP";
         }
     }
 }
