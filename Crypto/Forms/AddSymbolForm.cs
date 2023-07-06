@@ -48,7 +48,7 @@ namespace Crypto.Forms
                 PhemexUsdt = "to delete",
                 Huobi = textBoxHuobi.Text,
                 Binance = textBoxBinance.Text,
-                Ftx = "to delete",
+                //Ftx = "to delete",
                 Okx = textBoxOkxCoin.Text,
                 OkxUsd = textBoxOkxUsd.Text,
                 ByBitLinear = textBoxByBitLinear.Text,

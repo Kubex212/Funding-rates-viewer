@@ -21,7 +21,7 @@ namespace Crypto.Objects
         public string? Huobi { get; set; }
         public string? Binance { get; set; }
         public string? BinanceBUSD { get; set; }
-        public string? Ftx { get; set; }
+        //public string? Ftx { get; set; }
         public string? Okx { get; set; }
         public string? OkxUsd { get; set; }
 
@@ -40,7 +40,7 @@ namespace Crypto.Objects
                 Bitfinex == other?.Bitfinex &&
                 Phemex == other?.Phemex &&
                 Binance == other?.Binance &&
-                Ftx == other?.Ftx &&
+                //Ftx == other?.Ftx &&
                 Okx == other?.Okx &&
                 OkxUsd == other?.OkxUsd &&
                 Huobi == other?.Huobi && 

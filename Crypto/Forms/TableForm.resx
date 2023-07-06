@@ -61,6 +61,16 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pokażToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAA
+        cAAAAHABznhikwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADUSURBVDhPpZO9
+        DgFBFEZXQSPRoUZNIl6AV1ASPwW9SCjFM2gpEBqR+OmQ8GrOnbtbbMxOduMkJ/N9N5MtZmY9BwV84RPz
+        MkhKGzvY9XMiWvjGj6/kJsZijBvMmaZkcYUj0xxU8IYp08LI7I4l0yJYYl2jlQYuNNo5YlqjlQweNNo5
+        +asL556/P3D2VxeRe4q40+hki/JKQ8gVyeFUTXNTwz2GrnqOPY2x6ONMozLFC8oBiQ+UHynokmUW9CtO
+        MBJ5kWuNBnnaZY3xGaI8a3Egg1887wv9CiJdIjqO2wAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhHwGNAMQSACEYGIR7e4yMhJyclJycnKWlpa2trbWtpbW1tb29vca9tcbGxs7Oxs7OztbW1t7e
@@ -201,6 +211,9 @@
         +c1wjrOc50znOtv5znjOs573zOc++/nPWQgBAAA7
 </value>
   </data>
+  <metadata name="notificationCheckTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAAAAAAAEAIACMJgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAAAFv

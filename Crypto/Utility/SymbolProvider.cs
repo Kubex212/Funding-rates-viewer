@@ -70,12 +70,13 @@ namespace Crypto.Utility
                     PhemexUsdt = $"{n}USDT",
                     Huobi = $"{n}-USDT",
                     Binance = $"{n}USDT",
+                    BinanceBUSD = $"{n}BUSD",
                     Okx = $"{n}-USD-SWAP",
                     OkxUsd = $"{n}-USDT-SWAP",
                     ByBitInverse= $"{n}USDT",
                     ByBitLinear = $"{n}USD",
                     ByBitPerp = $"{n}PERP",
-                    Ftx = "to delete"
+                    //Ftx = "to delete"
                 }
             );
             Symbols.AddRange(symbols);

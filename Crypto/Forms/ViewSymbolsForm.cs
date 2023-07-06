@@ -7,9 +7,9 @@ namespace Crypto.Forms
     public partial class ViewSymbolsForm : Form
     {
         bool _madeChanges = false;
-        List<TableData> _data = new List<TableData>();
-        List<TableData> _specials = new List<TableData>();
-        public ViewSymbolsForm(List<TableData> data)
+        List<LabeledTableData> _data = new List<LabeledTableData>();
+        List<LabeledTableData> _specials = new List<LabeledTableData>();
+        public ViewSymbolsForm(List<LabeledTableData> data)
         {
             InitializeComponent();
             Width = 1000;
@@ -22,14 +22,15 @@ namespace Crypto.Forms
 
             DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
             dataGridView1.Columns["Name"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns["Name"].MinimumWidth = 50;
             editButtonColumn.Name = "Modyfikuj";
             editButtonColumn.HeaderText = "Modyfikuj";
-            int columnIndex = 8;
+            editButtonColumn.MinimumWidth = 80;
+            int columnIndex = 12;
             if (dataGridView1.Columns["Modyfikuj"] == null)
             {
                 dataGridView1.Columns.Insert(columnIndex, editButtonColumn);
             }
-            dataGridView1.Columns["Modyfikuj"].Width = 50;
         }
 
         private void ViewSymbolsForm_Load(object sender, EventArgs e)
@@ -45,12 +46,15 @@ namespace Crypto.Forms
 
                 if(symbol != null)
                 {
-                    Symbol? symbol2 = (Symbol?)symbol.Clone();
+                    var symbol2 = (Symbol)symbol.Clone();
 
                     var form = new EditSymbolForm(symbol, _specials);
                     form.ShowDialog();
 
-                    if(!symbol.Equals(symbol2)) _madeChanges = true;
+                    if(!symbol.Equals(symbol2))
+                    {
+                        _madeChanges = true;
+                    }
 
                     var bindingList = new BindingList<Symbol>(SymbolProvider.GetSymbols());
                     var source = new BindingSource(bindingList, null);
@@ -75,9 +79,9 @@ namespace Crypto.Forms
             }
         }
 
-        private List<TableData> GetSpecials()
+        private List<LabeledTableData> GetSpecials()
         {
-            _specials = new List<TableData>();
+            _specials = new List<LabeledTableData>();
             foreach(var d in _data)
             {
                 //if (d.Symbol == "GOLD-USDT") MessageBox.Show($"{d.FundingRate}");
@@ -92,31 +96,34 @@ namespace Crypto.Forms
         private void MarkSpecials()
         {
             var specials = GetSpecials();
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+
+            var reds = specials.Where(d => d.PredictedFunding == -100f);
+            var browns = specials.Where(d => d.PredictedFunding == -99f);
+            foreach(var data in specials)
             {
-                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                var row = -1;
+                foreach(DataGridViewRow r in dataGridView1.Rows)
                 {
-                    if (col.Name == "Name") continue;
-                    var cell = dataGridView1[col.Index, row.Index];
-                    var cellText = (string)cell.Value;
-                    //if (cellText == "GOLD-USDT") MessageBox.Show("");
-                    TableData? data = null;
-                    try 
+                    if (r.DataBoundItem is Symbol symbol && symbol.Name == data.CoinName)
                     {
-                        if ((data = specials.Find(d => d.Symbol == cellText)) != null)
-                        {
-                            DataGridViewCellStyle style = new DataGridViewCellStyle();
-                            if (data.FundingRate == -99f || data.PredictedFunding == -99f) style.BackColor = Color.DarkOrange;
-                            else style.BackColor = Color.DarkRed;
-                            cell.Style = style;
-                        }
-                    }
-                    catch(ArgumentException ex)
-                    {
-                        //MessageBox.Show(ex.Message);
+                        row = r.Index;
+                        break;
                     }
                 }
+                if(row == -1)
+                    throw new Exception("nie znalazło symbolu...");
+
+                var col = dataGridView1.Columns[data.MarketName].Index;
+                var cell = dataGridView1[col, row];
+                var style = new DataGridViewCellStyle();
+
+                if (data.FundingRate == -99f || data.PredictedFunding == -99f) 
+                    style.BackColor = Color.DarkOrange;
+                else
+                    style.BackColor = Color.DarkRed;
+                cell.Style = style;
             }
+
             dataGridView1.Update();
             dataGridView1.Refresh();
         }

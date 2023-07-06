@@ -21,22 +21,26 @@ namespace WebScraper.Services
             new DriverManager().SetUpDriver(new ChromeConfig());
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("headless");
-            webDriver = new ChromeDriver(chromeOptions);
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            webDriver = new ChromeDriver(chromeDriverService, chromeOptions);
         }
         public List<string> GetPhemexNames()
         {
             var names = new List<string>();
             var uri = "https://phemex.com/trade/BTCUSDT";
             webDriver.Navigate().GoToUrl(uri);
-            webDriver.FindElement(By.CssSelector("#app > div > div > main > div > header > div > h1 > div > div.symbol.df.aic.f16.fw3.wsn.T1 > i"), 15).Click();
-            webDriver.FindElement(By.CssSelector("body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.header.ps.H-embllz > div.wrap.pr.df.ph16.ooo.ovh.sv.H-1sa5lp8 > div.list.df.H-1sa5lp8 > span.btn.T3.fw1.cp.H-1sa5lp8.active"), 15).Click();
-            Thread.Sleep(3500);
+            webDriver.FindElement(By.CssSelector("#app > div > div > main > div > header > div.wrap.f1.df.aic.pl16.H-1dmlqg1 > h1 > div > div.symbol.df.aic.f16.fw3.wsn.T1 > i"), 15).Click();
+            //webDriver.FindElement(By.CssSelector("body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.header.ps.H-embllz > div.wrap.pr.df.ph16.ooo.ovh.sv.H-1sa5lp8 > div.list.df.H-1sa5lp8 > span.btn.T3.fw1.cp.H-1sa5lp8.active"), 15).Click();
+            //Thread.Sleep(3500);
             int increment = 1;
             try
             {
                 while (true)
                 {
-                    names.Add(webDriver.FindElement(By.CssSelector($"body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.body > div:nth-child({increment}) > div.df > div > div.key.df.aic.H-xxy0b1 > div > span"), 5).Text);
+                    //names.Add(webDriver.FindElement(By.CssSelector($"body > div.wrap.H-5pak8m > div > div > div.body.sv.H-5pak8m > div > div.body > div:nth-child({increment}) > div.df > div > div.key.df.aic.H-xxy0b1 > div > span"), 5).Text);
+                    names.Add(webDriver.FindElement(By.CssSelector($"body > div.wrap.H-802lc3 > div.market.H-802lc3 > div.body.sv.H-802lc3 > div > div.body > div:nth-child({increment}) > div.df > div > div.key.df.aic.H-xxy0b1 > div > span"), 5).Text);
+
                     increment++;
                 }
             }

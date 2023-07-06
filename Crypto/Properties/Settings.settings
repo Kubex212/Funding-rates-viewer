@@ -20,5 +20,8 @@
     <Setting Name="max_red" Type="System.Double" Scope="User">
       <Value Profile="(Default)">-0.005</Value>
     </Setting>
+    <Setting Name="notifications_difference" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.005</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

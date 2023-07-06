@@ -11,6 +11,11 @@ namespace Crypto.Objects
         public double Difference { get; set; }
         public NotificationType Type { get; set; }
         public List<string> SymbolNames { get; set; } = new List<string>();
+
+        public NotificationSettings(double difference)
+        {
+            Difference = difference;
+        }
     }
 
     public enum NotificationType

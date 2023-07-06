@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -50,9 +51,10 @@
             this.kolorBłęduToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorNieobsługiwanegoSymboluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.powiadomieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ustawieniaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pokażToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.notificationCheckTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -232,6 +234,22 @@
             this.powiadomieniaToolStripMenuItem.Name = "powiadomieniaToolStripMenuItem";
             this.powiadomieniaToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
             this.powiadomieniaToolStripMenuItem.Text = "Powiadomienia";
+            this.powiadomieniaToolStripMenuItem.MouseEnter += new System.EventHandler(this.powiadomieniaToolStripMenuItem_MouseEnter);
+            // 
+            // ustawieniaToolStripMenuItem1
+            // 
+            this.ustawieniaToolStripMenuItem1.Name = "ustawieniaToolStripMenuItem1";
+            this.ustawieniaToolStripMenuItem1.Size = new System.Drawing.Size(131, 22);
+            this.ustawieniaToolStripMenuItem1.Text = "Ustawienia";
+            this.ustawieniaToolStripMenuItem1.Click += new System.EventHandler(this.ustawieniaToolStripMenuItem1_Click);
+            // 
+            // pokażToolStripMenuItem
+            // 
+            this.pokażToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pokażToolStripMenuItem.Image")));
+            this.pokażToolStripMenuItem.Name = "pokażToolStripMenuItem";
+            this.pokażToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.pokażToolStripMenuItem.Text = "Pokaż";
+            this.pokażToolStripMenuItem.Click += new System.EventHandler(this.pokażToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -246,19 +264,10 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
-            // ustawieniaToolStripMenuItem1
+            // notificationCheckTimer
             // 
-            this.ustawieniaToolStripMenuItem1.Name = "ustawieniaToolStripMenuItem1";
-            this.ustawieniaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.ustawieniaToolStripMenuItem1.Text = "Ustawienia";
-            this.ustawieniaToolStripMenuItem1.Click += new System.EventHandler(this.ustawieniaToolStripMenuItem1_Click);
-            // 
-            // pokażToolStripMenuItem
-            // 
-            this.pokażToolStripMenuItem.Name = "pokażToolStripMenuItem";
-            this.pokażToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pokażToolStripMenuItem.Text = "Pokaż";
-            this.pokażToolStripMenuItem.Click += new System.EventHandler(this.pokażToolStripMenuItem_Click);
+            this.notificationCheckTimer.Interval = 100000;
+            this.notificationCheckTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // TableForm
             // 
@@ -309,5 +318,6 @@
         private ToolStripMenuItem powiadomieniaToolStripMenuItem;
         private ToolStripMenuItem ustawieniaToolStripMenuItem1;
         private ToolStripMenuItem pokażToolStripMenuItem;
+        private System.Windows.Forms.Timer notificationCheckTimer;
     }
 }

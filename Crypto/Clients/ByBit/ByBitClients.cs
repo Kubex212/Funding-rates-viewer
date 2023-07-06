@@ -55,7 +55,7 @@ namespace Crypto.Clients.Phemex
                         var symbol = Convert.ToString(resultObj["result"]!["list"]![0]!["symbol"]!);
                         var fundingRate = float.Parse(Convert.ToString(resultObj["result"]!["list"]![0]!["fundingRate"]!)!, CultureInfo.InvariantCulture);
 
-                        var data = new TableData(NameTranslator.ClientToGlobalName(symbol!, name), fundingRate, name, 0);
+                        var data = new TableData(NameTranslator.ClientToGlobalName(symbol!, name), fundingRate, name, -100);
 
                         result.Add(data);
                     }
@@ -64,7 +64,7 @@ namespace Crypto.Clients.Phemex
                 {
                     Logger.Log($"Symbol {s} nie działa ({name}): {ex.Message}");
 
-                    var data = new TableData(NameTranslator.ClientToGlobalName(s, name), -100, name, 0);
+                    var data = new TableData(NameTranslator.ClientToGlobalName(s, name), -100, name, -100);
                     result.Add(data);
 
                     return;
@@ -73,7 +73,7 @@ namespace Crypto.Clients.Phemex
                 {
                     Logger.Log($"Problem z symbolem {s}({name}): {ex.Message}");
 
-                    var data = new TableData(NameTranslator.ClientToGlobalName(s, name), -100, name, 0);
+                    var data = new TableData(NameTranslator.ClientToGlobalName(s, name), -100, name, -100);
                     result.Add(data);
 
                     return;

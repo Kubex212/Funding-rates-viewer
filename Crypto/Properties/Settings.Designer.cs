@@ -94,5 +94,17 @@ namespace Crypto.Properties {
                 this["max_red"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.005")]
+        public double notifications_difference {
+            get {
+                return ((double)(this["notifications_difference"]));
+            }
+            set {
+                this["notifications_difference"] = value;
+            }
+        }
     }
 }

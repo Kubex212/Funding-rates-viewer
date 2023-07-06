@@ -18,6 +18,7 @@ using Crypto.Clients.Ftx;
 using Crypto.Clients.Okx;
 using WebScraper.Services;
 using System.Reflection;
+using Crypto.Properties;
 
 namespace Crypto.Forms
 {
@@ -28,18 +29,19 @@ namespace Crypto.Forms
 
         private List<TableRow> _rows = new List<TableRow>();
         private List<TableData> _data = new List<TableData>();
-        private NotificationSettings _notificationSettings = new NotificationSettings();
+        private NotificationSettings _notificationSettings = new NotificationSettings(Settings.Default.notifications_difference);
         
 
         List<IClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Phemex USDT funding", "Phemex USDT predicted", "Huobi funding", "Huobi predicted", "Binance funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit Perp funding" };
-        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "PhemexUsdtFunding", "PhemexUsdtPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex predicted", "Phemex USDT funding", "Phemex USDT predicted", "Huobi funding", "Huobi predicted", "Binance funding", "Binance BUSD funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit Perp funding" };
+        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexPredicted", "PhemexUsdtFunding", "PhemexUsdtPredicted", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "BinanceBUSDFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding" };
 
         int _workingCells;
         (int ind, bool ascending) _sort = (-1, false);
         double _redMax;
         double _greenMin;
+
         public TableForm(int refresh, double redMax, double greenMin)
         {
             InitializeComponent();
@@ -48,6 +50,8 @@ namespace Crypto.Forms
             _greenMin = greenMin;
 
             InitTable(Names);
+            notificationCheckTimer.Enabled = true;
+
         }
 
         private void DataToRows(List<TableData> data)
@@ -60,7 +64,7 @@ namespace Crypto.Forms
             foreach(var d in data)
             {
                 var row = _rows.First(r => r.Symbol == d.Symbol);
-                switch(d.Name)
+                switch(d.MarketName)
                 {
                     case "Bitfinex":
                         {
@@ -91,6 +95,11 @@ namespace Crypto.Forms
                             row.BinanceFunding = d.FundingRate;
                             break;
                         }
+                    case "BinanceBUSD":
+                        {
+                            row.BinanceBUSDFunding = d.FundingRate;
+                            break;
+                        }
                     case "Okx":
                         {
                             row.OkxFunding = d.FundingRate;
@@ -119,23 +128,24 @@ namespace Crypto.Forms
                             break;
                         }
                     default:
-                        throw new InvalidOperationException($"symbol of name {d.Name} was not found");
+                        throw new InvalidOperationException($"symbol of name {d.MarketName} was not found");
                 };
             }
         }
 
-        private List<TableData> RowsToData(List<TableRow> rows)
+        private List<LabeledTableData> RowsToData(List<TableRow> rows)
         {
-            var result = new List<TableData>();
+            var result = new List<LabeledTableData>();
             foreach(var r in rows)
             {
-                string bitfinexName, phemexName, huobiName, binanceName, okxName, okxUsdName, byBitLinearName, byBitInverseName, byBitPerpName;
+                string bitfinexName, phemexName, huobiName, binanceName, binanceBName, okxName, okxUsdName, byBitLinearName, byBitInverseName, byBitPerpName;
                 try
                 {
                     bitfinexName = NameTranslator.GlobalToClientName(r.Symbol, "Bitfinex");
                     phemexName = NameTranslator.GlobalToClientName(r.Symbol, "Phemex");
                     huobiName = NameTranslator.GlobalToClientName(r.Symbol, "Huobi");
                     binanceName = NameTranslator.GlobalToClientName(r.Symbol, "Binance");
+                    binanceBName = NameTranslator.GlobalToClientName(r.Symbol, "BinanceBUSD");
                     okxName = NameTranslator.GlobalToClientName(r.Symbol, "Okx");
                     okxUsdName = NameTranslator.GlobalToClientName(r.Symbol, "OkxUsd");
                     byBitLinearName = NameTranslator.GlobalToClientName(r.Symbol, "ByBitLinear");
@@ -146,15 +156,16 @@ namespace Crypto.Forms
                 {
                     continue;
                 }
-                result.Add(new TableData(bitfinexName, r.BitfinexFunding, "Bitfinex", r.BitfinexPredicted));
-                result.Add(new TableData(phemexName, r.PhemexFunding, "Phemex", r.PhemexPredicted));
-                result.Add(new TableData(huobiName, r.HuobiFunding, "Huobi", r.HuobiPredicted));
-                result.Add(new TableData(binanceName, r.BinanceFunding, "Binance", -100));
-                result.Add(new TableData(okxName, r.OkxFunding, "Okx", r.OkxPredicted));
-                result.Add(new TableData(okxUsdName, r.OkxUsdFunding, "OkxUsd", r.OkxUsdPredicted));
-                result.Add(new TableData(byBitLinearName, r.ByBitLinearFunding, "ByBitLinear", r.ByBitLinearFunding));
-                result.Add(new TableData(byBitInverseName, r.ByBitInverseFunding, "ByBitInverse", r.ByBitInverseFunding));
-                result.Add(new TableData(byBitPerpName, r.ByBitPerpFunding, "ByBitPerp", r.ByBitPerpFunding));
+                result.Add(new LabeledTableData(r.Symbol, bitfinexName, r.BitfinexFunding, "Bitfinex", r.BitfinexPredicted));
+                result.Add(new LabeledTableData(r.Symbol, phemexName, r.PhemexFunding, "Phemex", r.PhemexPredicted));
+                result.Add(new LabeledTableData(r.Symbol, huobiName, r.HuobiFunding, "Huobi", r.HuobiPredicted));
+                result.Add(new LabeledTableData(r.Symbol, binanceName, r.BinanceFunding, "Binance", binanceName == "?" ? -99 : -100));
+                result.Add(new LabeledTableData(r.Symbol, binanceBName, r.BinanceBUSDFunding, "BinanceBUSD", -100));
+                result.Add(new LabeledTableData(r.Symbol, okxName, r.OkxFunding, "Okx", r.OkxPredicted));
+                result.Add(new LabeledTableData(r.Symbol, okxUsdName, r.OkxUsdFunding, "OkxUsd", r.OkxUsdPredicted));
+                result.Add(new LabeledTableData(r.Symbol, byBitLinearName, r.ByBitLinearFunding, "ByBitLinear", r.ByBitLinearFunding));
+                result.Add(new LabeledTableData(r.Symbol, byBitInverseName, r.ByBitInverseFunding, "ByBitInverse", r.ByBitInverseFunding));
+                result.Add(new LabeledTableData(r.Symbol, byBitPerpName, r.ByBitPerpFunding, "ByBitPerp", r.ByBitPerpFunding));
             }
             DeleteBadRows();
             return result;
@@ -162,11 +173,13 @@ namespace Crypto.Forms
 
         private void DeleteBadRows()
         {
-            for(int i=0; i<_rows.Count; i++)
-            {
-                var r = _rows[i];
-                if (r.BinanceFunding < -90f && r.BitfinexFunding < -90f && r.HuobiFunding < 90f && r.PhemexFunding < 90f && r.OkxFunding < 90f && r.OkxUsdFunding < 90f) _rows.Remove(r);
-            }
+            _rows.RemoveAll(r => r.BinanceFunding < -90f &&
+                r.BinanceBUSDFunding < -90f &&
+                r.BitfinexFunding < -90f &&
+                r.HuobiFunding < 90f &&
+                r.PhemexFunding < 90f &&
+                r.OkxFunding < 90f &&
+                r.OkxUsdFunding < 90f);
         }
 
         async void InitTable(List<string> symbols)
@@ -224,7 +237,7 @@ namespace Crypto.Forms
 
         private void RefreshTable()
         {
-            Sort();
+            var firstRow = Sort();
             var bindingList = new BindingList<TableRow>(_rows);
             var source = new BindingSource(bindingList, null);
             dataGridView1.DataSource = source;
@@ -232,6 +245,8 @@ namespace Crypto.Forms
             SetColors();
             dataGridView1.Update();
             dataGridView1.Refresh();
+            dataGridView1.FirstDisplayedScrollingRowIndex = firstRow;
+            dataGridView1.CurrentCell = dataGridView1.Rows[firstRow].Cells[0];
         }
 
         private void SetColors()
@@ -277,8 +292,9 @@ namespace Crypto.Forms
             Text = "Tabelka" + $" (załadowane symbole: {Symbols.Count}, działające komórki: {_workingCells})";
         }
 
-        private void Sort()
+        private int Sort()
         {
+            int firstRow = 0;
             if(_sort.ind == 0)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.Symbol).ToList();
@@ -288,82 +304,105 @@ namespace Crypto.Forms
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BitfinexFunding).ToList();
+                firstRow = _rows.Count(r => r.BitfinexFunding < -90f);
             }
             else if (_sort.ind == 2)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BitfinexPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BitfinexPredicted).ToList();
+                firstRow = _rows.Count(r => r.BitfinexPredicted < -90f);
             }
             else if (_sort.ind == 3)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.PhemexFunding).ToList();
+                firstRow = _rows.Count(r => r.PhemexFunding < -90f);
             }
             else if (_sort.ind == 4)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.PhemexPredicted).ToList();
+                firstRow = _rows.Count(r => r.PhemexPredicted < -90f);
             }
             else if (_sort.ind == 5)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexUsdtFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.PhemexUsdtFunding).ToList();
+                firstRow = _rows.Count(r => r.PhemexUsdtFunding < -90f);
             }
             else if (_sort.ind == 6)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.PhemexUsdtPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.PhemexUsdtPredicted).ToList();
+                firstRow = _rows.Count(r => r.PhemexUsdtPredicted < -90f);
             }
             else if (_sort.ind == 7)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiFunding).ToList();
+                firstRow = _rows.Count(r => r.HuobiFunding < -90f);
             }
             else if (_sort.ind == 8)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiPredicted).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiPredicted).ToList();
+                firstRow = _rows.Count(r => r.HuobiPredicted < -90f);
             }
             else if (_sort.ind == 9)
             {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.BinanceFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.BinanceFunding).ToList();
+                firstRow = _rows.Count(r => r.BinanceFunding < -90f);
             }
             else if (_sort.ind == 10)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxFunding).ToList();
-                else _rows = _rows.OrderByDescending(r => r.OkxFunding).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.BinanceBUSDFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.BinanceBUSDFunding).ToList();
+                firstRow = _rows.Count(r => r.BinanceBUSDFunding < -90f);
             }
             else if (_sort.ind == 11)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxPredicted).ToList();
-                else _rows = _rows.OrderByDescending(r => r.OkxPredicted).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxFunding).ToList();
+                firstRow = _rows.Count(r => r.OkxFunding < -90f);
             }
             else if (_sort.ind == 12)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdFunding).ToList();
-                else _rows = _rows.OrderByDescending(r => r.OkxUsdFunding).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxPredicted).ToList();
+                firstRow = _rows.Count(r => r.OkxPredicted < -90f);
             }
             else if (_sort.ind == 13)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdPredicted).ToList();
-                else _rows = _rows.OrderByDescending(r => r.OkxUsdPredicted).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxUsdFunding).ToList();
+                firstRow = _rows.Count(r => r.OkxUsdFunding < -90f);
             }
             else if (_sort.ind == 14)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitLinearFunding).ToList();
-                else _rows = _rows.OrderByDescending(r => r.ByBitLinearFunding).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.OkxUsdPredicted).ToList();
+                else _rows = _rows.OrderByDescending(r => r.OkxUsdPredicted).ToList();
+                firstRow = _rows.Count(r => r.OkxUsdPredicted < -90f);
             }
             else if (_sort.ind == 15)
             {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitInverseFunding).ToList();
-                else _rows = _rows.OrderByDescending(r => r.ByBitInverseFunding).ToList();
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitLinearFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.ByBitLinearFunding).ToList();
+                firstRow = _rows.Count(r => r.ByBitLinearFunding < -90f);
             }
             else if (_sort.ind == 16)
             {
+                if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitInverseFunding).ToList();
+                else _rows = _rows.OrderByDescending(r => r.ByBitInverseFunding).ToList();
+                firstRow = _rows.Count(r => r.ByBitInverseFunding < -90f);
+            }
+            else if (_sort.ind == 17)
+            {
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.ByBitPerpFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.ByBitPerpFunding).ToList();
+                firstRow = _rows.Count(r => r.ByBitPerpFunding < -90f);
             }
+            return _sort.ascending ? firstRow : 0;
         }
 
         private void MakeClients()
@@ -374,6 +413,7 @@ namespace Crypto.Forms
             PhemexV2Client.InitializeClient();
             HuobiClient.InitializeClient();
             BinanceClient.InitializeClient();
+            BinanceBClient.InitializeClient();
             //FtxClient.InitializeClient();
             OkxClient.InitializeClient();
             OkxUsdClient.InitializeClient();
@@ -383,6 +423,7 @@ namespace Crypto.Forms
             _clients.Add(new PhemexV2Client());
             _clients.Add(new HuobiClient());
             _clients.Add(new BinanceClient());
+            _clients.Add(new BinanceBClient());
             //_clients.Add(new FtxClient());
             _clients.Add(new OkxClient());
             _clients.Add(new OkxUsdClient());
@@ -402,40 +443,45 @@ namespace Crypto.Forms
             var notifications = Notify();
         }
 
-        private List<(string Name, string Prop1, string Prop2)> Notify()
+        private List<(string Name, string Prop1, string Prop2, bool Predicted, float Difference)> Notify()
         {
-            var res = new List<(string Name, string Prop1, string Prop2)>();
+            var res = new List<(string Name, string Prop1, string Prop2, bool Predicted, float Difference)>();
 
             var groups = _data.GroupBy(d => d.Symbol);
             foreach (var group in groups)
             {
-                var list = group.ToList();
-                var count = list.Count;
-                for (int i = 0; i < count; i++)
+                if(group.Count(d => d.FundingRate > -90f) >= 2)
                 {
-                    var broken = false;
-                    for (int j = i + 1; j < count; j++)
-                    {
-                        var cond1 = list[i].FundingRate != -100f && list[j].FundingRate != -100f &&
-                                    list[i].FundingRate != -99f  && list[j].FundingRate != -99f;
-                        var cond2 = Math.Abs(list[i].FundingRate - list[j].FundingRate) > _notificationSettings.Difference;
+                    var lowestFunding = group.Where(d => d.FundingRate > -90f).Aggregate((a, b) => a.FundingRate < b.FundingRate ? a : b);
+                    var highestFunding = group.Where(d => d.FundingRate > -90f).Aggregate((a, b) => a.FundingRate > b.FundingRate ? a : b);
 
-                        var cond3 = list[i].PredictedFunding != -100f && list[j].PredictedFunding != -100f &&
-                                    list[i].PredictedFunding != -99f  && list[j].PredictedFunding != -99f;
-                        var cond4 = Math.Abs(list[i].PredictedFunding - list[j].PredictedFunding) > _notificationSettings.Difference;
+                    var cond1 = highestFunding.FundingRate != -100f && lowestFunding.FundingRate != -100f &&
+                                highestFunding.FundingRate != -99f && lowestFunding.FundingRate != -99f;
+                    var diff1 = highestFunding.FundingRate - lowestFunding.FundingRate;
+                    var cond2 = diff1 > _notificationSettings.Difference;
 
-                        if (cond1 && cond2 || (cond3 && cond4))
-                        {
-                            res.Add((list[i].Symbol, list[i].Name, list[j].Name));
-                            broken = true;
-                            break; // one is enough
-                        }
-                    }
-                    if(broken)
+                    if (cond1 && cond2)
                     {
-                        break;
+                        res.Add((highestFunding.Symbol, highestFunding.MarketName, lowestFunding.MarketName, false, diff1));
                     }
                 }
+
+                if(group.Count(d => d.PredictedFunding > -90f) >= 2)
+                {
+                    var lowestPredicted = group.Where(d => d.PredictedFunding > -90f).Aggregate((a, b) => a.PredictedFunding < b.PredictedFunding ? a : b);
+                    var highestPredicted = group.Where(d => d.PredictedFunding > -90f).Aggregate((a, b) => a.PredictedFunding > b.PredictedFunding ? a : b);
+
+                    var cond3 = highestPredicted.PredictedFunding != -100f && lowestPredicted.PredictedFunding != -100f &&
+                                highestPredicted.PredictedFunding != -99f && lowestPredicted.PredictedFunding != -99f;
+                    var diff2 = highestPredicted.PredictedFunding - lowestPredicted.PredictedFunding;
+                    var cond4 = diff2 > _notificationSettings.Difference;
+
+
+                    if (cond3 && cond4)
+                    {
+                        res.Add((highestPredicted.Symbol, highestPredicted.MarketName, lowestPredicted.MarketName, true, diff2));
+                    }
+                } 
             }
 
             return res;
@@ -567,7 +613,8 @@ namespace Crypto.Forms
 
         private void modyfikujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var window = new ViewSymbolsForm(RowsToData(_rows));
+            var data = RowsToData(_rows).Where(d => d.Symbol != "Ftx").ToList();
+            var window = new ViewSymbolsForm(data);
             window.ShowDialog();
         }
 
@@ -627,53 +674,53 @@ namespace Crypto.Forms
 
         private async void pobierzSymboleZBinanceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var binanceNames = await BinanceClient.GetSymbolNames();
-            var newBinanceNames = binanceNames.Where(n => !Names.Contains(n)).ToList();
-            var namesUnknownForBinance = Names.Where(n => !binanceNames.Contains(n)).ToList();
+            var worker = new SeleniumWorker();
+            var phemexNames = worker.GetPhemexNames();
+            worker.QuitDriver();
+            //var binanceNames = await BinanceClient.GetSymbolNames();
+            //var newBinanceNames = binanceNames.Where(n => !Names.Contains(n)).ToList();
+            //var namesUnknownForBinance = Names.Where(n => !binanceNames.Contains(n)).ToList();
 
-            foreach(var name in namesUnknownForBinance)
-            {
-                // _symbols.Single(s => s.Name == name).Binance = "?";
-            }
+            //foreach(var name in namesUnknownForBinance)
+            //{
+            //    // _symbols.Single(s => s.Name == name).Binance = "?";
+            //}
 
-            //var worker = new SeleniumWorker();
-            //var phemexNames = worker.GetPhemexNames();
-            //worker.QuitDriver();
 
-            var phemexUsdNames = Utility.SymbolProvider.ReadFile("phemexUSD.txt", "USD");
-            var newPhemexUsdNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
-            var namesUnknownForPhemexUsd = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+            //var phemexUsdNames = Utility.SymbolProvider.ReadFile("phemexUSD.txt", "USD");
+            //var newPhemexUsdNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
+            //var namesUnknownForPhemexUsd = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
 
-            foreach (var name in namesUnknownForPhemexUsd)
-            {
-                //_symbols.Single(s => s.Name == name).Phemex = "?";
-            }
+            //foreach (var name in namesUnknownForPhemexUsd)
+            //{
+            //    //_symbols.Single(s => s.Name == name).Phemex = "?";
+            //}
 
-            var phemexUsdtNames = SymbolProvider.ReadFile("phemexUSDT.txt", "USDT");
-            var newPhemexUsdtNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
-            var namesUnknownForPhemexUsdt = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
+            //var phemexUsdtNames = SymbolProvider.ReadFile("phemexUSDT.txt", "USDT");
+            //var newPhemexUsdtNames = phemexUsdNames.Where(n => !Names.Contains(n)).ToList();
+            //var namesUnknownForPhemexUsdt = Names.Where(n => !phemexUsdNames.Contains(n)).ToList();
 
-            foreach (var name in namesUnknownForPhemexUsd)
-            {
-                // _symbols.Single(s => s.Name == name).PhemexUsdt = "?";
-            }
+            //foreach (var name in namesUnknownForPhemexUsd)
+            //{
+            //    // _symbols.Single(s => s.Name == name).PhemexUsdt = "?";
+            //}
 
-            var newNames = new List<string>(newBinanceNames);
-            newNames.AddRange(newPhemexUsdNames);
-            newNames.AddRange(newPhemexUsdtNames);
-            newNames = newNames.Distinct().ToList();
+            //var newNames = new List<string>(newBinanceNames);
+            //newNames.AddRange(newPhemexUsdNames);
+            //newNames.AddRange(newPhemexUsdtNames);
+            //newNames = newNames.Distinct().ToList();
 
-            SymbolProvider.AddSymbols(newNames.ToArray());
+            //SymbolProvider.AddSymbols(newNames.ToArray());
 
-            var bSymbolsCount = SymbolProvider.FixBinanceBSymbols(true);
+            //var bSymbolsCount = SymbolProvider.FixBinanceBSymbols(true);
 
-            MessageBox.Show($"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
-                $" było wcześniej nieznanych.\n" +
-                $"Phemex zwróciła {phemexUsdNames.Count} symboli, z czego {newPhemexUsdNames.Count}" +
-                $" było wcześniej nieznanych.\n\n" +
-                $"Łącznie dodano {newNames.Count - bSymbolsCount} symboli.",
-                "Wynik aktualizacji",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show($"Binance zwróciła {binanceNames.Count} symboli (w tym {bSymbolsCount} b-symboli), z czego {newBinanceNames.Count}" +
+            //    $" było wcześniej nieznanych.\n" +
+            //    $"Phemex zwróciła {phemexUsdNames.Count} symboli, z czego {newPhemexUsdNames.Count}" +
+            //    $" było wcześniej nieznanych.\n\n" +
+            //    $"Łącznie dodano {newNames.Count - bSymbolsCount} symboli.",
+            //    "Wynik aktualizacji",
+            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ustawieniaToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -684,15 +731,64 @@ namespace Crypto.Forms
                 if (result == DialogResult.OK)
                 {
                     _notificationSettings = form.Settings;
+                    Settings.Default.notifications_difference = form.Settings.Difference;
+                    Settings.Default.Save();
                 }
             }
         }
 
         private void pokażToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var notifications = Notify();
 
+            var messageSb = new StringBuilder();
+            foreach(var notification in notifications.OrderBy(n => -n.Difference).Take(10))
+            {
+                messageSb.AppendLine($"{notification.Name}: różnica {notification.Difference*100:0.000} na giełdach" +
+                    $" {notification.Prop1} i {notification.Prop2} ({(notification.Predicted ? "predicted" : "funding")})");
+            }
+            if(notifications.Count > 10)
+            {
+                messageSb.AppendLine($"i {notifications.Count - 10} innych...");
+            }
+
+            if(notifications.Any())
+            {
+                MessageBox.Show(messageSb.ToString(), "Powiadomienia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Brak powiadomień", "Powiadomienia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+            var t = menuStrip1.Items["powiadomieniaToolStripMenuItem"] as ToolStripMenuItem;
+            t.Text = "Powiadomienia";
+            t.DropDown.Items[1].Image = new Bitmap(Resources.bell_empty);
         }
 
-        
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            var notifications = Notify();
+
+            var t = menuStrip1.Items["powiadomieniaToolStripMenuItem"] as ToolStripMenuItem;
+            t.Text = "Powiadomienia " + (notifications.Any() ? $"({notifications.Count})" : "");
+            t.DropDown.Items[1].Image = notifications.Any() ? new Bitmap(Resources.bell_full) : new Bitmap(Resources.bell_empty);
+
+            if(notifications.Any())
+            {
+                t.Font = new Font(t.Font, FontStyle.Bold);
+            }
+            else
+            {
+                t.Font = new Font(t.Font, FontStyle.Regular);
+            }
+        }
+
+        private void powiadomieniaToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            var t = menuStrip1.Items["powiadomieniaToolStripMenuItem"] as ToolStripMenuItem;
+            t.Font = new Font(t.Font, FontStyle.Regular);
+        }
     }
 }

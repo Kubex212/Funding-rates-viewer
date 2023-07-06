@@ -24,7 +24,7 @@ namespace Crypto.Forms
             radioButton2.Checked = settings.Type == NotificationType.Specified;
             radioButton3.Checked = settings.Type == NotificationType.AllExcept;
 
-            numericUpDown1.Value = (decimal)settings.Difference;
+            numericUpDown1.Value = (decimal)settings.Difference * 100;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
