@@ -7,33 +7,32 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Crypto.Objects.Models.Phemex;
+using Crypto.Objects.Models;
 using Crypto.Objects;
 using System.Configuration;
 using Crypto.Utility;
 
-namespace Crypto.Clients.Okx
+namespace Crypto.Clients
 {
-    public class OkxClient : IClient
+    public class OkxClient : BaseClient
     {
-        public string Name { get; } = "Okx";
-        public static HttpClient Client { get; set; }
+        public override string Name { get; } = "Okx";
 
         private static string BaseUrl { get; } = "https://okx.com";
-        public static void InitializeClient()
+        public OkxClient()
         {
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<TableData>> GetTableDataAsync(List<string> globalSymbols)
+        public override async Task<List<TableData>> GetTableDataAsync(List<string> globalSymbols)
         {
             if (globalSymbols == null || globalSymbols.Count == 0)
             {
                 throw new ArgumentException("no symbols were provided");
             }
-            IClient c = this;
+            BaseClient c = this;
             var result = c.HandleUnknowns(globalSymbols);
             var noUnknowns = c.RemoveUnknowns(globalSymbols);
             var symbols = NameTranslator.GlobalToClientNames(noUnknowns, Name);
@@ -54,7 +53,7 @@ namespace Crypto.Clients.Okx
                         string json = await response.Content.ReadAsStringAsync();
 
                         var resultObj = JObject.Parse(json);
-                        var symbol = NameTranslator.ClientToGlobalName(s, Name);
+                        var getNameRes = NameTranslator.ClientToGlobalName(s, Name);
                         var msg = Convert.ToString(resultObj["msg"]);
                         if (msg != "")
                         {
@@ -67,7 +66,7 @@ namespace Crypto.Clients.Okx
                         p = p.Replace('.', ',');
                         var fundingRate = float.Parse(f);
                         var predictedRate = float.Parse(p);
-                        var data = new TableData(symbol, fundingRate, Name, predictedRate);
+                        var data = new TableData(getNameRes.Name, fundingRate, Name, predictedRate);
 
                         result.Add(data);
                     }
@@ -76,8 +75,8 @@ namespace Crypto.Clients.Okx
                 {
                     Logger.Log($"Symbol {s} nie działa ({Name}): {ex.Message}", Utility.Type.Message);
 
-                    var symbol = NameTranslator.ClientToGlobalName(s, Name);
-                    var data = new TableData(symbol, -100f, Name, -100f);
+                    var getNameRes = NameTranslator.ClientToGlobalName(s, Name);
+                    var data = new TableData(getNameRes.Name, -100f, Name, -100f);
                     result.Add(data);
 
                     return;
@@ -86,18 +85,18 @@ namespace Crypto.Clients.Okx
                 {
                     Logger.Log($"Problem z symbolem {s}({Name}): {ex.Message}");
 
-                    var symbol = NameTranslator.ClientToGlobalName(s, Name);
-                    var data = new TableData(symbol, -100f, Name, -100f);
+                    var getNameRes = NameTranslator.ClientToGlobalName(s, Name);
+                    var data = new TableData(getNameRes.Name, -100f, Name, -100f);
                     result.Add(data);
 
                     return;
                 }
-                catch (System.FormatException ex)
+                catch (FormatException ex)
                 {
                     Logger.Log($"Problem z symbolem {s} ({Name}) - format exception: {ex.Message}", Utility.Type.Error);
 
-                    var symbol = NameTranslator.ClientToGlobalName(s, Name);
-                    var data = new TableData(symbol, -100f, Name, -100f);
+                    var getNameRes = NameTranslator.ClientToGlobalName(s, Name);
+                    var data = new TableData(getNameRes.Name, -100f, Name, -100f);
                     result.Add(data);
 
                     return;

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Crypto.Objects.Models.Bitfinex;
+using Crypto.Objects.Models;
 
-namespace Crypto.Converters.Bitfinex
+namespace Crypto.Converters
 {
     public class DerivativeStatusConverter : JsonConverter
     {
@@ -83,7 +83,7 @@ namespace Crypto.Converters.Bitfinex
                     ClampMax = (float)array[23]
                 };
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 Utility.Logger.Log($"Bitfinex: błąd z {symbolStripped}. {ex.Message}", Utility.Type.Error);
                 return new DerivativeStatus

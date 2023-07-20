@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ignorujXWPowiadomieniachToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usuńXZIgnorowanychToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.konsolaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pokażCałośćToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +41,7 @@
             this.jakoRichTextBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabelkaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.odświeżToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.odświeżajToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wartościToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maksymalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +58,9 @@
             this.ustawieniaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pokażToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.notificationCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tableContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -64,13 +69,37 @@
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.ContextMenuStrip = this.tableContextMenu;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 24);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(1492, 453);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
+            // 
+            // tableContextMenu
+            // 
+            this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ignorujXWPowiadomieniachToolStripMenuItem,
+            this.usuńXZIgnorowanychToolStripMenuItem});
+            this.tableContextMenu.Name = "tableContextMenu";
+            this.tableContextMenu.Size = new System.Drawing.Size(232, 70);
+            // 
+            // ignorujXWPowiadomieniachToolStripMenuItem
+            // 
+            this.ignorujXWPowiadomieniachToolStripMenuItem.Name = "ignorujXWPowiadomieniachToolStripMenuItem";
+            this.ignorujXWPowiadomieniachToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.ignorujXWPowiadomieniachToolStripMenuItem.Text = "Ignoruj x w powiadomieniach";
+            this.ignorujXWPowiadomieniachToolStripMenuItem.Click += new System.EventHandler(this.ignorujXWPowiadomieniachToolStripMenuItem_Click);
+            // 
+            // usuńXZIgnorowanychToolStripMenuItem
+            // 
+            this.usuńXZIgnorowanychToolStripMenuItem.Name = "usuńXZIgnorowanychToolStripMenuItem";
+            this.usuńXZIgnorowanychToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.usuńXZIgnorowanychToolStripMenuItem.Text = "Usuń x z ignorowanych";
+            this.usuńXZIgnorowanychToolStripMenuItem.Click += new System.EventHandler(this.usuńXZIgnorowanychToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -121,6 +150,7 @@
             // 
             this.tabelkaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.odświeżToolStripMenuItem,
+            this.odświeżajToolStripMenuItem,
             this.wartościToolStripMenuItem});
             this.tabelkaToolStripMenuItem.Name = "tabelkaToolStripMenuItem";
             this.tabelkaToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
@@ -132,6 +162,15 @@
             this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.odświeżToolStripMenuItem.Text = "Odśwież";
             this.odświeżToolStripMenuItem.Click += new System.EventHandler(this.odświeżToolStripMenuItem_Click);
+            // 
+            // odświeżajToolStripMenuItem
+            // 
+            this.odświeżajToolStripMenuItem.Checked = true;
+            this.odświeżajToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.odświeżajToolStripMenuItem.Name = "odświeżajToolStripMenuItem";
+            this.odświeżajToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.odświeżajToolStripMenuItem.Text = "Odświeżaj";
+            this.odświeżajToolStripMenuItem.Click += new System.EventHandler(this.odświeżajToolStripMenuItem_Click);
             // 
             // wartościToolStripMenuItem
             // 
@@ -264,10 +303,10 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
-            // notificationCheckTimer
+            // refreshTimer
             // 
-            this.notificationCheckTimer.Interval = 100000;
-            this.notificationCheckTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            this.refreshTimer.Interval = 100000;
+            this.refreshTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // TableForm
             // 
@@ -284,6 +323,7 @@
             this.Text = "Tabelka";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TableForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tableContextMenu.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -318,6 +358,10 @@
         private ToolStripMenuItem powiadomieniaToolStripMenuItem;
         private ToolStripMenuItem ustawieniaToolStripMenuItem1;
         private ToolStripMenuItem pokażToolStripMenuItem;
-        private System.Windows.Forms.Timer notificationCheckTimer;
+        private System.Windows.Forms.Timer refreshTimer;
+        private ToolStripMenuItem odświeżajToolStripMenuItem;
+        private ContextMenuStrip tableContextMenu;
+        private ToolStripMenuItem ignorujXWPowiadomieniachToolStripMenuItem;
+        private ToolStripMenuItem usuńXZIgnorowanychToolStripMenuItem;
     }
 }

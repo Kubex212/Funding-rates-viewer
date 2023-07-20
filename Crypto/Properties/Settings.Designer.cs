@@ -26,36 +26,36 @@ namespace Crypto.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("OrangeRed")]
-        public global::System.Drawing.Color Color_low {
+        public global::System.Drawing.Color ColorLow {
             get {
-                return ((global::System.Drawing.Color)(this["Color_low"]));
+                return ((global::System.Drawing.Color)(this["ColorLow"]));
             }
             set {
-                this["Color_low"] = value;
+                this["ColorLow"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("LimeGreen")]
-        public global::System.Drawing.Color Color_high {
+        public global::System.Drawing.Color ColorHigh {
             get {
-                return ((global::System.Drawing.Color)(this["Color_high"]));
+                return ((global::System.Drawing.Color)(this["ColorHigh"]));
             }
             set {
-                this["Color_high"] = value;
+                this["ColorHigh"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 192")]
-        public global::System.Drawing.Color Color_empty {
+        public global::System.Drawing.Color ColorEmpty {
             get {
-                return ((global::System.Drawing.Color)(this["Color_empty"]));
+                return ((global::System.Drawing.Color)(this["ColorEmpty"]));
             }
             set {
-                this["Color_empty"] = value;
+                this["ColorEmpty"] = value;
             }
         }
         
@@ -74,36 +74,60 @@ namespace Crypto.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.015")]
-        public double min_green {
+        public double MinGreen {
             get {
-                return ((double)(this["min_green"]));
+                return ((double)(this["MinGreen"]));
             }
             set {
-                this["min_green"] = value;
+                this["MinGreen"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("-0.005")]
-        public double max_red {
+        public double MaxRed {
             get {
-                return ((double)(this["max_red"]));
+                return ((double)(this["MaxRed"]));
             }
             set {
-                this["max_red"] = value;
+                this["MaxRed"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.005")]
-        public double notifications_difference {
+        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        public double NotificationsDifference {
             get {
-                return ((double)(this["notifications_difference"]));
+                return ((double)(this["NotificationsDifference"]));
             }
             set {
-                this["notifications_difference"] = value;
+                this["NotificationsDifference"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double NotificationSoundDifference {
+            get {
+                return ((double)(this["NotificationSoundDifference"]));
+            }
+            set {
+                this["NotificationSoundDifference"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int RefreshTime {
+            get {
+                return ((int)(this["RefreshTime"]));
+            }
+            set {
+                this["RefreshTime"] = value;
             }
         }
     }

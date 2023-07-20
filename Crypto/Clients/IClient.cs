@@ -7,12 +7,11 @@ using Crypto.Objects;
 
 namespace Crypto.Clients
 {
-    public interface IClient
+    public abstract class BaseClient
     {
-        public string Name { get; }
-        public static HttpClient Client { get; private set; }
-        public static void InitializeClient() { }
-        public Task<List<TableData>> GetTableDataAsync(List<string> symbols);
+        public abstract string Name { get; }
+        public HttpClient Client { get; set; }
+        public abstract Task<List<TableData>> GetTableDataAsync(List<string> symbols);
         public List<TableData> HandleUnknowns(List<string> symbols)
         {
             List<TableData> result = new List<TableData>();

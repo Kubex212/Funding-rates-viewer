@@ -2,26 +2,32 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Crypto.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Color_low" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="ColorLow" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">OrangeRed</Value>
     </Setting>
-    <Setting Name="Color_high" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="ColorHigh" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">LimeGreen</Value>
     </Setting>
-    <Setting Name="Color_empty" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="ColorEmpty" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">192, 0, 192</Value>
     </Setting>
     <Setting Name="Color_error" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
-    <Setting Name="min_green" Type="System.Double" Scope="User">
+    <Setting Name="MinGreen" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.015</Value>
     </Setting>
-    <Setting Name="max_red" Type="System.Double" Scope="User">
+    <Setting Name="MaxRed" Type="System.Double" Scope="User">
       <Value Profile="(Default)">-0.005</Value>
     </Setting>
-    <Setting Name="notifications_difference" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.005</Value>
+    <Setting Name="NotificationsDifference" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.25</Value>
+    </Setting>
+    <Setting Name="NotificationSoundDifference" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
+    <Setting Name="RefreshTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
     </Setting>
   </Settings>
 </SettingsFile>

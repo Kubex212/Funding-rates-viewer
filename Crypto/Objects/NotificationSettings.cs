@@ -8,13 +8,16 @@ namespace Crypto.Objects
 {
     public class NotificationSettings
     {
-        public double Difference { get; set; }
+        public double StandardDifference { get; set; }
+        public double SoundDifference { get; set; }
         public NotificationType Type { get; set; }
-        public List<string> SymbolNames { get; set; } = new List<string>();
+        public List<string> IgnoredSymbolNames { get; set; } = new List<string>();
+        public List<string> WatchedSymbolNames { get; set; } = new List<string>();
 
-        public NotificationSettings(double difference)
+        public NotificationSettings(double standardDifference, double soundDifference)
         {
-            Difference = difference;
+            StandardDifference = standardDifference;
+            SoundDifference = soundDifference;
         }
     }
 

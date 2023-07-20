@@ -16,6 +16,7 @@ namespace Crypto.Utility
         private static bool _initialized = false;
         private static List<Symbol> _symbols = new List<Symbol>();
         private static List<string> _symbolNames = new List<string>();
+        private static Dictionary<string, Symbol> _symbolsByName = new Dictionary<string, Symbol>();
 
         public static List<Symbol> GetSymbols()
         {
@@ -28,6 +29,13 @@ namespace Crypto.Utility
             if (!_initialized)
                 if (!Initialize()) throw new InvalidOperationException();
             return _symbolNames;
+        }
+
+        public static Dictionary<string, Symbol> GetSymbolDict()
+        {
+            if (!_initialized)
+                if (!Initialize()) throw new InvalidOperationException();
+            return _symbolsByName;
         }
 
         public static bool SaveToFile()
@@ -131,6 +139,7 @@ namespace Crypto.Utility
                     string json = r.ReadToEnd();
                     _symbols = JsonConvert.DeserializeObject<List<Symbol>>(json)!;
                     _symbolNames = _symbols.Select(x => x.Name).ToList()!;
+                    _symbolsByName = _symbols.ToDictionary(x => x.Name!, x => x);
                 }
             }
             catch (FileNotFoundException ex)

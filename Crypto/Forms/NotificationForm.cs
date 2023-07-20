@@ -24,7 +24,11 @@ namespace Crypto.Forms
             radioButton2.Checked = settings.Type == NotificationType.Specified;
             radioButton3.Checked = settings.Type == NotificationType.AllExcept;
 
-            numericUpDown1.Value = (decimal)settings.Difference * 100;
+            numericUpDown1.Value = (decimal)settings.StandardDifference * 100;
+            numericUpDown2.Value = (decimal)settings.SoundDifference * 100;
+
+            allTB.Text = string.Join(";", settings.WatchedSymbolNames);
+            exceptTB.Text = string.Join(";", settings.IgnoredSymbolNames);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -62,7 +66,11 @@ namespace Crypto.Forms
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Settings.Difference = (double)numericUpDown1.Value / 100.0;
+            Settings.StandardDifference = (double)numericUpDown1.Value / 100.0;
+        }
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.SoundDifference = (double)numericUpDown2.Value / 100.0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -75,6 +83,11 @@ namespace Crypto.Forms
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void exceptTB_TextChanged(object sender, EventArgs e)
+        {
+            Settings.IgnoredSymbolNames = exceptTB.Text.Split(";").ToList();
         }
     }
 }

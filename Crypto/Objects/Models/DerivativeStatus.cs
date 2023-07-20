@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crypto.Objects.Models.Bitfinex
+namespace Crypto.Objects.Models
 {
     public class DerivativeStatus
     {
         public string Symbol { get; set; }
-        public long Mts  { get; set; }
+        public long Mts { get; set; }
         public float DerivPrice { get; set; }
         public float SpotPrice { get; set; }
         public float InsuranceFundBalance { get; set; }

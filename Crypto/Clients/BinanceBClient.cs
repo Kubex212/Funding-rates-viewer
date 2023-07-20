@@ -12,27 +12,21 @@ using System.Configuration;
 using Crypto.Utility;
 using Newtonsoft.Json;
 
-namespace Crypto.Clients.Binance
+namespace Crypto.Clients
 {
-    public class BinanceClient : IClient
+    public class BinanceBClient : BaseClient
     {
-        public string Name { get; } = "Binance";
-        public static HttpClient Client { get; set; }
+        public override string Name { get; } = "BinanceBUSD";
         private static string BaseUrl { get; } = "https://www.binance.com/";
-        public static void InitializeClient()
+        public BinanceBClient()
         {
             Client = new HttpClient();
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<TableData>> GetTableDataAsync(List<string> globalSymbols)
+        public override async Task<List<TableData>> GetTableDataAsync(List<string> globalSymbols)
         {
-            if (globalSymbols == null || globalSymbols.Count == 0)
-            {
-                throw new ArgumentException("no symbols were provided");
-            }
-            var symbols = NameTranslator.GlobalToClientNames(globalSymbols, Name);
             var result = new List<TableData>();
 
             string url = BaseUrl + "fapi/v1/premiumIndex";
@@ -44,15 +38,14 @@ namespace Crypto.Clients.Binance
                     dynamic obj = JsonConvert.DeserializeObject(data);
                     foreach (var item in obj)
                     {
-                        if (item.lastFundingRate == null) item.lastFundingRate = 0f;
-                        try
+                        var globalNameRes = NameTranslator.ClientToGlobalName((string)item.symbol, Name);
+                        if(globalNameRes.Success)
                         {
-                            string globalName = NameTranslator.ClientToGlobalName((string)item.symbol, Name);
-                            result.Add(new TableData(globalName, (float)item.lastFundingRate, Name, -100f));
+                            result.Add(new TableData(globalNameRes.Name, (float)item.lastFundingRate, Name, -100f));
                         }
-                        catch (InvalidOperationException ex)
+                        else
                         {
-                            Logger.Log(ex.Message, Utility.Type.Warning);
+                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
                         }
                     }
                 }
@@ -66,7 +59,7 @@ namespace Crypto.Clients.Binance
             return result;
         }
 
-        public static async Task<List<string>> GetSymbolNames()
+        public async Task<List<string>> GetSymbolNames()
         {
             var result = new List<string>();
 

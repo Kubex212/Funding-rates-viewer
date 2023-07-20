@@ -1,8 +1,8 @@
-using Crypto.Clients.Bitfinex;
-using Crypto.Clients.Phemex;
-using Crypto.Clients.Huobi;
+using Crypto.Clients;
+using Crypto.Clients;
+using Crypto.Clients;
 using Crypto.Forms;
-using Crypto.Objects.Models.Phemex;
+using Crypto.Objects.Models;
 using Crypto.Clients;
 using Crypto.Objects;
 using Crypto.Utility;
@@ -10,35 +10,38 @@ using System.Configuration;
 
 namespace Crypto
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
-            numericUpDown2.Value = (decimal)Properties.Settings.Default.min_green;
-            numericUpDown3.Value = (decimal)Properties.Settings.Default.max_red;
+            numericUpDown1.Value = (decimal)Properties.Settings.Default.RefreshTime;
+            numericUpDown2.Value = (decimal)Properties.Settings.Default.MinGreen;
+            numericUpDown3.Value = (decimal)Properties.Settings.Default.MaxRed;
 
-            if (Properties.Settings.Default.Color_high == Color.White)
-                Properties.Settings.Default.Color_high = Color.Green;
+            if (Properties.Settings.Default.ColorHigh == Color.White)
+                Properties.Settings.Default.ColorHigh = Color.Green;
 
-            if (Properties.Settings.Default.Color_low == Color.White)
-                Properties.Settings.Default.Color_low = Color.Red;
+            if (Properties.Settings.Default.ColorLow == Color.White)
+                Properties.Settings.Default.ColorLow = Color.Red;
 
             if (Properties.Settings.Default.Color_error == Color.White)
                 Properties.Settings.Default.Color_error = Color.Black;
 
-            if (Properties.Settings.Default.Color_empty == Color.White)
-                Properties.Settings.Default.Color_empty = Color.DarkMagenta;
+            if (Properties.Settings.Default.ColorEmpty == Color.White)
+                Properties.Settings.Default.ColorEmpty = Color.DarkMagenta;
             Properties.Settings.Default.Save();
+
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
             var tableForm = new TableForm((int)numericUpDown1.Value, (double)numericUpDown3.Value, (double)numericUpDown2.Value);
             tableForm.Show();
-            Properties.Settings.Default.min_green = (double)numericUpDown2.Value;
-            Properties.Settings.Default.max_red = (double)numericUpDown3.Value;
+            Properties.Settings.Default.RefreshTime = (int)numericUpDown1.Value;
+            Properties.Settings.Default.MinGreen = (double)numericUpDown2.Value;
+            Properties.Settings.Default.MaxRed = (double)numericUpDown3.Value;
             Properties.Settings.Default.Save();
             Hide();
         }

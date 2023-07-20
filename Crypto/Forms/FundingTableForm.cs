@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Crypto.Clients.Phemex;
+using Crypto.Clients;
 using Crypto.Objects;
 
 namespace Crypto
@@ -30,14 +30,12 @@ namespace Crypto
             _redMax = redMax;
             _greenMin = greenMin;
             timer1.Interval = refresh * 1000;
-            PhemexClient.InitializeClient();
 
             InitTable(symbols);
         }
 
         async void InitTable(List<string> symbols)
         {
-            PhemexClient.InitializeClient();
             PhemexClient client = new PhemexClient();
             _data = await client.GetTableDataAsync(symbols);
             var bindingList = new BindingList<TableData>(_data);

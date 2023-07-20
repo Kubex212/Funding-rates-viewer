@@ -89,20 +89,41 @@ namespace Crypto.Utility
         /// <param name="symbol">Symbol to translate</param>
         /// <param name="clientName">Name of the market</param>
         /// <returns>global name of the provided symbol</returns>
-        public static string ClientToGlobalName(string symbol, string clientName)
+        public static GetNameResult ClientToGlobalName(string symbol, string clientName)
         {
             if (!_initialized) 
                 if(!Initialize()) throw new InvalidOperationException();
             foreach (var s in _arrayOfObjects)
             {
-                if (s[clientName] == symbol) return s.Name;
+                if (s[clientName] == symbol) return new GetNameResult((string)s.Name);
             }
-            throw new InvalidOperationException($"Giełda {clientName} zwróciła symbol {symbol}, jednak w pliku .json nie ma jego odpowiednika. Zostanie on pominięty w tabeli.");
+            return new GetNameResult(false, $"Giełda {clientName} zwróciła symbol {symbol}, jednak w pliku .json nie ma jego odpowiednika. Zostanie on pominięty w tabeli.");
         }
 
         public static void Invalidate()
         {
             _initialized = false;
+        }
+    }
+
+    public struct GetNameResult
+    {
+        public string Name;
+        public bool Success;
+        public string Reason;
+
+        public GetNameResult(string name)
+        {
+            Name = name;
+            Success = true;
+            Reason = "";
+        }
+
+        public GetNameResult(bool success, string error)
+        {
+            Name = "";
+            Success = success;
+            Reason = error;
         }
     }
 }

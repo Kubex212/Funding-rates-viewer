@@ -11,20 +11,18 @@ namespace Crypto.Objects
         public string Symbol { get; set; }
         public float BitfinexFunding { get; set; } = -100;
         public float BitfinexPredicted { get; set; } = -100;
-        public float PhemexFunding { get; set; } = -100;
-        public float PhemexPredicted { get; set; } = -100;
-        public float PhemexUsdtFunding { get; set; } = -100;
-        public float PhemexUsdtPredicted { get; set; } = -100;
+        public float PhemexFunding { get; set; } = Consts.Unknown;
+        public float PhemexUsdtFunding { get; set; } = Consts.Unknown;
         public float HuobiFunding { get; set; } = -100;
         public float HuobiPredicted { get; set; } = -100;
-        public float BinanceFunding { get; set; } = -99;
-        public float BinanceBUSDFunding { get; set; } = -99;
+        public float BinanceFunding { get; set; } = Consts.Unknown;
+        public float BinanceBUSDFunding { get; set; } = Consts.Unknown;
         public float OkxFunding { get; set; } = -100;
         public float OkxPredicted { get; set; } = -100;
         public float OkxUsdFunding { get; set; } = -100;
         public float OkxUsdPredicted { get; set; } = -100;
-        public float ByBitLinearFunding { get; set; } = -100;
-        public float ByBitInverseFunding { get; set; } = -100;
-        public float ByBitPerpFunding { get; set; } = -100;
+        public float ByBitLinearFunding { get; set; } = Consts.Unknown;
+        public float ByBitInverseFunding { get; set; } = Consts.Unknown;
+        public float ByBitPerpFunding { get; set; } = Consts.Unknown;
     }
 }

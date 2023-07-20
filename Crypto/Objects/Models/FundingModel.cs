@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crypto.Objects.Models.Phemex
+namespace Crypto.Objects.Models
 {
     public class FundingModel
     {
