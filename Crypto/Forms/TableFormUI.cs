@@ -20,6 +20,8 @@ namespace Crypto.Forms
 {
     public partial class TableForm : Form
     {
+        private DateTime _lastRefresh;
+        private DataGridViewCell _recentlyRightClickedCell;
         private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             _sort = (e.ColumnIndex, _sort.ascending ? false : true);
@@ -229,14 +231,14 @@ namespace Crypto.Forms
 
         private void ustawieniaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            using (var form = new NotificationForm(_notificationSettings))
+            using (var form = new NotificationSettingsForm(_notificationSettings))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    _notificationSettings = form.Settings;
-                    Settings.Default.NotificationsDifference = form.Settings.StandardDifference;
-                    Settings.Default.NotificationSoundDifference = form.Settings.SoundDifference;
+                    Settings.Default.NotificationsDifference = form.Settings.DefaultStandardDifference;
+                    Settings.Default.NotificationSoundDifference = form.Settings.DefaultSoundDifference;
+                    Settings.Default.GroupsJson = Newtonsoft.Json.JsonConvert.SerializeObject(form.Settings.Groups);
                     Settings.Default.Save();
                 }
             }
@@ -244,32 +246,35 @@ namespace Crypto.Forms
 
         private void pokażToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var notifications = Notify();
+            var notifications = Notify().Take(15).ToList();
 
-            var messageSb = new StringBuilder();
-            foreach (var notification in notifications.OrderBy(n => -n.Difference).Take(10))
+            using (var form = new ShowNotificationsForm(_notificationSettings, notifications))
             {
-                messageSb.AppendLine($"{notification.Name}: różnica {notification.Difference * 100:0.000} na giełdach" +
-                    $" {notification.Prop1} i {notification.Prop2} ({(notification.Predicted ? "predicted" : "funding")})");
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if(form.IgnoreTime.HasValue)
+                    {
+                        // TODO: this will delete from ignored/muted even if form added symbols to the other one
+                        DeleteFromIgnoredAndMuted(form.IgnoreTime.Value, form.Symbols);
+                    }
+                    if(form.GoToSymbol != null)
+                    {
+                        GoToRow(form.GoToSymbol);
+                    }
+                }
             }
-            if (notifications.Count > 10)
-            {
-                messageSb.AppendLine($"i {notifications.Count - 10} innych...");
-            }
-
-            if (notifications.Any())
-            {
-                MessageBox.Show(messageSb.ToString(), "Powiadomienia", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Brak powiadomień", "Powiadomienia", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
 
             var t = menuStrip1.Items["powiadomieniaToolStripMenuItem"] as ToolStripMenuItem;
             t.Text = "Powiadomienia";
             t.DropDown.Items[1].Image = new Bitmap(Resources.bell_empty);
+        }
+
+        private async Task DeleteFromIgnoredAndMuted(int delay, List<string> symbols)
+        {
+            await Task.Delay(TimeSpan.FromMinutes(delay));
+            _notificationSettings.MutedSymbolNames.RemoveAll(s => symbols.Contains(s));
+            _notificationSettings.IgnoredSymbolNames.RemoveAll(s => symbols.Contains(s));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -292,10 +297,14 @@ namespace Crypto.Forms
             if(item.Checked)
             {
                 refreshTimer.Start();
+                refreshCountdown.Start();
             }
             else
             {
                 refreshTimer.Stop();
+                refreshCountdown.Stop();
+                var t = (menuStrip1.Items["tabelkaToolStripMenuItem"] as ToolStripMenuItem)!;
+                t.DropDown.Items[0].Text = $"Odśwież";
             }
         }
 
@@ -317,15 +326,19 @@ namespace Crypto.Forms
 
         private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
             {
-                DataGridViewCell c = (sender as DataGridView)![e.ColumnIndex, e.RowIndex];
+                var c = (sender as DataGridView)![e.ColumnIndex, e.RowIndex];
                 var symbol = _rows[e.RowIndex].Symbol;
+                _recentlyRightClickedCell = c;
 
                 tableContextMenu.Items[0].Text = $"Ignoruj {symbol} w powiadomieniach";
                 tableContextMenu.Items[1].Text = $"Usuń {symbol} z ignorowanych";
+                tableContextMenu.Items[2].Text = $"Wycisz {symbol}";
+                tableContextMenu.Items[3].Text = $"Usuń {symbol} z wyciszonych";
 
                 var isIgnored = _notificationSettings.IgnoredSymbolNames.Contains(symbol);
+                var isMuted = _notificationSettings.MutedSymbolNames.Contains(symbol);
                 if (isIgnored)
                 {
                     tableContextMenu.Items[0].Enabled = false;
@@ -336,7 +349,110 @@ namespace Crypto.Forms
                     tableContextMenu.Items[0].Enabled = true;
                     tableContextMenu.Items[1].Enabled = false;
                 }
+                if(isMuted)
+                {
+                    tableContextMenu.Items[2].Enabled = false;
+                    tableContextMenu.Items[3].Enabled = true;
+                }
+                else
+                {
+                    tableContextMenu.Items[2].Enabled = true;
+                    tableContextMenu.Items[3].Enabled = false;
+                }
             }
+        }
+
+        private void wyciszXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: make this in a more elegant way?
+            var item = (ToolStripMenuItem)sender;
+            var symbolName = item.Text.Split()[1];
+            _notificationSettings.MutedSymbolNames.Add(symbolName);
+        }
+
+        private void usuńXZWyciszonychToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: make this in a more elegant way?
+            var item = (ToolStripMenuItem)sender;
+            var symbolName = item.Text.Split()[1];
+            _notificationSettings.MutedSymbolNames.Remove(symbolName);
+        }
+
+        private void refreshCountdown_Tick(object sender, EventArgs e)
+        {
+            var secondsLeft = (refreshTimer.Interval/1000) - (DateTime.Now - _lastRefresh).Seconds;
+            var t = (menuStrip1.Items["tabelkaToolStripMenuItem"] as ToolStripMenuItem)!;
+            t.DropDown.Items[0].Text = $"Odśwież ({secondsLeft})";
+        }
+
+
+        private async void dataGridView1_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            //if (e.ColumnIndex < 1 || e.RowIndex < 1) return;
+
+            //var cell = dataGridView1[e.ColumnIndex, e.RowIndex];
+            //var columnName = _columnNames[e.ColumnIndex];
+            //var symbol = ((DataGridView)sender)[0, e.RowIndex].Value;
+            //var client = _clientsByNames[columnName];
+            //var priceRes = await client.GetPrice((string)symbol);
+
+            //if (priceRes.Success)
+            //{
+            //    cell.ToolTipText = priceRes.Price.ToString();
+            //}
+            //else
+            //{
+            //    cell.ToolTipText = priceRes.Message;
+            //}
+        }
+
+        private async void sprawdźCenęToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cell = _recentlyRightClickedCell;
+            if(cell.ColumnIndex < 0 || cell.RowIndex < 0)
+            {
+                return;
+            }
+
+            var symbol = _rows[cell.RowIndex].Symbol;
+            var columnName = _columnNames[cell.ColumnIndex];
+            var client = _clientsByNames[columnName];
+            if(!_clientsByNames.ContainsKey(symbol))
+            {
+                return;
+            }
+            var priceRes = await client.GetPrice((string)symbol);
+
+            if (priceRes.Success)
+            {
+                MessageBox.Show(priceRes.Price.ToString(), "Cena", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(priceRes.Message, "Cena", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void zresetujUstawieniaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.Default.Reset();
+            Settings.Default.Save();
+        }
+
+
+        private void domyślneSortowanieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _rows = _rows.OrderBy(r => Names.IndexOf(r.Symbol) < 0 ? 100_000 : Names.IndexOf(r.Symbol)).ToList();
+            var firstRow = 0;
+            var bindingList = new BindingList<TableRow>(_rows);
+            var source = new BindingSource(bindingList, null);
+            dataGridView1.DataSource = source;
+
+            SetColors();
+            dataGridView1.Update();
+            dataGridView1.Refresh();
+            dataGridView1.FirstDisplayedScrollingRowIndex = firstRow;
+            dataGridView1.CurrentCell = dataGridView1.Rows[firstRow].Cells[0];
         }
     }
 

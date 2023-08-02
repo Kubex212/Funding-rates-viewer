@@ -17,7 +17,6 @@ namespace Crypto.Clients
     public class BinanceBClient : BaseClient
     {
         public override string Name { get; } = "BinanceBUSD";
-        private static string BaseUrl { get; } = "https://www.binance.com/";
         public BinanceBClient()
         {
             Client = new HttpClient();
@@ -29,7 +28,7 @@ namespace Crypto.Clients
         {
             var result = new List<TableData>();
 
-            string url = BaseUrl + "fapi/v1/premiumIndex";
+            string url = "https://www.binance.com/fapi/v1/premiumIndex";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
@@ -45,7 +44,13 @@ namespace Crypto.Clients
                         }
                         else
                         {
-                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                            var globalName = ToGlobalName((string)item.symbol);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item.lastFundingRate, Name, -100f));
                         }
                     }
                 }
@@ -63,7 +68,7 @@ namespace Crypto.Clients
         {
             var result = new List<string>();
 
-            string url = BaseUrl + "fapi/v1/ticker/bookTicker";
+            string url = "https://www.binance.com/fapi/v1/ticker/bookTicker";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 string data = await response.Content.ReadAsStringAsync();
@@ -77,5 +82,39 @@ namespace Crypto.Clients
             return result;
         }
 
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("BUSD"))
+            {
+                return null;
+            }
+            return marketName.Replace("BUSD", "");
+        }
+
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = $"https://www.binance.com/fapi/v1/premiumIndex?symbol={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var price = (decimal)obj.indexPrice;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            return globalName + "BUSD";
+        }
     }
 }

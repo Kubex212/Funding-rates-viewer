@@ -29,8 +29,12 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.Button okButton;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddSymbolForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.textBoxPhemex = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,12 +53,13 @@
             this.textBoxBitfinex = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.textBoxHuobi = new System.Windows.Forms.TextBox();
+            this.textBoxPhemexUsdt = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBoxBinance = new System.Windows.Forms.TextBox();
+            this.textBoxHuobi = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.textBoxBinance = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.textBoxOkxCoin = new System.Windows.Forms.TextBox();
@@ -69,15 +74,10 @@
             this.panel11 = new System.Windows.Forms.Panel();
             this.textBoxByBitPerp = new System.Windows.Forms.TextBox();
             this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBoxPhemexUsdt = new System.Windows.Forms.TextBox();
             this.Phemex = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBoxPhemex = new System.Windows.Forms.TextBox();
             okButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel9.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -88,7 +88,6 @@
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel11.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // okButton
@@ -150,6 +149,52 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(290, 419);
             this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.textBoxPhemex);
+            this.panel9.Controls.Add(this.textBox10);
+            this.panel9.Controls.Add(this.textBox11);
+            this.panel9.Location = new System.Drawing.Point(136, 84);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(151, 25);
+            this.panel9.TabIndex = 29;
+            // 
+            // textBoxPhemex
+            // 
+            this.textBoxPhemex.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxPhemex.Location = new System.Drawing.Point(3, 5);
+            this.textBoxPhemex.Name = "textBoxPhemex";
+            this.textBoxPhemex.Size = new System.Drawing.Size(125, 23);
+            this.textBoxPhemex.TabIndex = 29;
+            // 
+            // textBox10
+            // 
+            this.textBox10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBox10.Location = new System.Drawing.Point(3, -33);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(125, 23);
+            this.textBox10.TabIndex = 28;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBox11.Location = new System.Drawing.Point(3, -68);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(125, 23);
+            this.textBox11.TabIndex = 25;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Location = new System.Drawing.Point(40, 112);
+            this.label11.Margin = new System.Windows.Forms.Padding(40, 0, 3, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(90, 31);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "PhemexUsdt";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label5
             // 
@@ -336,13 +381,13 @@
             this.panel3.Size = new System.Drawing.Size(151, 25);
             this.panel3.TabIndex = 25;
             // 
-            // textBoxHuobi
+            // textBoxPhemexUsdt
             // 
-            this.textBoxHuobi.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxHuobi.Location = new System.Drawing.Point(3, 5);
-            this.textBoxHuobi.Name = "textBoxHuobi";
-            this.textBoxHuobi.Size = new System.Drawing.Size(125, 23);
-            this.textBoxHuobi.TabIndex = 29;
+            this.textBoxPhemexUsdt.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxPhemexUsdt.Location = new System.Drawing.Point(3, 5);
+            this.textBoxPhemexUsdt.Name = "textBoxPhemexUsdt";
+            this.textBoxPhemexUsdt.Size = new System.Drawing.Size(125, 23);
+            this.textBoxPhemexUsdt.TabIndex = 30;
             // 
             // textBox3
             // 
@@ -361,13 +406,13 @@
             this.panel4.Size = new System.Drawing.Size(151, 25);
             this.panel4.TabIndex = 26;
             // 
-            // textBoxBinance
+            // textBoxHuobi
             // 
-            this.textBoxBinance.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxBinance.Location = new System.Drawing.Point(3, 5);
-            this.textBoxBinance.Name = "textBoxBinance";
-            this.textBoxBinance.Size = new System.Drawing.Size(125, 23);
-            this.textBoxBinance.TabIndex = 30;
+            this.textBoxHuobi.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxHuobi.Location = new System.Drawing.Point(3, 5);
+            this.textBoxHuobi.Name = "textBoxHuobi";
+            this.textBoxHuobi.Size = new System.Drawing.Size(125, 23);
+            this.textBoxHuobi.TabIndex = 29;
             // 
             // textBox4
             // 
@@ -385,6 +430,14 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(151, 25);
             this.panel5.TabIndex = 27;
+            // 
+            // textBoxBinance
+            // 
+            this.textBoxBinance.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.textBoxBinance.Location = new System.Drawing.Point(3, 5);
+            this.textBoxBinance.Name = "textBoxBinance";
+            this.textBoxBinance.Size = new System.Drawing.Size(125, 23);
+            this.textBoxBinance.TabIndex = 30;
             // 
             // textBox5
             // 
@@ -506,14 +559,6 @@
             this.textBox17.Size = new System.Drawing.Size(125, 23);
             this.textBox17.TabIndex = 30;
             // 
-            // textBoxPhemexUsdt
-            // 
-            this.textBoxPhemexUsdt.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxPhemexUsdt.Location = new System.Drawing.Point(3, 5);
-            this.textBoxPhemexUsdt.Name = "textBoxPhemexUsdt";
-            this.textBoxPhemexUsdt.Size = new System.Drawing.Size(125, 23);
-            this.textBoxPhemexUsdt.TabIndex = 30;
-            // 
             // Phemex
             // 
             this.Phemex.AutoSize = true;
@@ -526,64 +571,19 @@
             this.Phemex.Text = "Phemex";
             this.Phemex.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(40, 112);
-            this.label11.Margin = new System.Windows.Forms.Padding(40, 0, 3, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(90, 31);
-            this.label11.TabIndex = 37;
-            this.label11.Text = "PhemexUsdt";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.textBoxPhemex);
-            this.panel9.Controls.Add(this.textBox10);
-            this.panel9.Controls.Add(this.textBox11);
-            this.panel9.Location = new System.Drawing.Point(136, 84);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(151, 25);
-            this.panel9.TabIndex = 29;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBox10.Location = new System.Drawing.Point(3, -33);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(125, 23);
-            this.textBox10.TabIndex = 28;
-            // 
-            // textBox11
-            // 
-            this.textBox11.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBox11.Location = new System.Drawing.Point(3, -68);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(125, 23);
-            this.textBox11.TabIndex = 25;
-            // 
-            // textBoxPhemex
-            // 
-            this.textBoxPhemex.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxPhemex.Location = new System.Drawing.Point(3, 5);
-            this.textBoxPhemex.Name = "textBoxPhemex";
-            this.textBoxPhemex.Size = new System.Drawing.Size(125, 23);
-            this.textBoxPhemex.TabIndex = 29;
-            // 
             // AddSymbolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(312, 446);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddSymbolForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dodaj symbol";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -604,8 +604,6 @@
             this.panel8.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }

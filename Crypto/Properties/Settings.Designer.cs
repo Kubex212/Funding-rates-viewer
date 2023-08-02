@@ -97,7 +97,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0025")]
         public double NotificationsDifference {
             get {
                 return ((double)(this["NotificationsDifference"]));
@@ -109,7 +109,7 @@ namespace Crypto.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.005")]
         public double NotificationSoundDifference {
             get {
                 return ((double)(this["NotificationSoundDifference"]));
@@ -128,6 +128,18 @@ namespace Crypto.Properties {
             }
             set {
                 this["RefreshTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[{\"Symbols\":[\"BTC\",\"ETH\"],\"StandardDifference\":0.005,\"SoundDifference\":0.0075}]")]
+        public string GroupsJson {
+            get {
+                return ((string)(this["GroupsJson"]));
+            }
+            set {
+                this["GroupsJson"] = value;
             }
         }
     }

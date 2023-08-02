@@ -36,5 +36,18 @@ namespace Crypto.Clients
             }
             return result;
         }
+
+        public abstract Task<PriceResult> GetPrice(string globalName);
+
+        protected abstract string? ToGlobalName(string marketName);
+
+        protected abstract string? ToClientName(string globalName);
+    }
+
+    public class PriceResult
+    {
+        public decimal? Price { get; set; }
+        public bool Success { get => Price.HasValue; }
+        public string Message { get; set; } = "";
     }
 }

@@ -18,7 +18,6 @@ namespace Crypto.Clients
     {
         public override string Name { get; } = "Binance";
         public static HttpClient Client { get; set; }
-        private static string BaseUrl { get; } = "https://www.binance.com/";
         public BinanceClient()
         {
             Client = new HttpClient();
@@ -30,7 +29,7 @@ namespace Crypto.Clients
         {
             var result = new List<TableData>();
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            string url = BaseUrl + "fapi/v1/premiumIndex";
+            string url = "https://www.binance.com/fapi/v1/premiumIndex";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
@@ -39,15 +38,21 @@ namespace Crypto.Clients
                     dynamic obj = JsonConvert.DeserializeObject(data)!;
                     foreach (var item in obj)
                     {
-                        //try
-                        //{
-                        //    string globalName = NameTranslator.ClientToGlobalName((string)item.symbol, Name);
-                        //    result.Add(new TableData(globalName, (float)item.lastFundingRate, Name, -100f));
-                        //}
-                        //catch (InvalidOperationException ex)
-                        //{
-                        //    Logger.Log(ex.Message, Utility.Type.Warning);
-                        //}
+                        var globalNameRes = NameTranslator.ClientToGlobalName((string)item.symbol, Name);
+                        if (globalNameRes.Success)
+                        {
+                            result.Add(new TableData(globalNameRes.Name, (float)item.lastFundingRate, Name, -100f));
+                        }
+                        else
+                        {
+                            var globalName = ToGlobalName((string)item.symbol);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item.lastFundingRate, Name, -100f));
+                        }
                     }
                 }
             }
@@ -65,7 +70,7 @@ namespace Crypto.Clients
         {
             var result = new List<string>();
 
-            string url = BaseUrl + "fapi/v1/ticker/bookTicker";
+            string url = "https://www.binance.com/fapi/v1/ticker/bookTicker";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 string data = await response.Content.ReadAsStringAsync();
@@ -79,5 +84,39 @@ namespace Crypto.Clients
             return result;
         }
 
+        protected override string? ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("USDT"))
+            {
+                return null;
+            }
+            return marketName.Replace("USDT", "");
+        }
+
+        public override async Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = $"https://www.binance.com/fapi/v1/premiumIndex?symbol={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var price = (decimal)obj.indexPrice;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            return globalName + "USDT";
+        }
     }
 }

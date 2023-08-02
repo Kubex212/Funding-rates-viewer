@@ -95,5 +95,20 @@ namespace Crypto.Clients
 
             return result;
         }
+
+        protected override string ToGlobalName(string marketName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<PriceResult> GetPrice(string globalName)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

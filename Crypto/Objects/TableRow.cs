@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,12 +10,12 @@ namespace Crypto.Objects
     public class TableRow
     {
         public string Symbol { get; set; }
-        public float BitfinexFunding { get; set; } = -100;
-        public float BitfinexPredicted { get; set; } = -100;
+        public float BitfinexFunding { get; set; } = Consts.Unknown;
+        public float BitfinexPredicted { get; set; } = Consts.Unknown;
         public float PhemexFunding { get; set; } = Consts.Unknown;
         public float PhemexUsdtFunding { get; set; } = Consts.Unknown;
-        public float HuobiFunding { get; set; } = -100;
-        public float HuobiPredicted { get; set; } = -100;
+        public float HuobiFunding { get; set; } = Consts.Unknown;
+        public float HuobiPredicted { get; set; } = Consts.Unknown;
         public float BinanceFunding { get; set; } = Consts.Unknown;
         public float BinanceBUSDFunding { get; set; } = Consts.Unknown;
         public float OkxFunding { get; set; } = -100;
@@ -24,5 +25,37 @@ namespace Crypto.Objects
         public float ByBitLinearFunding { get; set; } = Consts.Unknown;
         public float ByBitInverseFunding { get; set; } = Consts.Unknown;
         public float ByBitPerpFunding { get; set; } = Consts.Unknown;
+        public float MaxDiff
+        {
+            get
+            {
+                var type = this.GetType();
+
+                // Get all properties of type float using reflection
+                var floatProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                                     .Where(p => p.PropertyType == typeof(float) && p.Name != "MaxDiff")
+                                                     .ToArray();
+
+
+                // Initialize min and max values
+                var minValue = float.MaxValue;
+                var maxValue = float.MinValue;
+
+                // Iterate through the float properties and find the min and max values
+                foreach (var property in floatProperties)
+                {
+                    var value = (float)property.GetValue(this);
+                    if(value == Consts.Unknown || value == Consts.Error)
+                    {
+                        continue;
+                    }
+                    minValue = Math.Min(minValue, value);
+                    maxValue = Math.Max(maxValue, value);
+                }
+
+                // Calculate and return the difference between the min and max values
+                return maxValue - minValue;
+            }
+        }
     }
 }

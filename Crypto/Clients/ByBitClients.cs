@@ -41,14 +41,21 @@ namespace Crypto.Clients
                     dynamic obj = JsonConvert.DeserializeObject(data)!;
                     foreach (JObject item in obj.result.list)
                     {
-                        var globalNameRes = NameTranslator.ClientToGlobalName((string)item["symbol"]!, Name);
+                        var marketName = (string)item["symbol"]!;
+                        var globalNameRes = NameTranslator.ClientToGlobalName(marketName, Name);
                         if (globalNameRes.Success)
                         {
                             result.Add(new TableData(globalNameRes.Name, (float)item["fundingRate"]!, Name, -100f));
                         }
                         else
                         {
-                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                            var globalName = ToGlobalName(marketName);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item["fundingRate"]!, Name, -100f));
                         }
                     }
                 }
@@ -58,25 +65,74 @@ namespace Crypto.Clients
                 Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
                 return result;
             }
+
             return result;
         }
 
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = BaseUrl + Path + $"&symbol={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    obj = obj.result.list[0];
+                    var price = (decimal)obj.indexPrice;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
     }
     public class ByBitLinearClient : BaseByBitClient
     {
         public override string Name => "ByBitLinear";
         protected override string Path { get; } = "/v5/market/tickers?category=linear";
+        protected override string? ToClientName(string globalName) => globalName + "USDT";
+        protected override string ToGlobalName(string marketName)
+        {
+            if(!marketName.EndsWith("USDT"))
+            {
+                return null;
+            }
+            return marketName.Replace("USDT", "");
+        }
     }
 
     public class ByBitInverseClient : BaseByBitClient
     {
         public override string Name => "ByBitInverse";
         protected override string Path { get; } = "/v5/market/tickers?category=inverse";
+        protected override string? ToClientName(string globalName) => globalName + "USD";
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("USD"))
+            {
+                return null;
+            }
+            return marketName.Replace("USD", "");
+        }
     }
 
     public class ByBitPerpClient : BaseByBitClient
     {
         public override string Name => "ByBitPerp";
         protected override string Path { get; } = "/v5/market/tickers?category=linear";
+        protected override string? ToClientName(string globalName) => globalName + "PERP";
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("PERP"))
+            {
+                return null;
+            }
+            return marketName.Replace("PERP", "");
+        }
     }
 }

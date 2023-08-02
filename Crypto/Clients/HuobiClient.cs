@@ -18,7 +18,6 @@ namespace Crypto.Clients
 {
     public class HuobiClient : BaseClient
     {
-        private string _baseUrl = "https://api.hbdm.com";
         public override string Name { get; } = "Huobi";
 
         public HuobiClient()
@@ -31,8 +30,7 @@ namespace Crypto.Clients
         public override async Task<List<TableData>> GetTableDataAsync(List<string> symbols)
         {
             var result = new List<TableData>();
-            string path = "/linear-swap-api/v1/swap_batch_funding_rate";
-            string url = _baseUrl + path;
+            var url = "https://api.hbdm.com/linear-swap-api/v1/swap_batch_funding_rate";
 
             try
             {
@@ -50,7 +48,13 @@ namespace Crypto.Clients
                         }
                         else
                         {
-                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                            var globalName = ToGlobalName((string)item.contract_code);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item.funding_rate, Name, (float)item.estimated_rate));
                         }
                     }
                 }
@@ -66,6 +70,39 @@ namespace Crypto.Clients
         {
             return symbols;
         }
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("-USDT"))
+            {
+                return null;
+            }
+            return marketName.Replace("-USDT", "");
+        }
 
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = $"https://api.hbdm.com/linear-swap-api/v1/swap_batch_funding_rate?contract_code={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var array = obj.data;
+                    return new PriceResult() { Message = "Nie wiem skad to wziac na Huobi." };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            return globalName + "-USDT";
+        }
     }
 }

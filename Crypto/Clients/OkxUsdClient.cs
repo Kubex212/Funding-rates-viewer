@@ -105,5 +105,41 @@ namespace Crypto.Clients
 
             return result;
         }
+
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("-USDT-SWAP"))
+            {
+                return null;
+            }
+            return marketName.Replace("-USDT-SWAP", "");
+        }
+
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            //var clientName = ToClientName(globalName);
+            //string url = $"https://www.binance.com/fapi/v1/ticker/bookTicker?symbol={clientName}";
+            //try
+            //{
+            //    using (HttpResponseMessage response = await Client.GetAsync(url))
+            //    {
+            //        var data = await response.Content.ReadAsStringAsync();
+            //        dynamic obj = JsonConvert.DeserializeObject(data)!;
+            //        var price = (decimal)obj.indexPrice;
+            //        return new PriceResult() { Price = price };
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+            //    return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            //}
+            return new PriceResult() { Message = "Nie wiem skad to wziac na okx." };
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -29,17 +29,9 @@ namespace Crypto.Clients
 
         public override async Task<List<TableData>> GetTableDataAsync(List<string> globalSymbols)
         {
-            if (globalSymbols == null || globalSymbols.Count == 0)
-            {
-                throw new ArgumentException("no symbols were provided");
-            }
-            BaseClient c = this;
-            var result = c.HandleUnknowns(globalSymbols);
-            var noUnknowns = c.RemoveUnknowns(globalSymbols);
-            var symbols = NameTranslator.GlobalToClientNames(noUnknowns, Name);
+            var result = new List<TableData>();
             string baseUrl = "https://api-pub.bitfinex.com/v2/status/deriv";
-            var symbolsArray = symbols.ToArray<string>();
-            string url = baseUrl + "?keys=" + string.Join(",", symbolsArray);
+            string url = baseUrl + "?keys=ALL";
 
             try
             {
@@ -66,26 +58,86 @@ namespace Crypto.Clients
             foreach (var d in derivatives)
             {
                 var res = NameTranslator.ClientToGlobalName(d.Symbol, Name);
-                result.Add(new TableData(res.Name, d.CurrentFunding, Name, d.NextFundingAccrued));
-            }
-            return result;
-        }
-
-        private List<string> TranslateSymbols(List<string> symbols)
-        {
-            List<string> result = new List<string>();
-            foreach (var s in symbols)
-            {
-                result.Add(s switch
+                if (res.Success)
                 {
-                    "BTCUSD" => "tBTCF0:USTF0",
-                    "ETHUSD" => "tETHF0:USTF0",
-                    "XRPUSD" => "tXRPF0:USTF0",
-                    _ => throw new ArgumentException($"Giełda {Name} nie zna symbolu {s}")
-                });
+                    result.Add(new TableData(res.Name, d.CurrentFunding, Name, d.NextFundingAccrued));
+                }
+                else
+                {
+                    var globalName = ToGlobalName(d.Symbol);
+                    if (globalName == null)
+                    {
+                        Logger.Log(res.Reason, Utility.Type.Message);
+                        continue;
+                    }
+                    result.Add(new TableData(globalName, d.CurrentFunding, Name, d.NextFundingAccrued));
+                }
             }
             return result;
         }
 
+        protected override string? ToGlobalName(string marketName)
+        {
+            var firstF = marketName.IndexOf("F");
+            var baseName = marketName.Substring(1, firstF - 1);
+            if (marketName.EndsWith("USTF0"))
+            {
+                return baseName;
+            }
+            else if (marketName.EndsWith("BTCF0"))
+            {
+                return baseName + "-BTC";
+            }
+            else if (marketName.EndsWith("EUTF0"))
+            {
+                return baseName + "-EUT";
+            }
+            else
+            {
+                return null;
+            }
+            // tALGF0:USTF0
+        }
+
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            string baseUrl = "https://api-pub.bitfinex.com/v2/status/deriv";
+            var clientName = ToClientName(globalName);
+            string url = baseUrl + "?keys=ALL";
+
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    string derivativeStatuses = await response.Content.ReadAsStringAsync();
+                    var res = JsonConvert.DeserializeObject<List<DerivativeStatus>>(derivativeStatuses, new DerivativeStatusConverter())!;
+
+                    var price = res[0].DerivPrice;
+                    return new PriceResult() { Price = (decimal)price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            if (!globalName.Contains("-"))
+            {
+                return $"t{globalName}F0:USTF0";
+            }
+            else if (globalName.Contains("-EUT"))
+            {
+                return $"t{globalName.Replace("-EUT", "")}F0:EUTF0";
+            }
+            else if (globalName.Contains("-BTC"))
+            {
+                return $"t{globalName.Replace("-BTC", "")}F0:BTCF0";
+            }
+            else throw new Exception("nieoczekiwany globalny symbol");
+        }
     }
 }

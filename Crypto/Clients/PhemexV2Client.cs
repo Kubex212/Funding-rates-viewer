@@ -21,7 +21,6 @@ namespace Crypto.Clients
         public override string Name { get; } = "PhemexUsdt";
         private static string Id { get; } = ConfigurationManager.AppSettings["phemexId"]!;
         private static string SecretKey { get; } = ConfigurationManager.AppSettings["phemexSecretKey"]!;
-        private static string BaseUrl { get; } = "https://api.phemex.com";
         public PhemexV2Client()
         {
             Client = new HttpClient();
@@ -34,7 +33,7 @@ namespace Crypto.Clients
         {
             var result = new List<TableData>();
 
-            string url = BaseUrl + "/md/v2/ticker/24hr/all";
+            string url = "https://api.phemex.com/md/v2/ticker/24hr/all";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
@@ -46,11 +45,17 @@ namespace Crypto.Clients
                         var globalNameRes = NameTranslator.ClientToGlobalName((string)item["symbol"]!, Name);
                         if (globalNameRes.Success)
                         {
-                            result.Add(new TableData(globalNameRes.Name, (float)item["fundingRateRr"]! / 100000000f, Name, -100f));
+                            result.Add(new TableData(globalNameRes.Name, (float)item["fundingRateRr"]! /*/ 1000f*/, Name, -100f));
                         }
                         else
                         {
-                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                            var globalName = ToGlobalName((string)item["symbol"]!);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item["fundingRateRr"]!, Name, -100f));
                         }
                     }
                 }
@@ -67,7 +72,7 @@ namespace Crypto.Clients
         {
             var result = new List<string>();
 
-            string url = BaseUrl + "/md/v1/ticker/24hr/all";
+            string url = "https://api.phemex.com/md/v3/ticker/24hr/all";
             using (HttpResponseMessage response = await Client.GetAsync(url))
             {
                 string data = await response.Content.ReadAsStringAsync();
@@ -79,6 +84,40 @@ namespace Crypto.Clients
             }
 
             return result;
+        }
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("USDT"))
+            {
+                return null;
+            }
+            return marketName.Replace("USDT", "");
+        }
+
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = $"https://api.phemex.com/md/v3/ticker/24hr?symbol={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var price = (decimal)obj.result.lastRp;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            return globalName + "USDT";
         }
     }
 }

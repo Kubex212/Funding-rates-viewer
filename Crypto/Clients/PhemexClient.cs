@@ -49,7 +49,13 @@ namespace Crypto.Clients
                         }
                         else
                         {
-                            Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                            var globalName = ToGlobalName((string)item["symbol"]!);
+                            if (globalName == null)
+                            {
+                                Logger.Log(globalNameRes.Reason, Utility.Type.Message);
+                                continue;
+                            }
+                            result.Add(new TableData(globalName, (float)item["fundingRateEr"]!, Name, -100f));
                         }
                     }
                 }
@@ -78,6 +84,40 @@ namespace Crypto.Clients
             }
 
             return result;
+        }
+        protected override string ToGlobalName(string marketName)
+        {
+            if (!marketName.EndsWith("USD"))
+            {
+                return null;
+            }
+            return marketName.Replace("USD", "");
+        }
+
+        public async override Task<PriceResult> GetPrice(string globalName)
+        {
+            var clientName = ToClientName(globalName);
+            string url = $"https://api.phemex.com/md/v1/ticker/24hr?symbol={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var price = (decimal)obj.result[0].lastEp;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+        }
+
+        protected override string? ToClientName(string globalName)
+        {
+            return globalName + "USD";
         }
     }
 }

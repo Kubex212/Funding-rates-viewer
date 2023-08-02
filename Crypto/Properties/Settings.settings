@@ -21,13 +21,16 @@
       <Value Profile="(Default)">-0.005</Value>
     </Setting>
     <Setting Name="NotificationsDifference" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.25</Value>
+      <Value Profile="(Default)">0.0025</Value>
     </Setting>
     <Setting Name="NotificationSoundDifference" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.5</Value>
+      <Value Profile="(Default)">0.005</Value>
     </Setting>
     <Setting Name="RefreshTime" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="GroupsJson" Type="System.String" Scope="User">
+      <Value Profile="(Default)">[{"Symbols":["BTC","ETH"],"StandardDifference":0.005,"SoundDifference":0.0075}]</Value>
     </Setting>
   </Settings>
 </SettingsFile>

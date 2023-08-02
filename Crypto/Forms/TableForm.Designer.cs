@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ignorujXWPowiadomieniachToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuńXZIgnorowanychToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usuńXZWyciszonychToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sprawdźCenęToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.konsolaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pokażCałośćToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +47,7 @@
             this.wartościToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.minimalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.maksymalnaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.domyślneSortowanieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.symboleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modyfikujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,11 +57,13 @@
             this.kolorPoniżejToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorBłęduToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kolorNieobsługiwanegoSymboluToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zresetujUstawieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.powiadomieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ustawieniaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pokażToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.refreshCountdown = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableContextMenu.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -77,15 +82,19 @@
             this.dataGridView1.Size = new System.Drawing.Size(1492, 453);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
+            this.dataGridView1.CellToolTipTextNeeded += new System.Windows.Forms.DataGridViewCellToolTipTextNeededEventHandler(this.dataGridView1_CellToolTipTextNeeded);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
             // 
             // tableContextMenu
             // 
             this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ignorujXWPowiadomieniachToolStripMenuItem,
-            this.usuńXZIgnorowanychToolStripMenuItem});
+            this.usuńXZIgnorowanychToolStripMenuItem,
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem,
+            this.usuńXZWyciszonychToolStripMenuItem,
+            this.sprawdźCenęToolStripMenuItem});
             this.tableContextMenu.Name = "tableContextMenu";
-            this.tableContextMenu.Size = new System.Drawing.Size(232, 70);
+            this.tableContextMenu.Size = new System.Drawing.Size(232, 114);
             // 
             // ignorujXWPowiadomieniachToolStripMenuItem
             // 
@@ -100,6 +109,27 @@
             this.usuńXZIgnorowanychToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.usuńXZIgnorowanychToolStripMenuItem.Text = "Usuń x z ignorowanych";
             this.usuńXZIgnorowanychToolStripMenuItem.Click += new System.EventHandler(this.usuńXZIgnorowanychToolStripMenuItem_Click);
+            // 
+            // nieWydawajDźwiękuDlaXToolStripMenuItem
+            // 
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem.Name = "nieWydawajDźwiękuDlaXToolStripMenuItem";
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem.Text = "Wycisz x";
+            this.nieWydawajDźwiękuDlaXToolStripMenuItem.Click += new System.EventHandler(this.wyciszXToolStripMenuItem_Click);
+            // 
+            // usuńXZWyciszonychToolStripMenuItem
+            // 
+            this.usuńXZWyciszonychToolStripMenuItem.Name = "usuńXZWyciszonychToolStripMenuItem";
+            this.usuńXZWyciszonychToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.usuńXZWyciszonychToolStripMenuItem.Text = "Usuń x z wyciszonych";
+            this.usuńXZWyciszonychToolStripMenuItem.Click += new System.EventHandler(this.usuńXZWyciszonychToolStripMenuItem_Click);
+            // 
+            // sprawdźCenęToolStripMenuItem
+            // 
+            this.sprawdźCenęToolStripMenuItem.Name = "sprawdźCenęToolStripMenuItem";
+            this.sprawdźCenęToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.sprawdźCenęToolStripMenuItem.Text = "Sprawdź cenę";
+            this.sprawdźCenęToolStripMenuItem.Click += new System.EventHandler(this.sprawdźCenęToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -151,7 +181,8 @@
             this.tabelkaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.odświeżToolStripMenuItem,
             this.odświeżajToolStripMenuItem,
-            this.wartościToolStripMenuItem});
+            this.wartościToolStripMenuItem,
+            this.domyślneSortowanieToolStripMenuItem});
             this.tabelkaToolStripMenuItem.Name = "tabelkaToolStripMenuItem";
             this.tabelkaToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.tabelkaToolStripMenuItem.Text = "Tabelka";
@@ -159,7 +190,7 @@
             // odświeżToolStripMenuItem
             // 
             this.odświeżToolStripMenuItem.Name = "odświeżToolStripMenuItem";
-            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.odświeżToolStripMenuItem.Text = "Odśwież";
             this.odświeżToolStripMenuItem.Click += new System.EventHandler(this.odświeżToolStripMenuItem_Click);
             // 
@@ -168,7 +199,7 @@
             this.odświeżajToolStripMenuItem.Checked = true;
             this.odświeżajToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.odświeżajToolStripMenuItem.Name = "odświeżajToolStripMenuItem";
-            this.odświeżajToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.odświeżajToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.odświeżajToolStripMenuItem.Text = "Odświeżaj";
             this.odświeżajToolStripMenuItem.Click += new System.EventHandler(this.odświeżajToolStripMenuItem_Click);
             // 
@@ -178,7 +209,7 @@
             this.minimalnaToolStripMenuItem,
             this.maksymalnaToolStripMenuItem});
             this.wartościToolStripMenuItem.Name = "wartościToolStripMenuItem";
-            this.wartościToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.wartościToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.wartościToolStripMenuItem.Text = "Wartości...";
             // 
             // minimalnaToolStripMenuItem
@@ -194,6 +225,13 @@
             this.maksymalnaToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.maksymalnaToolStripMenuItem.Text = "Maksymalna";
             this.maksymalnaToolStripMenuItem.Click += new System.EventHandler(this.maksymalnaToolStripMenuItem_Click);
+            // 
+            // domyślneSortowanieToolStripMenuItem
+            // 
+            this.domyślneSortowanieToolStripMenuItem.Name = "domyślneSortowanieToolStripMenuItem";
+            this.domyślneSortowanieToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.domyślneSortowanieToolStripMenuItem.Text = "Domyślne sortowanie";
+            this.domyślneSortowanieToolStripMenuItem.Click += new System.EventHandler(this.domyślneSortowanieToolStripMenuItem_Click);
             // 
             // symboleToolStripMenuItem
             // 
@@ -232,7 +270,8 @@
             this.kolorPowyżejToolStripMenuItem,
             this.kolorPoniżejToolStripMenuItem,
             this.kolorBłęduToolStripMenuItem,
-            this.kolorNieobsługiwanegoSymboluToolStripMenuItem});
+            this.kolorNieobsługiwanegoSymboluToolStripMenuItem,
+            this.zresetujUstawieniaToolStripMenuItem});
             this.ustawieniaToolStripMenuItem.Name = "ustawieniaToolStripMenuItem";
             this.ustawieniaToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.ustawieniaToolStripMenuItem.Text = "Ustawienia";
@@ -265,6 +304,13 @@
             this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Text = "Kolor nieobsługiwanego symbolu";
             this.kolorNieobsługiwanegoSymboluToolStripMenuItem.Click += new System.EventHandler(this.kolorNieobsługiwanegoSymboluToolStripMenuItem_Click);
             // 
+            // zresetujUstawieniaToolStripMenuItem
+            // 
+            this.zresetujUstawieniaToolStripMenuItem.Name = "zresetujUstawieniaToolStripMenuItem";
+            this.zresetujUstawieniaToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.zresetujUstawieniaToolStripMenuItem.Text = "Zresetuj ustawienia";
+            this.zresetujUstawieniaToolStripMenuItem.Click += new System.EventHandler(this.zresetujUstawieniaToolStripMenuItem_Click);
+            // 
             // powiadomieniaToolStripMenuItem
             // 
             this.powiadomieniaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -284,7 +330,6 @@
             // 
             // pokażToolStripMenuItem
             // 
-            this.pokażToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pokażToolStripMenuItem.Image")));
             this.pokażToolStripMenuItem.Name = "pokażToolStripMenuItem";
             this.pokażToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.pokażToolStripMenuItem.Text = "Pokaż";
@@ -294,7 +339,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Image = global::Crypto.Properties.Resources.loading1;
             this.pictureBox1.Location = new System.Drawing.Point(0, 24);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(1492, 453);
@@ -308,6 +353,11 @@
             this.refreshTimer.Interval = 100000;
             this.refreshTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // refreshCountdown
+            // 
+            this.refreshCountdown.Interval = 1000;
+            this.refreshCountdown.Tick += new System.EventHandler(this.refreshCountdown_Tick);
+            // 
             // TableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -316,7 +366,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TableForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -363,5 +412,11 @@
         private ContextMenuStrip tableContextMenu;
         private ToolStripMenuItem ignorujXWPowiadomieniachToolStripMenuItem;
         private ToolStripMenuItem usuńXZIgnorowanychToolStripMenuItem;
+        private ToolStripMenuItem nieWydawajDźwiękuDlaXToolStripMenuItem;
+        private ToolStripMenuItem usuńXZWyciszonychToolStripMenuItem;
+        private System.Windows.Forms.Timer refreshCountdown;
+        private ToolStripMenuItem sprawdźCenęToolStripMenuItem;
+        private ToolStripMenuItem zresetujUstawieniaToolStripMenuItem;
+        private ToolStripMenuItem domyślneSortowanieToolStripMenuItem;
     }
 }
