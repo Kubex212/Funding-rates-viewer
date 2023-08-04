@@ -28,6 +28,8 @@ namespace Crypto.Forms
 
             ignoredTb.Text = string.Join(";", settings.IgnoredSymbolNames);
             mutedTb.Text = string.Join(";", settings.MutedSymbolNames);
+
+            Icon = Properties.Resources.btc;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Crypto.Objects.Models;
-using RestSharp;
 using Crypto.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

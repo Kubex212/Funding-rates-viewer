@@ -27,6 +27,8 @@ namespace Crypto.Forms
                 else if (log.type == Utility.Type.Error) richTextBox1.SelectionColor = Color.Red;
             }
             richTextBox1.Select(0,0);
+
+            Icon = Properties.Resources.btc;
         }
     }
 }

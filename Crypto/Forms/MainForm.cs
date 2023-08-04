@@ -33,6 +33,7 @@ namespace Crypto
                 Properties.Settings.Default.ColorEmpty = Color.DarkMagenta;
             Properties.Settings.Default.Save();
 
+            Icon = Properties.Resources.btc;
         }
 
         private async void button1_Click(object sender, EventArgs e)

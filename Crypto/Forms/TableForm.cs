@@ -58,6 +58,8 @@ namespace Crypto.Forms
             refreshTimer.Enabled = true;
             refreshCountdown.Enabled = true;
 
+            pictureBox1.Image = Properties.Resources.hzk6C;
+            Icon = Properties.Resources.btc;
         }
 
         private void DataToRows(List<TableData> data)
@@ -538,6 +540,11 @@ namespace Crypto.Forms
                     var diff = nGroup.StandardDifference;
                     var soundDiff = nGroup.SoundDifference;
 
+                    if(!nGroup.Symbols.Contains(group.Key))
+                    {
+                        continue;
+                    }
+
                     if (group.Count(d => d.FundingRate > -90f) >= 2)
                     {
                         var lowestFunding = group.Where(d => d.FundingRate > -90f).Aggregate((a, b) => a.FundingRate < b.FundingRate ? a : b);
@@ -571,6 +578,34 @@ namespace Crypto.Forms
                             res.Add(new Notification(highestPredicted.Symbol, highestPredicted.MarketName, lowestPredicted.MarketName, true, diff2, playSound));
                         }
                     }
+                }
+            }
+
+            var other2 = _data.Where(d => d.Symbol.Contains("-")).GroupBy(d => d.Symbol);
+            other2 = other2.Where(g => !_notificationSettings.IgnoredSymbolNames.Contains(g.Key));
+
+            foreach (var group in other2)
+            {
+                var diff = 0.0015;
+                var soundDiff = 0.0015;
+
+                var element = group.Single();
+                var diff1 = Math.Abs(element.FundingRate);
+                var cond2 = diff1 > diff;
+
+                var playSound = diff1 > soundDiff && !_notificationSettings.MutedSymbolNames.Contains(element.Symbol);
+                if (true && cond2)
+                {
+                    res.Add(new Notification(element.Symbol, element.MarketName, element.MarketName, false, diff1, playSound));
+                }
+
+                var diff2 = Math.Abs(element.PredictedFunding);
+                var cond4 = diff2 > diff;
+
+                playSound = diff2 > soundDiff && !_notificationSettings.MutedSymbolNames.Contains(element.Symbol);
+                if (true && cond4)
+                {
+                    res.Add(new Notification(element.Symbol, element.MarketName, element.MarketName, true, diff2, playSound));
                 }
             }
 

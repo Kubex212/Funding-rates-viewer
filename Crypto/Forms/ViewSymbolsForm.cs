@@ -31,6 +31,8 @@ namespace Crypto.Forms
             {
                 dataGridView1.Columns.Insert(columnIndex, editButtonColumn);
             }
+
+            Icon = Properties.Resources.btc;
         }
 
         private void ViewSymbolsForm_Load(object sender, EventArgs e)

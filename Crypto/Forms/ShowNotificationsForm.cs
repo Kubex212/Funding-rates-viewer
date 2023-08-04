@@ -27,11 +27,11 @@ namespace Crypto.Forms
             InitializeComponent();
 
             Settings = notificationsSettings;
-            Notifications = notifications;
+            Notifications = notifications.OrderBy(n => -n.Difference).Take(_symbolCount).ToList();
             _symbols = notifications.Select(n => n.Name).Distinct();
 
             var messageSb = new StringBuilder();
-            foreach (var notification in notifications.OrderBy(n => -n.Difference).Take(_symbolCount))
+            foreach (var notification in Notifications)
             {
                 messageSb.AppendLine($"{notification.Name}: różnica {notification.Difference * 100:0.000} na giełdach" +
                     $" {notification.Prop1} i {notification.Prop2} ({(notification.Predicted ? "predicted" : "funding")})");
@@ -56,7 +56,7 @@ namespace Crypto.Forms
                     // Find the index of the first space character (word delimiter)
                     var index = line.IndexOf(':');
 
-                    if (index >= 0 && notifications[i].Sound)
+                    if (index >= 0 && Notifications[i].Sound)
                     {
                         // Set the first word in bold
                         richTextBox.Select(richTextBox.GetFirstCharIndexFromLine(i), index);
@@ -66,6 +66,7 @@ namespace Crypto.Forms
                 richTextBox.DeselectAll();
             }
             goToBox.Items.AddRange(_symbols.ToArray());
+            Icon = Properties.Resources.btc;
         }
 
         private void button1_Click(object sender, EventArgs e)

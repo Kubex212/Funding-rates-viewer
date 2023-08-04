@@ -416,11 +416,12 @@ namespace Crypto.Forms
 
             var symbol = _rows[cell.RowIndex].Symbol;
             var columnName = _columnNames[cell.ColumnIndex];
-            var client = _clientsByNames[columnName];
-            if(!_clientsByNames.ContainsKey(symbol))
+            if (!_clientsByNames.ContainsKey(columnName))
             {
                 return;
             }
+            var client = _clientsByNames[columnName];
+            
             var priceRes = await client.GetPrice((string)symbol);
 
             if (priceRes.Success)
@@ -442,6 +443,7 @@ namespace Crypto.Forms
 
         private void domyślneSortowanieToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _sort = (-1, false);
             _rows = _rows.OrderBy(r => Names.IndexOf(r.Symbol) < 0 ? 100_000 : Names.IndexOf(r.Symbol)).ToList();
             var firstRow = 0;
             var bindingList = new BindingList<TableRow>(_rows);

@@ -32,8 +32,10 @@ namespace Crypto.Objects
                 var type = this.GetType();
 
                 // Get all properties of type float using reflection
-                var floatProperties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                                     .Where(p => p.PropertyType == typeof(float) && p.Name != "MaxDiff")
+                var fundingProps = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                                     .Where(p => p.PropertyType == typeof(float) 
+                                                     && p.Name != "MaxDiff"
+                                                     && p.Name.Contains("Funding"))
                                                      .ToArray();
 
 
@@ -42,7 +44,7 @@ namespace Crypto.Objects
                 var maxValue = float.MinValue;
 
                 // Iterate through the float properties and find the min and max values
-                foreach (var property in floatProperties)
+                foreach (var property in fundingProps)
                 {
                     var value = (float)property.GetValue(this);
                     if(value == Consts.Unknown || value == Consts.Error)
@@ -52,9 +54,33 @@ namespace Crypto.Objects
                     minValue = Math.Min(minValue, value);
                     maxValue = Math.Max(maxValue, value);
                 }
+                
+                var fundingDiff = maxValue - minValue;
 
-                // Calculate and return the difference between the min and max values
-                return maxValue - minValue;
+                var predictedProps = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                                     .Where(p => p.PropertyType == typeof(float)
+                                                     && p.Name != "MaxDiff"
+                                                     && p.Name.Contains("Predicted"))
+                                                     .ToArray();
+
+                minValue = float.MaxValue;
+                maxValue = float.MinValue;
+
+                // Iterate through the float properties and find the min and max values
+                foreach (var property in fundingProps)
+                {
+                    var value = (float)property.GetValue(this);
+                    if (value == Consts.Unknown || value == Consts.Error)
+                    {
+                        continue;
+                    }
+                    minValue = Math.Min(minValue, value);
+                    maxValue = Math.Max(maxValue, value);
+                }
+
+                var predictedDiff = maxValue - minValue;
+
+                return Math.Max(fundingDiff, predictedDiff);
             }
         }
     }
