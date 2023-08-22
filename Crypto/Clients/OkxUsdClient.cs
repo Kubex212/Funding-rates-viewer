@@ -11,6 +11,7 @@ using Crypto.Objects.Models;
 using Crypto.Objects;
 using System.Configuration;
 using Crypto.Utility;
+using System.Globalization;
 
 namespace Crypto.Clients
 {
@@ -62,10 +63,8 @@ namespace Crypto.Clients
                         }
                         var f = Convert.ToString(resultObj["data"][0]["fundingRate"]);
                         var p = Convert.ToString(resultObj["data"][0]["nextFundingRate"]);
-                        f = f.Replace('.', ',');
-                        p = p.Replace('.', ',');
-                        var fundingRate = float.Parse(f);
-                        var predictedRate = float.Parse(p);
+                        var fundingRate = float.Parse(f, CultureInfo.InvariantCulture);
+                        var predictedRate = float.Parse(p, CultureInfo.InvariantCulture);
                         var data = new TableData(getNameRes.Name, fundingRate, Name, predictedRate);
 
                         result.Add(data);
