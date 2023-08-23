@@ -11,6 +11,7 @@ using Crypto.Objects;
 using System.Configuration;
 using Crypto.Utility;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Crypto.Clients
 {
@@ -96,15 +97,33 @@ namespace Crypto.Clients
         public override async Task<PriceResult> GetPrice(string globalName)
         {
             var clientName = ToClientName(globalName);
-            string url = $"https://www.binance.com/fapi/v1/premiumIndex?symbol={clientName}";
+            string url = $"https://www.binance.com/fapi/v1/ticker/price";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
                 {
+                    response.EnsureSuccessStatusCode();
                     var data = await response.Content.ReadAsStringAsync();
-                    dynamic obj = JsonConvert.DeserializeObject(data)!;
-                    var price = (decimal)obj.indexPrice;
-                    return new PriceResult() { Price = price };
+
+                    var objList = JsonConvert.DeserializeObject<List<dynamic>>(data)!;
+                    if(objList != null)
+                    {
+                        Func<dynamic, bool> condition = item => item.symbol == clientName;
+                        var selectedElement = objList.FirstOrDefault(condition);
+
+                        if (selectedElement != null)
+                        {
+                            var price = (decimal)selectedElement.price;
+                            return new PriceResult() { Price = price };
+                        }
+                        else
+                        {
+                            return new PriceResult() { Message = "No suitable element found." };
+                        }
+                    } else
+                    {
+                        return new PriceResult() { Message = "Invalid data format" };
+                    }
                 }
             }
             catch (Exception ex)

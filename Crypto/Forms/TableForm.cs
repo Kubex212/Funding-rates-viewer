@@ -37,7 +37,7 @@ namespace Crypto.Forms
 
         List<BaseClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex USDT funding", "Huobi funding", "Huobi predicted", "Binance funding", "Binance BUSD funding", "OKX coin funding", "OKX coin predicted", "OKX USD funding", "OKX USD predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit Perp funding", "Różnica" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex USDT funding", "Huobi funding", "Huobi predicted", "Binance funding", "Binance BUSD funding", "OKX coin funding", "OKX coin predicted", "OKX USDT funding", "OKX USDT predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit USDC funding", "Różnica" };
         string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexUsdtFunding", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "BinanceBUSDFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding", "MaxDiff" };
 
         int _workingCells;

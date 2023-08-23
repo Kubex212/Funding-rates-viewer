@@ -81,15 +81,15 @@ namespace Crypto.Clients
         public async override Task<PriceResult> GetPrice(string globalName)
         {
             var clientName = ToClientName(globalName);
-            string url = $"https://api.hbdm.com/linear-swap-api/v1/swap_batch_funding_rate?contract_code={clientName}";
+            string url = $"https://api.hbdm.com/linear-swap-ex/market/trade?contract_code={clientName}";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
                 {
                     var data = await response.Content.ReadAsStringAsync();
                     dynamic obj = JsonConvert.DeserializeObject(data)!;
-                    var array = obj.data;
-                    return new PriceResult() { Message = "Nie wiem skad to wziac na Huobi." };
+                    var price = (decimal)obj.tick.data[0].price;
+                    return new PriceResult() { Price = price };
                 }
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@ using System.Configuration;
 using Crypto.Utility;
 using Crypto.Objects.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Crypto.Clients
 {
@@ -104,7 +105,7 @@ namespace Crypto.Clients
                 {
                     var data = await response.Content.ReadAsStringAsync();
                     dynamic obj = JsonConvert.DeserializeObject(data)!;
-                    var price = (decimal)obj.result[0].lastEp;
+                    var price = (decimal)obj.result.lastEp / 10000;
                     return new PriceResult() { Price = price };
                 }
             }
@@ -117,7 +118,14 @@ namespace Crypto.Clients
 
         protected override string? ToClientName(string globalName)
         {
-            return globalName + "USD";
+            if (globalName == "BTC" || globalName == "ETH")
+            {
+                return "u" + globalName + "USD";
+            }
+            else
+            {
+                return globalName + "USD";
+            }
         }
     }
 }

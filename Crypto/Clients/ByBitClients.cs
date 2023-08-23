@@ -20,6 +20,7 @@ namespace Crypto.Clients
     {
         private static string BaseUrl { get; } = "https://api.bybit.com";
         protected abstract string Path { get; }
+        protected abstract string PricePath { get; }
 
         public BaseByBitClient()
         {
@@ -72,7 +73,7 @@ namespace Crypto.Clients
         public async override Task<PriceResult> GetPrice(string globalName)
         {
             var clientName = ToClientName(globalName);
-            string url = BaseUrl + Path + $"&symbol={clientName}";
+            string url = BaseUrl + PricePath + $"&symbol={clientName}";
             try
             {
                 using (HttpResponseMessage response = await Client.GetAsync(url))
@@ -80,7 +81,7 @@ namespace Crypto.Clients
                     var data = await response.Content.ReadAsStringAsync();
                     dynamic obj = JsonConvert.DeserializeObject(data)!;
                     obj = obj.result.list[0];
-                    var price = (decimal)obj.indexPrice;
+                    var price = (decimal)obj.price;
                     return new PriceResult() { Price = price };
                 }
             }
@@ -95,6 +96,7 @@ namespace Crypto.Clients
     {
         public override string Name => "ByBitLinear";
         protected override string Path { get; } = "/v5/market/tickers?category=linear";
+        protected override string PricePath { get; } = "/v5/market/recent-trade?category=linear";
         protected override string? ToClientName(string globalName) => globalName + "USDT";
         protected override string ToGlobalName(string marketName)
         {
@@ -110,6 +112,7 @@ namespace Crypto.Clients
     {
         public override string Name => "ByBitInverse";
         protected override string Path { get; } = "/v5/market/tickers?category=inverse";
+        protected override string PricePath { get; } = "/v5/market/recent-trade?category=inverse";
         protected override string? ToClientName(string globalName) => globalName + "USD";
         protected override string ToGlobalName(string marketName)
         {
@@ -125,6 +128,7 @@ namespace Crypto.Clients
     {
         public override string Name => "ByBitPerp";
         protected override string Path { get; } = "/v5/market/tickers?category=linear";
+        protected override string PricePath { get; } = "/v5/market/recent-trade?category=linear";
         protected override string? ToClientName(string globalName) => globalName + "PERP";
         protected override string ToGlobalName(string marketName)
         {

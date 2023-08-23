@@ -12,6 +12,7 @@ using Crypto.Objects;
 using System.Configuration;
 using Crypto.Utility;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Crypto.Clients
 {
@@ -116,24 +117,24 @@ namespace Crypto.Clients
 
         public async override Task<PriceResult> GetPrice(string globalName)
         {
-            //var clientName = ToClientName(globalName);
-            //string url = $"https://www.binance.com/fapi/v1/ticker/bookTicker?symbol={clientName}";
-            //try
-            //{
-            //    using (HttpResponseMessage response = await Client.GetAsync(url))
-            //    {
-            //        var data = await response.Content.ReadAsStringAsync();
-            //        dynamic obj = JsonConvert.DeserializeObject(data)!;
-            //        var price = (decimal)obj.indexPrice;
-            //        return new PriceResult() { Price = price };
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
-            //    return new PriceResult() { Message = "Nie udało się pobrać ceny." };
-            //}
-            return new PriceResult() { Message = "Nie wiem skad to wziac na okx." };
+            var clientName = ToClientName(globalName);
+            string url = $"https://www.okx.com/api/v5/market/trades?instId={clientName}";
+            try
+            {
+                using (HttpResponseMessage response = await Client.GetAsync(url))
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    dynamic obj = JsonConvert.DeserializeObject(data)!;
+                    var price = (decimal)obj.data[0].px;
+                    return new PriceResult() { Price = price };
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log($"Błąd na {Name}: {ex.Message}", Utility.Type.Error);
+                return new PriceResult() { Message = "Nie udało się pobrać ceny." };
+            }
+            //return new PriceResult() { Message = "Nie wiem skad to wziac na okx." };
         }
 
         protected override string? ToClientName(string globalName)

@@ -96,6 +96,7 @@ namespace Crypto.Clients
 
         public async override Task<PriceResult> GetPrice(string globalName)
         {
+
             var clientName = ToClientName(globalName);
             string url = $"https://api.phemex.com/md/v3/ticker/24hr?symbol={clientName}";
             try
