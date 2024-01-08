@@ -15,7 +15,6 @@ namespace Crypto.Objects
         public float PhemexFunding { get; set; } = Consts.Unknown;
         public float PhemexUsdtFunding { get; set; } = Consts.Unknown;
         public float HuobiFunding { get; set; } = Consts.Unknown;
-        public float HuobiPredicted { get; set; } = Consts.Unknown;
         public float BinanceFunding { get; set; } = Consts.Unknown;
         public float BinanceBUSDFunding { get; set; } = Consts.Unknown;
         public float OkxFunding { get; set; } = -100;

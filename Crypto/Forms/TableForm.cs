@@ -37,8 +37,8 @@ namespace Crypto.Forms
 
         List<BaseClient> _clients;
 
-        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex USDT funding", "Huobi funding", "Huobi predicted", "Binance funding", "Binance BUSD funding", "OKX coin funding", "OKX coin predicted", "OKX USDT funding", "OKX USDT predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit USDC funding", "Różnica" };
-        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexUsdtFunding", "HuobiFunding", "HuobiPredicted", "BinanceFunding", "BinanceBUSDFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding", "MaxDiff" };
+        string[] _displayedColumnNames = { "Symbol", "Bitfinex funding", "Bitfinex predicted", "Phemex funding", "Phemex USDT funding", "Huobi funding", "Binance funding", "Binance BUSD funding", "OKX coin funding", "OKX coin predicted", "OKX USDT funding", "OKX USDT predicted", "ByBit USDT funding", "ByBit Inverse funding", "ByBit USDC funding", "Różnica" };
+        string[] _columnNames = { "Symbol", "BitfinexFunding", "BitfinexPredicted", "PhemexFunding", "PhemexUsdtFunding", "HuobiFunding", "BinanceFunding", "BinanceBUSDFunding", "OkxFunding", "OkxPredicted", "OkxUsdFunding", "OkxUsdPredicted", "ByBitLinearFunding", "ByBitInverseFunding", "ByBitPerpFunding", "MaxDiff" };
 
         int _workingCells;
         (int ind, bool ascending) _sort = (-1, false);
@@ -98,7 +98,6 @@ namespace Crypto.Forms
                     case "Huobi":
                         {
                             row.HuobiFunding = d.FundingRate;
-                            row.HuobiPredicted = d.PredictedFunding;
                             break;
                         }
                     case "Binance":
@@ -169,7 +168,7 @@ namespace Crypto.Forms
                     continue;
                 }
                 result.Add(new LabeledTableData(r.Symbol, bitfinexName, r.BitfinexFunding, "Bitfinex", r.BitfinexPredicted));
-                result.Add(new LabeledTableData(r.Symbol, huobiName, r.HuobiFunding, "Huobi", r.HuobiPredicted));
+                result.Add(new LabeledTableData(r.Symbol, huobiName, r.HuobiFunding, "Huobi", Consts.Unknown));
                 result.Add(new LabeledTableData(r.Symbol, binanceName, r.BinanceFunding, "Binance", binanceName == "?" ? -99 : -100));
                 result.Add(new LabeledTableData(r.Symbol, binanceBName, r.BinanceBUSDFunding, "BinanceBUSD", -100));
                 result.Add(new LabeledTableData(r.Symbol, okxName, r.OkxFunding, "Okx", r.OkxPredicted));
@@ -228,7 +227,6 @@ namespace Crypto.Forms
             dataGridView1.Columns["PhemexFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["PhemexUsdtFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["HuobiFunding"].DefaultCellStyle.Format = "0.0000%";
-            dataGridView1.Columns["HuobiPredicted"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["BinanceFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["BinanceBUSDFunding"].DefaultCellStyle.Format = "0.0000%";
             dataGridView1.Columns["OkxFunding"].DefaultCellStyle.Format = "0.0000%";
@@ -355,12 +353,6 @@ namespace Crypto.Forms
                 if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiFunding).ToList();
                 else _rows = _rows.OrderByDescending(r => r.HuobiFunding).ToList();
                 firstRow = _rows.Count(r => r.HuobiFunding < -90f);
-            }
-            else if (_sort.ind == i++)
-            {
-                if (_sort.ascending) _rows = _rows.OrderBy(r => r.HuobiPredicted).ToList();
-                else _rows = _rows.OrderByDescending(r => r.HuobiPredicted).ToList();
-                firstRow = _rows.Count(r => r.HuobiPredicted < -90f);
             }
             else if (_sort.ind == i++)
             {

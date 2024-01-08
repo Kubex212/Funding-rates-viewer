@@ -43,7 +43,7 @@ namespace Crypto.Clients
                         var globalNameRes = NameTranslator.ClientToGlobalName((string)item.contract_code, Name);
                         if (globalNameRes.Success)
                         {
-                            result.Add(new TableData(globalNameRes.Name, (float)item.funding_rate, Name, (float)item.estimated_rate));
+                            result.Add(new TableData(globalNameRes.Name, (float)item.funding_rate, Name, Consts.Unknown));
                         }
                         else
                         {
@@ -53,7 +53,7 @@ namespace Crypto.Clients
                                 Logger.Log(globalNameRes.Reason, Utility.Type.Message);
                                 continue;
                             }
-                            result.Add(new TableData(globalName, (float)item.funding_rate, Name, (float)item.estimated_rate));
+                            result.Add(new TableData(globalName, (float)item.funding_rate, Name, Consts.Unknown));
                         }
                     }
                 }
